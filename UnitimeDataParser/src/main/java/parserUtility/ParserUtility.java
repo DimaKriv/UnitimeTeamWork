@@ -1,6 +1,11 @@
 package parserUtility;
 
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ParserUtility {
 
@@ -16,7 +21,7 @@ public class ParserUtility {
         try {
             connection = DriverManager.getConnection(DATABASE_URL);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return connection;
     }
@@ -33,7 +38,7 @@ public class ParserUtility {
             Statement statement  = connection.createStatement();
             resultSet = statement.executeQuery(querySQL);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return resultSet;
     }
