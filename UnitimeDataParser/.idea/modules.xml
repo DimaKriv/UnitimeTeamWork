@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UnitimeDataParser.iml" filepath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UnitimeDataParser_main.iml" filepath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser_main.iml" group="UnitimeDataParser" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UnitimeDataParser_test.iml" filepath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser_test.iml" group="UnitimeDataParser" />
+    </modules>
+  </component>
+</project>
