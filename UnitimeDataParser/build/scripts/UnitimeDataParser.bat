@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\parser-1.jar;%APP_HOME%\lib\sqlite-jdbc-3.21.0.1.jar
+set CLASSPATH=%APP_HOME%\lib\parser-1.jar;%APP_HOME%\lib\sqlite-jdbc-3.21.0.1.jar;%APP_HOME%\lib\java-xmlbuilder-1.2.jar;%APP_HOME%\lib\base64-2.3.8.jar
 
 @rem Execute UnitimeDataParser
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %UNITIME_DATA_PARSER_OPTS%  -classpath "%CLASSPATH%" Main %CMD_LINE_ARGS%
