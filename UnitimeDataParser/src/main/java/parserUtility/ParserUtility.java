@@ -26,7 +26,7 @@ public class ParserUtility {
      * @param querySQL SQL statement to query from database
      * @return queried data in ResultSet object.
      */
-    public ResultSet queryDataFromDatabase(String querySQL){
+    public static ResultSet queryDataFromDatabase(String querySQL){
         ResultSet resultSet = null;
         try {
             Connection connection = connectToDatabase();
