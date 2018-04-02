@@ -1,3 +1,5 @@
+import parserUtility.ParserUtility;
+
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -6,30 +8,14 @@ import java.sql.Statement;
 
 
 public class Main {
-    /**
-     * Connect to the test.db database
-     * @return the Connection object
-     */
-    private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:../Tunniplaan.db";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-
 
     /**
-     * select all rows in the warehouses table
+     * select all rows in the institudid table
      */
     public void selectAll(){
         String sql = "SELECT name FROM INSTITUDID";
 
-        try (Connection conn = this.connect();
+        try (Connection conn = ParserUtility.connectToDatabase();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
