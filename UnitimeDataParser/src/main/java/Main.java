@@ -1,4 +1,5 @@
 import parserUtility.ParserUtility;
+import toXmlParser.Departments;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Main app = new Main();
+        Departments departments = new Departments();
+        departments.buildXML();
     }
 }

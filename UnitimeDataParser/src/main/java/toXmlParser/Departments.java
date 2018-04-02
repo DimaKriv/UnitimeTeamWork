@@ -1,7 +1,6 @@
 package toXmlParser;
 
 import com.jamesmurty.utils.XMLBuilder;
-import com.sun.org.apache.xml.internal.serializer.OutputPropertiesFactory;
 import parserUtility.ParserUtility;
 
 import javax.xml.parsers.ParserConfigurationException;
