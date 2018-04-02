@@ -5,6 +5,7 @@ import parserUtility.ParserUtility;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -38,9 +39,13 @@ public class Departments {
                             .attribute("allowEvents", "true");
             }
 
+            new File("XMLFiles").mkdirs();  // create XMLFiles directory
+
             PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/departments.xml"));
             Properties outputProperties = new Properties();
             outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
+            outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
+            outputProperties.put("{http://xml.apache.org/xslt}indent-amount", "2");
             xmlBuilder.toWriter(writer, outputProperties);
 
         } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
