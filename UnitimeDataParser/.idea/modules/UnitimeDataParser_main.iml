@@ -10,5 +10,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: org.xerial:sqlite-jdbc:3.21.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.jamesmurty.utils:java-xmlbuilder:1.2" level="project" />
+    <orderEntry type="library" name="Gradle: net.iharder:base64:2.3.8" level="project" />
   </component>
 </module>

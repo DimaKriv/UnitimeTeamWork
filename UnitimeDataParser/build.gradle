@@ -20,6 +20,7 @@ configurations {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     extraLibs group: 'org.xerial', name: 'sqlite-jdbc', version: '3.21.0.1'
+    extraLibs group: 'com.jamesmurty.utils', name: 'java-xmlbuilder', version: '1.2'
     configurations.compile.extendsFrom(configurations.extraLibs)
 }
 

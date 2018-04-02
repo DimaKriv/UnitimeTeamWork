@@ -1,5 +1,6 @@
 package toXmlParser;
 
+import com.jamesmurty.utils.XMLBuilder;
 import parserUtility.ParserUtility;
 
 import java.sql.ResultSet;
