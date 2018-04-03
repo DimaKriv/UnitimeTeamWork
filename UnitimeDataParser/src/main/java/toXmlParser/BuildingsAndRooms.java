@@ -17,10 +17,10 @@ public class BuildingsAndRooms {
 
     private final String QUERY_SQL_ROOM_FEATURES = "SELECT * FROM R_VARUSTUS";
     private final String QUERY_SQL_BUILDING = "SELECT * FROM R_HOONE";
-    private final String QUERY_SQL_ROOMS = "SELECT * FROM R_RUUM WHERE R_RUUM.fk_bl_id=";
+    private final String QUERY_SQL_ROOMS = "SELECT * FROM R_RUUM";
     //private final ResultSet QUERY_SQL_RESULT_ROOMS = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOMS);
     private final ResultSet QUERY_SQL_RESULT_BUILDING = ParserUtility.queryDataFromDatabase(QUERY_SQL_BUILDING);
-    private final ResultSet QUERY_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOM_FEATURES);
+    private final ResultSet QUERY_SQL_RESULT_ROOM_FEATURES = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOM_FEATURES);
 
     public void buildXML() throws SQLException {
         try {
@@ -29,41 +29,46 @@ public class BuildingsAndRooms {
                             .attribute("campus", "TTU")
                             .attribute("term", "Fall")
                             .attribute("year", "2018");
-            while (QUERY_SQL_RESULT_BUILDING.next()){
-                String externalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
-                String name = QUERY_SQL_RESULT_BUILDING.getString("nimetus");
-                ResultSet QUERY_SQL_RESULT_ROOMS = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOMS + "'" + externalId + "'");
-                xmlBuilder.element("building")
-                        .attribute("externalId", externalId)
-                        .attribute("abbreviation", externalId)
-                        .attribute("locationX", String.valueOf(0))
-                        .attribute("locationY", String.valueOf(0))
-                        .attribute("name", name);
-                while (QUERY_SQL_RESULT_ROOMS.next()){
+            while (QUERY_SQL_RESULT_BUILDING.next()) {
+                String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
+                String buildingName = QUERY_SQL_RESULT_BUILDING.getString("nimetus");
+                ResultSet QUERY_SQL_RESULT_ROOMS = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOMS + "'" + buildingExternalId + "'");
+                while (QUERY_SQL_RESULT_ROOMS.next()) {
                     String roomExternalId = QUERY_SQL_RESULT_ROOMS.getString("fk_bl_id");
-                    int capacity = QUERY_SQL_RESULT_ROOMS.getInt("kohtade_arv");
-                    String roomNumber = QUERY_SQL_RESULT_ROOMS.getString("ruum_id");
-                    String roomClassification = QUERY_SQL_RESULT_ROOMS.getString("nimetus");
-                    xmlBuilder.element("room")
-                            .attribute("externalId", roomExternalId)
-                            .attribute("locationX", String.valueOf(0))
-                            .attribute("locationY", String.valueOf(0))
-                            .attribute("roomNumber", roomNumber)
-                            .attribute("roomClassification", roomClassification)
-                            .attribute("capacity", String.valueOf(capacity));
-                    xmlBuilder.element("roomDepartments")
-                            .element("assigned")
-                            .attribute("departmentNumber", String.valueOf(1001))
-                            .attribute("percent", String.valueOf(100));
-                    while (QUERY_RESULT_SET.next()) {
-                        String varustusKood = QUERY_RESULT_SET.getString("VARUSTUS_KOOD");
-                        xmlBuilder.element("roomFeatures")
-                                .attribute("feature", varustusKood)
-                                .attribute("value", varustusKood);
+                    String roomNumber = QUERY_SQL_RESULT_ROOMS.getString("nimetus");
+                    int roomCapacity = QUERY_SQL_RESULT_ROOMS.getInt("kohtade_arv");
+                    String[] buildingAbbreviation = QUERY_SQL_RESULT_ROOMS.getString("rm_id").split("-");
+                    String roomClassification = QUERY_SQL_RESULT_ROOMS.getString("ruum_id");
+                    if (roomExternalId.equals(buildingExternalId)) {
+                        xmlBuilder.element("building")
+                                .attribute("abbreviation", buildingAbbreviation[0])
+                                .attribute("externalId", buildingExternalId)
+                                .attribute("locationX", String.valueOf(0))
+                                .attribute("locationY", String.valueOf(0))
+                                .attribute("name", buildingName)
+                                .element("room")
+                                    .attribute("externalId", roomExternalId)
+                                    .attribute("locationX", String.valueOf(0))
+                                    .attribute("locationY", String.valueOf(0))
+                                    .attribute("roomClassification", roomClassification)
+                                    .attribute("roomNumber", roomNumber)
+                                    .attribute("roomCapacity", String.valueOf(roomCapacity))
+                                    .element("roomDepartments")
+                                        .element("assigned")
+                                            .attribute("departmnetNumber", String.valueOf(1001))
+                                            .attribute("percent", "100")
+                                        .up()
+                                        .up()
+                                    .element("roomFeatures")
+                                        .element("roomFeature")
+                                            .attribute("feature", "chair")
+                                            .attribute("value", "0")
+                                        .up()
+                                        .up();
                     }
                 }
             }
-            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/buildingsAndRooms.xml"));
+            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/rooms.xml"));
             Properties outputProperties = new Properties();
             outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
             outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
