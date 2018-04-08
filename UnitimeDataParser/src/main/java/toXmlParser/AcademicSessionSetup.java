@@ -17,6 +17,8 @@ public class AcademicSessionSetup {
     private final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
     private final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS);
 
+    String[] finalExamTimes = new String[]{"1000", "1200", "1400", "1600", "1800"};
+
 
     public AcademicSessionSetup() throws SQLException {
     }
@@ -32,9 +34,6 @@ public class AcademicSessionSetup {
 
 
             //ADD DATE PATTERNS
-
-            //ADDING DATE PATTERNS
-
             XMLBuilder datePatterns = xmlSessionSetup.element("datePatterns");
 
             //all weeks separately
@@ -162,6 +161,38 @@ public class AcademicSessionSetup {
 
             }
 
+            // ADD EXAMINATION PERIODS
+
+
+            XMLBuilder examinationPeriods = xmlSessionSetup.element("examinationPeriods");
+            XMLBuilder finalExaminationPeriods = examinationPeriods.element("periods")
+                    .attribute("type", "final");
+
+
+            //counted as main final examinations lasts for 3 weeks, no preferences yet.
+            //exams which lasts more than 1.5H doesn't counted yet. Need to do something with it.
+
+            //loop for weeks
+            for (int i = 16; i < 18; i++) {
+                //loop for week-days
+                for (int j = 0; j < 4; j++) {
+                    //loop for times
+                    for (int l = 0; l < finalExamTimes.length; l++) {
+
+
+                        finalExaminationPeriods.element("period")
+                                .attribute("date", getDateInFormat(j, i))
+                                .attribute("startTime", finalExamTimes[l])
+                                .attribute("length", "90");
+                    }
+                }
+            }
+
+            //no midterm examinations yet.
+            examinationPeriods.element("periods")
+                    .attribute("type", "midterm");
+
+
 
             new File("XMLFiles").mkdirs();  // create XMLFiles directory
 
@@ -211,7 +242,6 @@ public class AcademicSessionSetup {
 
 
 //  work later with parameters
-
 
 
 //    private ResultSet getQueryResultSetDatesBySessionId(int sessionId) {
