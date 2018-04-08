@@ -28,8 +28,8 @@ public class CSVEncodingRepairer {
                 try {
                     // create new empty file with old name of current file
                     File newFile = new File(oldFilePath);
-//                    boolean isCreated = newFile.createNewFile();
-//                    System.out.println("Create " + newFile.getName() + " success: " + isCreated);
+                    boolean isCreated = newFile.createNewFile();
+                    System.out.println("Create " + newFile.getName() + " success: " + isCreated);
 
                     BufferedReader reader = new BufferedReader(new FileReader(renamedFile));
                     BufferedWriter writer = new BufferedWriter(
