@@ -17,11 +17,9 @@ public class AcademicSessionSetup {
     private final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
     private final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS);
 
-    String[] finalExamTimes = new String[]{"1000", "1200", "1400", "1600", "1800"};
+    private final String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
 
 
-    public AcademicSessionSetup() throws SQLException {
-    }
 
     public void buildXML() {
         try {
@@ -30,7 +28,8 @@ public class AcademicSessionSetup {
             xmlSessionSetup =
                     XMLBuilder.create(("sessionSetup"));
 
-            //here is some space for @arveske
+
+            //here is some space for @arveske :^)   :^)    :^)   :^)   :^)   :^)   :^)   :^)   :^)   :^)   :^)
 
 
             //ADD DATE PATTERNS
@@ -163,7 +162,6 @@ public class AcademicSessionSetup {
 
             // ADD EXAMINATION PERIODS
 
-
             XMLBuilder examinationPeriods = xmlSessionSetup.element("examinationPeriods");
             XMLBuilder finalExaminationPeriods = examinationPeriods.element("periods")
                     .attribute("type", "final");
@@ -177,12 +175,12 @@ public class AcademicSessionSetup {
                 //loop for week-days
                 for (int j = 0; j < 4; j++) {
                     //loop for times
-                    for (int l = 0; l < finalExamTimes.length; l++) {
+                    for (int l = 0; l < FINAL_EXAM_TIMES.length; l++) {
 
 
                         finalExaminationPeriods.element("period")
                                 .attribute("date", getDateInFormat(j, i))
-                                .attribute("startTime", finalExamTimes[l])
+                                .attribute("startTime", FINAL_EXAM_TIMES[l])
                                 .attribute("length", "90");
                     }
                 }
@@ -191,6 +189,38 @@ public class AcademicSessionSetup {
             //no midterm examinations yet.
             examinationPeriods.element("periods")
                     .attribute("type", "midterm");
+
+
+
+
+            //@arveske, add here academicAreas, it's your job.
+            // Everything bellow you can safely change, if you find suitable data.
+
+
+
+            //ADD ACADEMIC CLASSIFICATIONS. Only bachelor and magistracy yet.
+            XMLBuilder academicClassifications = xmlSessionSetup.element("academicClassifications");
+
+            academicClassifications.element("academicClassification")
+                    .attribute("externalId","someId1")
+                    .attribute("code","someCode01")
+                    .attribute("name","bachelor");
+
+            academicClassifications.element("academicClassification")
+                    .attribute("externalId","someId2")
+                    .attribute("code","someCode02")
+                    .attribute("name","magistracy");
+
+
+
+
+            //ADD STUDENT GROUPS. Not filled yet.
+            xmlSessionSetup.element("studentGroups");
+
+            //ADD STUDENTS ACCOMODATIONS. Not filled yet.
+            xmlSessionSetup.element("studentAccomodations");
+
+
 
 
 
@@ -241,7 +271,7 @@ public class AcademicSessionSetup {
 }
 
 
-//  work later with parameters
+//  work later with custom parameters
 
 
 //    private ResultSet getQueryResultSetDatesBySessionId(int sessionId) {
