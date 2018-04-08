@@ -15,14 +15,13 @@ import java.util.Properties;
 
 public class BuildingsAndRooms {
 
-    private final String QUERY_SQL_ROOM_FEATURES = "SELECT * FROM R_VARUSTUS";
+    private final String QUERY_SQL_ROOM_FEATURES = "SELECT * FROM R_RUUM_VARUSTUS";
     private final String QUERY_SQL_BUILDING = "SELECT * FROM R_HOONE";
     private final String QUERY_SQL_ROOMS = "SELECT * FROM R_RUUM";
-    //private final ResultSet QUERY_SQL_RESULT_ROOMS = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOMS);
     private final ResultSet QUERY_SQL_RESULT_BUILDING = ParserUtility.queryDataFromDatabase(QUERY_SQL_BUILDING);
-    private final ResultSet QUERY_SQL_RESULT_ROOM_FEATURES = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOM_FEATURES);
 
     public void buildXML() throws SQLException {
+        System.out.println(ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOM_FEATURES).next());
         try {
             XMLBuilder xmlBuilder =
                     XMLBuilder.create("buildingsRooms")
@@ -32,39 +31,48 @@ public class BuildingsAndRooms {
             while (QUERY_SQL_RESULT_BUILDING.next()) {
                 String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
                 String buildingName = QUERY_SQL_RESULT_BUILDING.getString("nimetus");
-                ResultSet QUERY_SQL_RESULT_ROOMS = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOMS + "'" + buildingExternalId + "'");
+                ResultSet QUERY_SQL_RESULT_ROOMS = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOMS);
                 while (QUERY_SQL_RESULT_ROOMS.next()) {
+                    ResultSet QUERY_SQL_RESULT_ROOM_FEATURES = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOM_FEATURES);
+                    String roomFeaturesId = QUERY_SQL_RESULT_ROOM_FEATURES.getString("fk_room_id");
                     String roomExternalId = QUERY_SQL_RESULT_ROOMS.getString("fk_bl_id");
-                    String roomNumber = QUERY_SQL_RESULT_ROOMS.getString("nimetus");
+                    String roomId = QUERY_SQL_RESULT_ROOMS.getString("ruum_id");
+                    String roomNumber = QUERY_SQL_RESULT_ROOMS.getString("rm_id");
                     int roomCapacity = QUERY_SQL_RESULT_ROOMS.getInt("kohtade_arv");
-                    String[] buildingAbbreviation = QUERY_SQL_RESULT_ROOMS.getString("rm_id").split("-");
-                    String roomClassification = QUERY_SQL_RESULT_ROOMS.getString("ruum_id");
-                    if (roomExternalId.equals(buildingExternalId)) {
-                        xmlBuilder.element("building")
-                                .attribute("abbreviation", buildingAbbreviation[0])
-                                .attribute("externalId", buildingExternalId)
-                                .attribute("locationX", String.valueOf(0))
-                                .attribute("locationY", String.valueOf(0))
-                                .attribute("name", buildingName)
-                                .element("room")
-                                    .attribute("externalId", roomExternalId)
-                                    .attribute("locationX", String.valueOf(0))
-                                    .attribute("locationY", String.valueOf(0))
-                                    .attribute("roomClassification", roomClassification)
-                                    .attribute("roomNumber", roomNumber)
-                                    .attribute("roomCapacity", String.valueOf(roomCapacity))
-                                    .element("roomDepartments")
+                    String[] buildingAbbreviation = QUERY_SQL_RESULT_ROOMS.getString("kood").split("-");
+                    String roomClassification = QUERY_SQL_RESULT_ROOMS.getString("nimetus");
+                    while (QUERY_SQL_RESULT_ROOM_FEATURES.next()) {
+                        String features = QUERY_SQL_RESULT_ROOM_FEATURES.getString("fk_varustus_kood");
+                        if (roomExternalId.equals(buildingExternalId)) {
+                            if (roomFeaturesId.equals(roomId)) {
+                                xmlBuilder.element("building")
+                                        .attribute("abbreviation", buildingAbbreviation[0])
+                                        .attribute("externalId", buildingExternalId)
+                                        .attribute("locationX", String.valueOf(0))
+                                        .attribute("locationY", String.valueOf(0))
+                                        .attribute("name", buildingName)
+                                        .element("room")
+                                        .attribute("externalId", roomId)
+                                        .attribute("locationX", String.valueOf(0))
+                                        .attribute("locationY", String.valueOf(0))
+                                        .attribute("roomClassification", roomClassification)
+                                        .attribute("roomNumber", roomNumber)
+                                        .attribute("roomCapacity", String.valueOf(roomCapacity))
+                                        .element("roomDepartments")
                                         .element("assigned")
-                                            .attribute("departmnetNumber", String.valueOf(1001))
-                                            .attribute("percent", "100")
+                                        .attribute("departmnetNumber", String.valueOf(1001))
+                                        .attribute("percent", "100")
                                         .up()
                                         .up()
-                                    .element("roomFeatures")
+                                        .element("roomFeatures")
                                         .element("roomFeature")
-                                            .attribute("feature", "chair")
-                                            .attribute("value", "0")
+                                        .attribute("feature", features)
+                                        .attribute("value", features)
                                         .up()
                                         .up();
+                            }
+
+                        }
                     }
                 }
             }

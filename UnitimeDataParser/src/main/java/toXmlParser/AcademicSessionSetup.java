@@ -23,7 +23,6 @@ public class AcademicSessionSetup {
             xmlBuilder =
                     XMLBuilder.create(("datePatterns"));
 
-
             //ADDING DATE PATTERNS
 
             //all weeks separately
