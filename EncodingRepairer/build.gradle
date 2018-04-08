@@ -12,6 +12,10 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 configurations {
     // configuration that holds jars to include in the jar
     extraLibs

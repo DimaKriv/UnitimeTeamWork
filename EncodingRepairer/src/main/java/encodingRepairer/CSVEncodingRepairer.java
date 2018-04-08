@@ -1,11 +1,8 @@
 package encodingRepairer;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.nio.charset.Charset;
+import java.util.*;
 
 public class CSVEncodingRepairer {
 
@@ -31,9 +28,10 @@ public class CSVEncodingRepairer {
                     boolean isCreated = newFile.createNewFile();
                     System.out.println("Create " + newFile.getName() + " success: " + isCreated);
 
-                    BufferedReader reader = new BufferedReader(new FileReader(renamedFile));
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(new FileInputStream(renamedFile), Charset.forName("UTF-8").newDecoder()));
                     BufferedWriter writer = new BufferedWriter(
-                            new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8));
+                            new OutputStreamWriter(new FileOutputStream(newFile), Charset.forName("UTF-8").newEncoder()));
 
                     String currentLine;
 
@@ -99,13 +97,5 @@ public class CSVEncodingRepairer {
             filesList = Arrays.asList(filesArray);
         }
         return filesList;
-    }
-
-    private void readLineFromFile(File file) throws IOException {
-
-    }
-
-    private void writeLineToFile(File file) throws IOException {
-
     }
 }
