@@ -5,16 +5,21 @@ import parserUtility.ParserUtility;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 
 
 public class AcademicSessionSetup {
 
+
+    private final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
+    private final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS);
+
+
+    public AcademicSessionSetup() throws SQLException {
+    }
 
     public void buildXML() {
         try {
@@ -25,7 +30,11 @@ public class AcademicSessionSetup {
 
             //here is some space for @arveske
 
+
+            //ADD DATE PATTERNS
+
             //ADDING DATE PATTERNS
+
             XMLBuilder datePatterns = xmlSessionSetup.element("datePatterns");
 
             //all weeks separately
@@ -68,7 +77,6 @@ public class AcademicSessionSetup {
                 }
             }
 
-
             //even weeks
             XMLBuilder evenWeeks = datePatterns.element("datePattern")
                     .attribute("name", "even weeks")
@@ -103,10 +111,54 @@ public class AcademicSessionSetup {
                     .attribute("type", "Standard")
                     .attribute("visible", "true")
                     .attribute("default", "true");
-            for (int i = 0; i < 7; i++) {
+            for (int i = 8; i < 15; i++) {
                 weeksFromEightToSixteen.element("dates")
                         .attribute("fromDate", getDateInFormat(0, i))
                         .attribute("toDate", getDateInFormat(4, i));
+
+            }
+
+
+            //ADD TIME PATTERNS
+
+            XMLBuilder timePatterns = xmlSessionSetup.element("timePatterns");
+
+
+            while (QUERY_TIME_PATTERNS_RESULT_SET.next()) {
+
+
+                String name = QUERY_TIME_PATTERNS_RESULT_SET.getString("name");
+                String nbrMeetings = QUERY_TIME_PATTERNS_RESULT_SET.getString("nbr_meetings");
+                String minsPerMeeting = QUERY_TIME_PATTERNS_RESULT_SET.getString("mins_per_meetings");
+                String type = QUERY_TIME_PATTERNS_RESULT_SET.getString("type");
+                String visible = QUERY_TIME_PATTERNS_RESULT_SET.getString("visible");
+                String nbrSlotsPerMeeting = QUERY_TIME_PATTERNS_RESULT_SET.getString("nbr_slots_per_meeting");
+                String breakTime = QUERY_TIME_PATTERNS_RESULT_SET.getString("break_time");
+
+                String[] timesTimePattern = QUERY_TIME_PATTERNS_RESULT_SET.getString("time").split(" ");
+                String[] daysTimePattern = QUERY_TIME_PATTERNS_RESULT_SET.getString("days").split(" ");
+
+
+                XMLBuilder timePattern = timePatterns.element("timePattern")
+                        .attribute("name", name)
+                        .attribute("nbrMeetings", nbrMeetings)
+                        .attribute("minsPerMeeting", minsPerMeeting)
+                        .attribute("type", type)
+                        .attribute("visible", visible)
+                        .attribute("nbrSlotsPerMeeting", nbrSlotsPerMeeting)
+                        .attribute("breakTime", breakTime);
+
+
+                for (int i = 0; i < daysTimePattern.length; i++) {
+                    timePattern.element("days")
+                            .attribute("code", daysTimePattern[i]);
+                }
+
+                for (int i = 0; i < timesTimePattern.length; i++) {
+                    timePattern.element("time")
+                            .attribute("start", timesTimePattern[i]);
+                }
+
 
             }
 
@@ -122,7 +174,7 @@ public class AcademicSessionSetup {
             xmlSessionSetup.toWriter(writer, outputProperties);
 
 
-        } catch (ParserConfigurationException | FileNotFoundException | TransformerException e) {
+        } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -136,22 +188,22 @@ public class AcademicSessionSetup {
 
     private ResultSet getResultSetDayAndWeek(int day, int week) {
 
-        return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM SESSIOON_AJAD" +
-                "WHERE fk_tunn_sessioon_id = '1123'" +
+        return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM session_ajad" +
+                "WHERE fk_tunn_session_id = '1123'" +
                 " AND paev = '" + Integer.toString(day) +
                 "' AND nadal='" + Integer.toString(week) + "'");
     }
 
 
-
     private ResultSet getResultSetDatesBySessionId() {
+
         return ParserUtility.queryDataFromDatabase(getSQLQueryDatesBySessionId());
     }
 
     //1123 - 2018 spring semester default
     private String getSQLQueryDatesBySessionId() {
-        return "SELECT * FROM SESSIOON_AJAD" +
-                "WHERE fk_tunn_sessioon_id = '1123'";
+        return "SELECT * FROM session_ajad" +
+                "WHERE fk_tunn_session_id = '1123'";
     }
 
 
@@ -159,6 +211,7 @@ public class AcademicSessionSetup {
 
 
 //  work later with parameters
+
 
 
 //    private ResultSet getQueryResultSetDatesBySessionId(int sessionId) {
