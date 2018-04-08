@@ -18,17 +18,20 @@ public class AcademicSessionSetup {
 
     public void buildXML() {
         try {
-            XMLBuilder xmlBuilder;
+            XMLBuilder xmlSessionSetup;
 
-            xmlBuilder =
-                    XMLBuilder.create(("datePatterns"));
+            xmlSessionSetup =
+                    XMLBuilder.create(("sessionSetup"));
+
+            //here is some space for @arveske
 
             //ADDING DATE PATTERNS
+            XMLBuilder datePatterns = xmlSessionSetup.element("datePatterns");
 
             //all weeks separately
             for (int i = 0; i < 15; i++) {
-                xmlBuilder.element("datePattern")
-                        .attribute("name", "week " + Integer.toString(i+1))
+                datePatterns.element("datePattern")
+                        .attribute("name", "week " + Integer.toString(i + 1))
                         .attribute("type", "Standard")
                         .attribute("visible", "true")
                         .attribute("default", "true")
@@ -36,61 +39,76 @@ public class AcademicSessionSetup {
                         .element("dates")
                         .attribute("fromDate", getDateInFormat(0, i))
                         .attribute("toDate", getDateInFormat(4, i));
-
             }
 
             //all weeks together
-            xmlBuilder.element("datePattern")
+            XMLBuilder allWeeksPattern = datePatterns.element("datePattern")
                     .attribute("name", "all weeks")
                     .attribute("type", "Standard")
                     .attribute("visible", "true")
                     .attribute("default", "true");
-
             for (int i = 0; i < 15; i++) {
-
-                xmlBuilder.element("dates")
+                allWeeksPattern.element("dates")
                         .attribute("fromDate", getDateInFormat(0, i))
                         .attribute("toDate", getDateInFormat(4, i));
-
-
             }
 
-            //odd weeks
 
-            xmlBuilder.element("datePattern")
+            //odd weeks
+            XMLBuilder oddWeeks = datePatterns.element("datePattern")
                     .attribute("name", "odd weeks")
                     .attribute("type", "Standard")
                     .attribute("visible", "true")
                     .attribute("default", "true");
-
-
             for (int i = 0; i < 15; i++) {
                 if ((i + 1) % 2 != 0) {
-                    xmlBuilder.element("dates")
+                    oddWeeks.element("dates")
                             .attribute("fromDate", getDateInFormat(0, i))
                             .attribute("toDate", getDateInFormat(4, i));
                 }
             }
 
 
-
             //even weeks
-            xmlBuilder.element("datePattern")
+            XMLBuilder evenWeeks = datePatterns.element("datePattern")
                     .attribute("name", "even weeks")
                     .attribute("type", "Standard")
                     .attribute("visible", "true")
                     .attribute("default", "true");
-
             for (int i = 0; i < 15; i++) {
                 if ((i + 1) % 2 == 0) {
-                    xmlBuilder.element("dates")
+                    evenWeeks.element("dates")
                             .attribute("fromDate", getDateInFormat(0, i))
                             .attribute("toDate", getDateInFormat(4, i));
                 }
             }
 
+            //from 1 to 8 weeks
+            XMLBuilder weeksFromOneToEight = datePatterns.element("datePattern")
+                    .attribute("name", "weeks 1-8")
+                    .attribute("type", "Standard")
+                    .attribute("visible", "true")
+                    .attribute("default", "true");
+            for (int i = 0; i < 7; i++) {
+                weeksFromOneToEight.element("dates")
+                        .attribute("fromDate", getDateInFormat(0, i))
+                        .attribute("toDate", getDateInFormat(4, i));
+
+            }
 
 
+            //from 9 to 16 weeks
+            XMLBuilder weeksFromEightToSixteen = datePatterns.element("datePattern")
+                    .attribute("name", "weeks 1-8")
+                    .attribute("type", "Standard")
+                    .attribute("visible", "true")
+                    .attribute("default", "true");
+            for (int i = 0; i < 7; i++) {
+                weeksFromEightToSixteen.element("dates")
+                        .attribute("fromDate", getDateInFormat(0, i))
+                        .attribute("toDate", getDateInFormat(4, i));
+
+            }
 
 
             new File("XMLFiles").mkdirs();  // create XMLFiles directory
@@ -101,7 +119,7 @@ public class AcademicSessionSetup {
             outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
             outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
             outputProperties.put("{http://xml.apache.org/xslt}indent-amount", "2");
-            xmlBuilder.toWriter(writer, outputProperties);
+            xmlSessionSetup.toWriter(writer, outputProperties);
 
 
         } catch (ParserConfigurationException | FileNotFoundException | TransformerException e) {
@@ -117,11 +135,13 @@ public class AcademicSessionSetup {
 
 
     private ResultSet getResultSetDayAndWeek(int day, int week) {
+
         return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM SESSIOON_AJAD" +
                 "WHERE fk_tunn_sessioon_id = '1123'" +
                 " AND paev = '" + Integer.toString(day) +
                 "' AND nadal='" + Integer.toString(week) + "'");
     }
+
 
 
     private ResultSet getResultSetDatesBySessionId() {
