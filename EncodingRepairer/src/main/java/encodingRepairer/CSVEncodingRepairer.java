@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class CSVEncodingRepairer {
 
-    private final String PATH_TO_CSV_FILES = "../test/andmed/TUNNIPLAAN";
+    private final String PATH_TO_CSV_FILES = "../andmed/TUNNIPLAAN";
 
     public void repairEncodingInCSVFiles() {
         List<File> files = getFilesList(PATH_TO_CSV_FILES);
@@ -28,8 +28,8 @@ public class CSVEncodingRepairer {
                 try {
                     // create new empty file with old name of current file
                     File newFile = new File(oldFilePath);
-                    boolean isCreated = newFile.createNewFile();
-                    System.out.println("Create " + newFile.getName() + " success: " + isCreated);
+//                    boolean isCreated = newFile.createNewFile();
+//                    System.out.println("Create " + newFile.getName() + " success: " + isCreated);
 
                     BufferedReader reader = new BufferedReader(new FileReader(renamedFile));
                     BufferedWriter writer = new BufferedWriter(
