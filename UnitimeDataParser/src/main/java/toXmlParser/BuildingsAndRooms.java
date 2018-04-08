@@ -15,6 +15,7 @@ import java.util.Properties;
 
 public class BuildingsAndRooms {
 
+    //Select
     private final String QUERY_SQL_ROOM_FEATURES = "SELECT * FROM R_RUUM_VARUSTUS";
     private final String QUERY_SQL_BUILDING = "SELECT * FROM R_HOONE";
     private final String QUERY_SQL_ROOMS = "SELECT * FROM R_RUUM";
