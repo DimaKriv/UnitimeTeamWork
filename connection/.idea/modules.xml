@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/unitime.iml" filepath="$PROJECT_DIR$/.idea/modules/unitime.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/unitime_main.iml" filepath="$PROJECT_DIR$/.idea/modules/unitime_main.iml" group="unitime" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/unitime_test.iml" filepath="$PROJECT_DIR$/.idea/modules/unitime_test.iml" group="unitime" />
+    </modules>
+  </component>
+</project>
