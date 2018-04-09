@@ -17,7 +17,7 @@ public class BuildingsAndRooms {
 
     //Select
     private final String QUERY_SQL_ROOM_FEATURES = "SELECT * FROM R_RUUM_VARUSTUS";
-    private final String QUERY_SQL_BUILDING = "SELECT * FROM R_HOONE";
+    private final String QUERY_SQL_BUILDING = "SELECT V.fk_varustus_kood, H.bl_id, H.nimetus AS buildingName, R.kohtade_arv, R.rm_id, R.ruum_id, R.kood, R.nimetus AS roomName FROM R_HOONE AS H INNER JOIN R_RUUM AS R ON H.bl_id=R.fk_bl_id INNER JOIN R_RUUM_VARUSTUS AS V ON V.fk_ruum_id=R.ruum_id";
     private final String QUERY_SQL_ROOMS = "SELECT * FROM R_RUUM";
     private final ResultSet QUERY_SQL_RESULT_BUILDING = ParserUtility.queryDataFromDatabase(QUERY_SQL_BUILDING);
 
@@ -31,59 +31,53 @@ public class BuildingsAndRooms {
                             .attribute("year", "2018");
             while (QUERY_SQL_RESULT_BUILDING.next()) {
                 String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
-                String buildingName = QUERY_SQL_RESULT_BUILDING.getString("nimetus");
-                ResultSet QUERY_SQL_RESULT_ROOMS = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOMS);
-                while (QUERY_SQL_RESULT_ROOMS.next()) {
-                    ResultSet QUERY_SQL_RESULT_ROOM_FEATURES = ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOM_FEATURES);
-                    String roomFeaturesId = QUERY_SQL_RESULT_ROOM_FEATURES.getString("fk_room_id");
-                    String roomExternalId = QUERY_SQL_RESULT_ROOMS.getString("fk_bl_id");
-                    String roomId = QUERY_SQL_RESULT_ROOMS.getString("ruum_id");
-                    String roomNumber = QUERY_SQL_RESULT_ROOMS.getString("rm_id");
-                    int roomCapacity = QUERY_SQL_RESULT_ROOMS.getInt("kohtade_arv");
-                    String[] buildingAbbreviation = QUERY_SQL_RESULT_ROOMS.getString("kood").split("-");
-                    String roomClassification = QUERY_SQL_RESULT_ROOMS.getString("nimetus");
-                    while (QUERY_SQL_RESULT_ROOM_FEATURES.next()) {
-                        String features = QUERY_SQL_RESULT_ROOM_FEATURES.getString("fk_varustus_kood");
-                        if (roomExternalId.equals(buildingExternalId)) {
-                            if (roomFeaturesId.equals(roomId)) {
-                                xmlBuilder.element("building")
-                                        .attribute("abbreviation", buildingAbbreviation[0])
-                                        .attribute("externalId", buildingExternalId)
-                                        .attribute("locationX", String.valueOf(0))
-                                        .attribute("locationY", String.valueOf(0))
-                                        .attribute("name", buildingName)
-                                        .element("room")
-                                        .attribute("externalId", roomId)
-                                        .attribute("locationX", String.valueOf(0))
-                                        .attribute("locationY", String.valueOf(0))
-                                        .attribute("roomClassification", roomClassification)
-                                        .attribute("roomNumber", roomNumber)
-                                        .attribute("roomCapacity", String.valueOf(roomCapacity))
-                                        .element("roomDepartments")
-                                        .element("assigned")
-                                        .attribute("departmnetNumber", String.valueOf(1001))
-                                        .attribute("percent", "100")
-                                        .up()
-                                        .up()
-                                        .element("roomFeatures")
-                                        .element("roomFeature")
-                                        .attribute("feature", features)
-                                        .attribute("value", features)
-                                        .up()
-                                        .up();
-                            }
-
-                        }
-                    }
+                String buildingName = QUERY_SQL_RESULT_BUILDING.getString("buildingName");
+                String roomExternalId = QUERY_SQL_RESULT_BUILDING.getString("ruum_id");
+                String buildingAbbreviation = QUERY_SQL_RESULT_BUILDING.getString("kood").split("-")[0];
+                String roomCapacity = QUERY_SQL_RESULT_BUILDING.getString("kohtade_arv");
+                String roomNumber = QUERY_SQL_RESULT_BUILDING.getString("rm_id");
+                String roomClassification = QUERY_SQL_RESULT_BUILDING.getString("roomName");
+                if (roomClassification.length() > 20){
+                    roomClassification = roomClassification.substring(0, 20);
                 }
+                String roomFeatures = QUERY_SQL_RESULT_BUILDING.getString("fk_varustus_kood");
+                String roomFeaturesValue = roomFeatures;
+                if (roomFeatures.length() > 20){
+                    roomFeaturesValue = roomFeatures.substring(0, 20);
+                }
+                xmlBuilder.element("building")
+                        .attribute("abbreviation", buildingAbbreviation)
+                        .attribute("externalId", buildingExternalId)
+                        .attribute("locationX", String.valueOf(0))
+                        .attribute("locationY", String.valueOf(0))
+                        .attribute("name", buildingName)
+                        .element("room")
+                        .attribute("externalId", roomExternalId)
+                        .attribute("locationX", String.valueOf(0))
+                        .attribute("locationY", String.valueOf(0))
+                        .attribute("roomClassification", roomClassification)
+                        .attribute("roomNumber", roomNumber)
+                        .attribute("roomCapacity", String.valueOf(roomCapacity))
+                        .element("roomDepartments")
+                        .element("assigned")
+                        .attribute("departmnetNumber", String.valueOf(1001))
+                        .attribute("percent", "100")
+                        .up()
+                        .up()
+                        .element("roomFeatures")
+                        .element("roomFeature")
+                        .attribute("feature", roomFeatures)
+                        .attribute("value", roomFeaturesValue)
+                        .up()
+                        .up();
             }
-            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/rooms.xml"));
+            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/BuildingAndRooms.xml"));
             Properties outputProperties = new Properties();
             outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
             outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
             outputProperties.put("{http://xml.apache.org/xslt}indent-amount", "2");
             xmlBuilder.toWriter(writer, outputProperties);
-        } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
+            } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
             e.printStackTrace();
         }
     }
