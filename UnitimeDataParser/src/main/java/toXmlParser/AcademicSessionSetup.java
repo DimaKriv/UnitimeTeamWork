@@ -259,7 +259,7 @@ public class AcademicSessionSetup {
                     .attribute("type", "midterm");
 
 
-            //@arveske, add here academicAreas, it's your job.
+            //@arveske, add here academicAreas
             // Everything bellow you can safely change, if you find suitable data.
 
 
@@ -275,6 +275,10 @@ public class AcademicSessionSetup {
                     .attribute("externalId", "someId2")
                     .attribute("code", "someCode02")
                     .attribute("name", "magistracy");
+
+            //ADD POSMAJORRS/POSMINORS. Not filled yet
+            xmlSessionSetup.element("posMajors");
+            xmlSessionSetup.element("posMinors");
 
 
             //ADD STUDENT GROUPS. Not filled yet.
