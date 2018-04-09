@@ -14,10 +14,19 @@ import java.util.Properties;
 public class AcademicSessionSetup {
 
 
+    private final String QUERY_SQL_TUNN_AINE = "SELECT * FROM TUNN_AINE";
+    private final ResultSet QUERY_TUNN_AINE_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TUNN_AINE);
+
+    private final String QUERY_SQL_INSITUDID = "SELECT * FROM INSTITUDID";
+    private final ResultSet QUERY_INSTITUDID_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_INSITUDID);
+
+
     private final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
     private final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS);
 
     private final String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
+
+
 
 
 
@@ -28,8 +37,67 @@ public class AcademicSessionSetup {
             xmlSessionSetup =
                     XMLBuilder.create(("sessionSetup"));
 
+            xmlSessionSetup =
+                    XMLBuilder.create(("sessionSetup"))
+                            .attribute("term", "Fal")
+                            .attribute("year", "2018")
+                            .attribute("campus", "TTU")
+                            .attribute("dateFormat", "yyyy/M/d");
 
-            //here is some space for @arveske :^)   :^)    :^)   :^)   :^)   :^)   :^)   :^)   :^)   :^)   :^)
+            XMLBuilder session = xmlSessionSetup.element("session")
+                    .attribute("startDate", "")
+                    .attribute("endDate", "")
+                    .attribute("classEndDate", "")
+                    .attribute("examStartDate", "")
+                    .attribute("eventStartDate", "")
+                    .attribute("eventEndDate", "");
+
+            XMLBuilder holidays = session.element("holidays");
+
+            //not filled yet
+            XMLBuilder managers = xmlSessionSetup.element("managers")
+                    .attribute("incremental", "true");
+
+            //done
+            XMLBuilder departments = xmlSessionSetup.element("Departments");
+
+            while (QUERY_INSTITUDID_RESULT_SET.next()) {
+                String code = QUERY_INSTITUDID_RESULT_SET.getString("DEPTCODE");
+                String abbreviation = QUERY_INSTITUDID_RESULT_SET.getString("ABBREVIATION");
+                String name = QUERY_INSTITUDID_RESULT_SET.getString("NAME");
+                String externalid = QUERY_INSTITUDID_RESULT_SET.getString("EXTERNALID");
+
+                XMLBuilder department = departments.element("department")
+                        .attribute("code", code)
+                        .attribute("externalId", externalid)
+                        .attribute("abbreviation", abbreviation)
+                        .attribute("name", name);
+
+                department.element("eventManagement")
+                        .attribute("enabled", "true");
+
+                department.element("required")
+                        .attribute("time", "false")
+                        .attribute("room", "false")
+                        .attribute("distribution", "false");
+            }
+
+            //department code
+            XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
+
+            while (QUERY_TUNN_AINE_RESULT_SET.next()) {
+                String abbreviation = QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
+                String title = QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
+                String department = QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
+
+                subjectAreas.element("subjectArea")
+                        .attribute("abbrevation", abbreviation)
+                        .attribute("title", title)
+                        .attribute("department", department);
+            }
+
+            //not filled. needed managers done
+            XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
 
 
             //ADD DATE PATTERNS
@@ -191,27 +259,22 @@ public class AcademicSessionSetup {
                     .attribute("type", "midterm");
 
 
-
-
             //@arveske, add here academicAreas, it's your job.
             // Everything bellow you can safely change, if you find suitable data.
-
 
 
             //ADD ACADEMIC CLASSIFICATIONS. Only bachelor and magistracy yet.
             XMLBuilder academicClassifications = xmlSessionSetup.element("academicClassifications");
 
             academicClassifications.element("academicClassification")
-                    .attribute("externalId","someId1")
-                    .attribute("code","someCode01")
-                    .attribute("name","bachelor");
+                    .attribute("externalId", "someId1")
+                    .attribute("code", "someCode01")
+                    .attribute("name", "bachelor");
 
             academicClassifications.element("academicClassification")
-                    .attribute("externalId","someId2")
-                    .attribute("code","someCode02")
-                    .attribute("name","magistracy");
-
-
+                    .attribute("externalId", "someId2")
+                    .attribute("code", "someCode02")
+                    .attribute("name", "magistracy");
 
 
             //ADD STUDENT GROUPS. Not filled yet.
@@ -219,9 +282,6 @@ public class AcademicSessionSetup {
 
             //ADD STUDENTS ACCOMODATIONS. Not filled yet.
             xmlSessionSetup.element("studentAccomodations");
-
-
-
 
 
             new File("XMLFiles").mkdirs();  // create XMLFiles directory
