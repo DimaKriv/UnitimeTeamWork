@@ -40,7 +40,6 @@ public class AcademicSessionSetup {
     public void buildXML() {
         try {
 
-
             xmlSessionSetup =
                     XMLBuilder.create(("sessionSetup"))
                             .attribute("term", "Fal")
@@ -57,9 +56,9 @@ public class AcademicSessionSetup {
                     .attribute("eventStartDate", "")
                     .attribute("eventEndDate", "");
 
-            XMLBuilder holidays = session.element("holidays");
 
-            //not filled yet
+            //holidays/managers are not important
+            XMLBuilder holidays = session.element("holidays");
             XMLBuilder managers = xmlSessionSetup.element("managers")
                     .attribute("incremental", "true");
 
@@ -70,11 +69,11 @@ public class AcademicSessionSetup {
                 String code = QUERY_INSTITUDID_RESULT_SET.getString("DEPTCODE");
                 String abbreviation = QUERY_INSTITUDID_RESULT_SET.getString("ABBREVIATION");
                 String name = QUERY_INSTITUDID_RESULT_SET.getString("NAME");
-                String externalid = QUERY_INSTITUDID_RESULT_SET.getString("EXTERNALID");
+                String externalId = QUERY_INSTITUDID_RESULT_SET.getString("EXTERNALID");
 
                 XMLBuilder department = departments.element("department")
                         .attribute("code", code)
-                        .attribute("externalId", externalid)
+                        .attribute("externalId", externalId)
                         .attribute("abbreviation", abbreviation)
                         .attribute("name", name);
 
@@ -87,10 +86,11 @@ public class AcademicSessionSetup {
                         .attribute("distribution", "false");
             }
 
-            //department code
+            //NEED TO ADD SUBJECT AREAS
             XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
 
             while (QUERY_TUNN_AINE_RESULT_SET.next()) {
+
                 String abbreviation = QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
                 String title = QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
                 String department = QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
@@ -105,18 +105,11 @@ public class AcademicSessionSetup {
             //not filled. needed managers done
             XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
 
-
             //ADD TIME/DATE PATTERNS/
             timeDatePatterns.buildTimePatternsXML();
-
             timeDatePatterns.buildDatePatterns();
-
             // ADD EXAMINATION PERIODS
             examinationPeriods.buildExaminationPeriods();
-
-
-            //@arveske, add here academicAreas
-            // Everything bellow you can safely change, if you find suitable data.
 
 
             //ADD ACADEMIC CLASSIFICATIONS. Only bachelor and magistracy yet.
