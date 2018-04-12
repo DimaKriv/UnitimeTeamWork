@@ -2,16 +2,14 @@ package toXmlParser.sessionsetup;
 
 import com.jamesmurty.utils.XMLBuilder;
 
-/**
- * Created by lll on 11-Apr-18.
- */
+
 public class ExaminationPeriods {
 
     AcademicSessionSetup academicSessionSetup;
 
 
 
-    ExaminationPeriods(AcademicSessionSetup academicSessionSetup){
+    public ExaminationPeriods(AcademicSessionSetup academicSessionSetup){
         this.academicSessionSetup = academicSessionSetup;
     }
 

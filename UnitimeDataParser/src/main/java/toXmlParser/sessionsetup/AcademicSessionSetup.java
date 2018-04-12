@@ -132,6 +132,7 @@ public class AcademicSessionSetup {
             //ADD ACADEMIC CLASSIFICATIONS. Only bachelor and magistracy yet.
             XMLBuilder academicClassifications = xmlSessionSetup.element("academicClassifications");
 
+
             academicClassifications.element("academicClassification")
                     .attribute("externalId", "id1")
                     .attribute("code", "01")
@@ -176,21 +177,30 @@ public class AcademicSessionSetup {
     ResultSet getResultSetDayAndWeek(int day, int week) {
 
         return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM session_ajad" +
-                "WHERE fk_tunn_session_id = '1123'" +
-                " AND paev = '" + Integer.toString(day) +
-                "' AND nadal='" + Integer.toString(week) + "'");
+                " WHERE fk_tunn_sessioon_id = 1123" +
+                " AND paev = " + day +
+                " AND nadal = " + week);
     }
+//"SELECT kuupaev FROM sessioon_ajad WHERE fk_tunn_sessioon_id = 1123 AND paev = 0 AND nadal=0;
 
 
-    ResultSet getResultSetDatesBySessionId() {
 
-        return ParserUtility.queryDataFromDatabase(getSQLQueryDatesBySessionId());
+//        return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM sessioon_ajad" +
+//                "WHERE fk_tunn_sessioon_id = 1123" +
+//                " AND paev = " + day +
+//            " AND nadal = " + week)
+
+
+
+    ResultSet getResultSetDatesBySessioonId() {
+
+        return ParserUtility.queryDataFromDatabase(getSQLQueryDatesBySessioonId());
     }
 
     //1123 - 2018 spring semester default
-    String getSQLQueryDatesBySessionId() {
-        return "SELECT * FROM session_ajad" +
-                "WHERE fk_tunn_session_id = '1123'";
+    String getSQLQueryDatesBySessioonId() {
+        return "SELECT * FROM sessioon_ajad" +
+                "WHERE fk_tunn_sessioon_id = '1123'";
     }
 
 
