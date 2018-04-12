@@ -43,8 +43,12 @@ public class ExaminationPeriods {
         }
 
         //no midterm examinations yet.
-        examinationPeriods.element("periods")
+        XMLBuilder midTerm = examinationPeriods.element("periods")
                 .attribute("type", "midterm");
+        midTerm.element("period")
+                .attribute("date", academicSessionSetup.getDateInFormat(2, 8))
+                .attribute("startTime", "1830")
+                .attribute("length", "90");
 
 
 

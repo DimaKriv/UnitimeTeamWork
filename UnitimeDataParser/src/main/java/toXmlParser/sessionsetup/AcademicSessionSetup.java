@@ -46,9 +46,10 @@ public class AcademicSessionSetup {
             xmlSessionSetup =
                     XMLBuilder.create(("sessionSetup"))
                             .attribute("term", "Fal")
-                            .attribute("year", "2018")
-                            .attribute("campus", "TTU")
-                            .attribute("dateFormat", "yyyy/M/d");
+                            .attribute("year", "2118")
+                            .attribute("campus", "TTUTEST")
+                            .attribute("dateFormat", "yyyy/M/d")
+                            .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
 
             XMLBuilder session = xmlSessionSetup.element("session")
                     .attribute("startDate", getDateInFormat(0, 0))
@@ -59,13 +60,29 @@ public class AcademicSessionSetup {
                     .attribute("eventEndDate", getDateInFormat(1, -1));
 
 
-            //holidays/managers are not important
+//            holidays/managers are not important
             XMLBuilder holidays = session.element("holidays");
+            XMLBuilder holiday = holidays.element("holiday")
+                    .attribute("date", "2118/9/6");
+
+            //add managers
             XMLBuilder managers = xmlSessionSetup.element("managers")
                     .attribute("incremental", "true");
 
+            XMLBuilder manager = managers.element("manager")
+                    .attribute("externalId", "7")
+                    .attribute("firstName", "Mister")
+                    .attribute("lastName", "Manager")
+                    .attribute("email", "testManager@test.org");
 
-            XMLBuilder departments = xmlSessionSetup.element("Departments");
+            XMLBuilder departmentCode = manager.element("department").attr("code", "1001");
+            XMLBuilder role = departmentCode.element("role")
+                    .attribute("reference", "testROLE")
+                    .attribute("primary", "true")
+                    .attribute("emails", "true");
+
+
+            XMLBuilder departments = xmlSessionSetup.element("departments");
 
             while (QUERY_INSTITUDID_RESULT_SET.next()) {
                 String code = QUERY_INSTITUDID_RESULT_SET.getString("DEPTCODE");
@@ -112,10 +129,21 @@ public class AcademicSessionSetup {
                 String department = QUERY_SUBJECT_AREAS_SET.getString("department_id");
 
                 subjectAreas.element("subjectArea")
-                        .attribute("abbrevation", abbreviation)
+                        .attribute("abbreviation", abbreviation)
                         .attribute("title", title)
                         .attribute("department", department);
             }
+
+
+            XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
+            XMLBuilder solverGroup = solverGroups.element("solverGroup")
+                    .attribute("abbreviation", "testSOLVER GROUP")
+                    .attribute("name", "Instructional Planning TEST");
+            XMLBuilder manager1 = solverGroup.element("manager")
+                    .attribute("externalId", "7");
+            XMLBuilder department1 = solverGroup.element("department")
+                    .attribute("code", "0101");
+
 
             //not filled. needed managers done
 //            XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
@@ -128,6 +156,13 @@ public class AcademicSessionSetup {
             timeDatePatterns.buildDatePatterns();
             // ADD EXAMINATION PERIODS
             examinationPeriods.buildExaminationPeriods();
+
+
+            XMLBuilder academicAreas = xmlSessionSetup.element("academicAreas");
+            XMLBuilder academicArea = academicAreas.element("academicAreas")
+                    .attribute("externalId", "ATESTA")
+                    .attribute("abbreviation", "ATESTA")
+                    .attribute("title", "SOMEBODY ONCE TOLD ME");
 
 
             //ADD ACADEMIC CLASSIFICATIONS. Only bachelor and magistracy yet.
@@ -146,11 +181,34 @@ public class AcademicSessionSetup {
 
 
             //ADD POSMAJORRS/POSMINORS/STUDENT GROUPS/STUDENTS ACCOMODATIONS. Not filled yet. Seems, not important...
-            xmlSessionSetup.element("posMajors");
-            xmlSessionSetup.element("posMinors");
-            xmlSessionSetup.element("studentGroups");
-            xmlSessionSetup.element("studentAccomodations");
 
+            XMLBuilder posMajors = xmlSessionSetup.element("posMajors");
+            posMajors.element("posMajor")
+                    .attribute("code", "MAJ1")
+                    .attribute("academicArea", "ATESTA")
+                    .attribute("externalId", "MAJ1")
+                    .attribute("name", "somebudy");
+
+            XMLBuilder posMinors = xmlSessionSetup.element("posMinors");
+            posMinors.element("posMinor")
+                    .attribute("code", "MIN1")
+                    .attribute("academicArea", "ATESTA")
+                    .attribute("externalId", "MIN1")
+                    .attribute("name", "olololo");
+
+
+            XMLBuilder studentGroups = xmlSessionSetup.element("studentGroups");
+            studentGroups.element("studentGroup")
+                    .attribute("code", "G1")
+                    .attribute("name", "GROUP1")
+                    .attribute("externalId", "g1");
+
+
+            XMLBuilder studAccom = xmlSessionSetup.element("studentAccomodations");
+            studAccom.element("studentAccomodation")
+                    .attribute("code","EC")
+                    .attribute("name","Ergonomic Chair")
+                    .attribute("externalId","ACC-EC");
 
             new File("XMLFiles").mkdirs();
 

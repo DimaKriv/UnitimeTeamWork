@@ -111,46 +111,49 @@ public class TimeDatePatterns {
             }
         }
 
-        //even weeks
-        XMLBuilder evenWeeks = datePatterns.element("datePattern")
-                .attribute("name", "even weeks")
-                .attribute("type", "Standard")
-                .attribute("visible", "true")
-                .attribute("default", "true");
-        for (int i = 0; i < 15; i++) {
-            if ((i + 1) % 2 == 0) {
-                evenWeeks.element("dates")
-                        .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
-                        .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
-            }
-        }
-
-        //from 1 to 8 weeks
-        XMLBuilder weeksFromOneToEight = datePatterns.element("datePattern")
-                .attribute("name", "weeks 1-8")
-                .attribute("type", "Standard")
-                .attribute("visible", "true")
-                .attribute("default", "true");
-        for (int i = 0; i < 7; i++) {
-            weeksFromOneToEight.element("dates")
-                    .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
-                    .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
-
-        }
+        //TEST LATER
 
 
-        //from 9 to 16 weeks
-        XMLBuilder weeksFromEightToSixteen = datePatterns.element("datePattern")
-                .attribute("name", "weeks 1-8")
-                .attribute("type", "Standard")
-                .attribute("visible", "true")
-                .attribute("default", "true");
-        for (int i = 8; i < 15; i++) {
-            weeksFromEightToSixteen.element("dates")
-                    .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
-                    .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
-
-        }
+//        //even weeks
+//        XMLBuilder evenWeeks = datePatterns.element("datePattern")
+//                .attribute("name", "even weeks")
+//                .attribute("type", "Standard")
+//                .attribute("visible", "true")
+//                .attribute("default", "true");
+//        for (int i = 0; i < 15; i++) {
+//            if ((i + 1) % 2 == 0) {
+//                evenWeeks.element("dates")
+//                        .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
+//                        .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
+//            }
+//        }
+//
+//        //from 1 to 8 weeks
+//        XMLBuilder weeksFromOneToEight = datePatterns.element("datePattern")
+//                .attribute("name", "weeks 1-8")
+//                .attribute("type", "Standard")
+//                .attribute("visible", "true")
+//                .attribute("default", "true");
+//        for (int i = 0; i < 7; i++) {
+//            weeksFromOneToEight.element("dates")
+//                    .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
+//                    .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
+//
+//        }
+//
+//
+//        //from 9 to 16 weeks
+//        XMLBuilder weeksFromEightToSixteen = datePatterns.element("datePattern")
+//                .attribute("name", "weeks 1-8")
+//                .attribute("type", "Standard")
+//                .attribute("visible", "true")
+//                .attribute("default", "true");
+//        for (int i = 8; i < 15; i++) {
+//            weeksFromEightToSixteen.element("dates")
+//                    .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
+//                    .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
+//
+//        }
     }
 
 }
