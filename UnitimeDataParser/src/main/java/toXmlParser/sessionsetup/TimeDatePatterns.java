@@ -12,7 +12,7 @@ public class TimeDatePatterns {
 
     AcademicSessionSetup academicSessionSetup;
 
-    TimeDatePatterns(AcademicSessionSetup academicSessionSetup) {
+    public TimeDatePatterns(AcademicSessionSetup academicSessionSetup) {
         this.academicSessionSetup = academicSessionSetup;
     }
 
