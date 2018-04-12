@@ -49,12 +49,12 @@ public class AcademicSessionSetup {
 
 
             XMLBuilder session = xmlSessionSetup.element("session")
-                    .attribute("startDate", getDateInFormat(0,0))
-                    .attribute("endDate", getDateInFormat(4,18))
-                    .attribute("classEndDate", getDateInFormat(4,15))
-                    .attribute("examStartDate", getDateInFormat(0,16))
-                    .attribute("eventStartDate", getDateInFormat(0,-1))
-                    .attribute("eventEndDate", getDateInFormat(1,-1));
+                    .attribute("startDate", getDateInFormat(0, 0))
+                    .attribute("endDate", getDateInFormat(4, 18))
+                    .attribute("classEndDate", getDateInFormat(4, 15))
+                    .attribute("examStartDate", getDateInFormat(0, 16))
+                    .attribute("eventStartDate", getDateInFormat(0, -1))
+                    .attribute("eventEndDate", getDateInFormat(1, -1));
 
 
             //holidays/managers are not important
@@ -100,7 +100,6 @@ public class AcademicSessionSetup {
                         .attribute("abbrevation", abbreviation)
                         .attribute("title", title)
                         .attribute("department", department);
-
             }
 
 
@@ -169,8 +168,13 @@ public class AcademicSessionSetup {
 
 
     String getDateInFormat(int day, int week) {
-        String[] strings = getResultSetDayAndWeek(day, week).toString().substring(0, 9).split("-");
-        return strings[0] + "/" + strings[1] + "/" + strings[2];
+        String strings1 = null;
+        try {
+            strings1 = getResultSetDayAndWeek(day, week).getString("kuupaev").substring(0, 10).replaceAll("-", "/");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return strings1;
     }
 
 
@@ -181,16 +185,6 @@ public class AcademicSessionSetup {
                 " AND paev = " + day +
                 " AND nadal = " + week);
     }
-//"SELECT kuupaev FROM sessioon_ajad WHERE fk_tunn_sessioon_id = 1123 AND paev = 0 AND nadal=0;
-
-
-
-//        return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM sessioon_ajad" +
-//                "WHERE fk_tunn_sessioon_id = 1123" +
-//                " AND paev = " + day +
-//            " AND nadal = " + week)
-
-
 
     ResultSet getResultSetDatesBySessioonId() {
 
