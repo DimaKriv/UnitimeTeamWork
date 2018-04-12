@@ -1,15 +1,18 @@
 package toXmlParser.sessionsetup;
 
+
 import com.jamesmurty.utils.XMLBuilder;
 import parserUtility.ParserUtility;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-
 
 public class AcademicSessionSetup {
 
@@ -89,18 +92,6 @@ public class AcademicSessionSetup {
 
             //NEED TO ADD SUBJECT AREAS---NOW DUMMY VALUES
 
-            XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
-
-            for (int i = 0; i < 10; i++) {
-                String abbreviation = "dummyAB" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
-                String title = "dummyTitle" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
-                String department = "dummyDepartment" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
-
-                subjectAreas.element("subjectArea")
-                        .attribute("abbrevation", abbreviation)
-                        .attribute("title", title)
-                        .attribute("department", department);
-            }
 
 
 //            while (QUERY_TUNN_AINE_RESULT_SET.next()) {
