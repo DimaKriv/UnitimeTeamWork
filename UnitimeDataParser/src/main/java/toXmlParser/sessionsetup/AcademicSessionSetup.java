@@ -49,12 +49,12 @@ public class AcademicSessionSetup {
 
 
             XMLBuilder session = xmlSessionSetup.element("session")
-                    .attribute("startDate", "")
-                    .attribute("endDate", "")
-                    .attribute("classEndDate", "")
-                    .attribute("examStartDate", "")
-                    .attribute("eventStartDate", "")
-                    .attribute("eventEndDate", "");
+                    .attribute("startDate", getDateInFormat(0,0))
+                    .attribute("endDate", getDateInFormat(4,18))
+                    .attribute("classEndDate", getDateInFormat(4,15))
+                    .attribute("examStartDate", getDateInFormat(0,16))
+                    .attribute("eventStartDate", getDateInFormat(0,-1))
+                    .attribute("eventEndDate", getDateInFormat(1,-1));
 
 
             //holidays/managers are not important
@@ -86,24 +86,41 @@ public class AcademicSessionSetup {
                         .attribute("distribution", "false");
             }
 
-            //NEED TO ADD SUBJECT AREAS
+
+            //NEED TO ADD SUBJECT AREAS---NOW DUMMY VALUES
+
             XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
 
-            while (QUERY_TUNN_AINE_RESULT_SET.next()) {
-
-                String abbreviation = QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
-                String title = QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
-                String department = QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
+            for (int i = 0; i < 10; i++) {
+                String abbreviation = "dummyAB" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
+                String title = "dummyTitle" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
+                String department = "dummyDepartment" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
 
                 subjectAreas.element("subjectArea")
                         .attribute("abbrevation", abbreviation)
                         .attribute("title", title)
                         .attribute("department", department);
+
             }
 
 
+//            while (QUERY_TUNN_AINE_RESULT_SET.next()) {
+//
+//                String abbreviation = QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
+//                String title = QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
+//                String department = QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
+//
+//                subjectAreas.element("subjectArea")
+//                        .attribute("abbrevation", abbreviation)
+//                        .attribute("title", title)
+//                        .attribute("department", department);
+//            }
+
             //not filled. needed managers done
-            XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
+//            XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
+//            solverGroups.elem("solverGroups")
+//                    .attribute("abbreviation", "DummyName")
+//                    .attribute("name","dummyName");
 
             //ADD TIME/DATE PATTERNS/
             timeDatePatterns.buildTimePatternsXML();
