@@ -33,6 +33,9 @@ public class AcademicSessionSetup {
     final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
     final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS);
 
+    final String QUERY_SQL_SUBJECT_AREAS = "SELECT * FROM SUBJECT_AREAS_TTU";
+    final ResultSet QUERY_SUBJECT_AREAS_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_SUBJECT_AREAS);
+
     final String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
     XMLBuilder xmlSessionSetup;
 
@@ -46,7 +49,6 @@ public class AcademicSessionSetup {
                             .attribute("year", "2018")
                             .attribute("campus", "TTU")
                             .attribute("dateFormat", "yyyy/M/d");
-
 
             XMLBuilder session = xmlSessionSetup.element("session")
                     .attribute("startDate", getDateInFormat(0, 0))
@@ -91,29 +93,29 @@ public class AcademicSessionSetup {
 
             XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
 
-            for (int i = 0; i < 10; i++) {
-                String abbreviation = "dummyAB" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
-                String title = "dummyTitle" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
-                String department = "dummyDepartment" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
-
-                subjectAreas.element("subjectArea")
-                        .attribute("abbrevation", abbreviation)
-                        .attribute("title", title)
-                        .attribute("department", department);
-            }
-
-
-//            while (QUERY_TUNN_AINE_RESULT_SET.next()) {
-//
-//                String abbreviation = QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
-//                String title = QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
-//                String department = QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
+//            for (int i = 0; i < 10; i++) {
+//                String abbreviation = "dummyAB" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
+//                String title = "dummyTitle" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
+//                String department = "dummyDepartment" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
 //
 //                subjectAreas.element("subjectArea")
 //                        .attribute("abbrevation", abbreviation)
 //                        .attribute("title", title)
 //                        .attribute("department", department);
 //            }
+
+
+            while (QUERY_SUBJECT_AREAS_SET.next()) {
+
+                String abbreviation = QUERY_SUBJECT_AREAS_SET.getString("abbv");
+                String title = QUERY_SUBJECT_AREAS_SET.getString("title");
+                String department = QUERY_SUBJECT_AREAS_SET.getString("department_id");
+
+                subjectAreas.element("subjectArea")
+                        .attribute("abbrevation", abbreviation)
+                        .attribute("title", title)
+                        .attribute("department", department);
+            }
 
             //not filled. needed managers done
 //            XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
