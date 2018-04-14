@@ -20,7 +20,7 @@ public class SubjectAreas {
     private static final int FIRST_DEPARTMENT = 1001;
     private static final int LAST_DEPARTMENT = 1020;
 
-    private static final String QUERY_SQL = "SELECT * FROM SUBJECT_AREAS_TTU;";
+    private static final String QUERY_SQL = "SELECT * FROM SUBJECT_AREAS_TTU";
     private static final ResultSet QUERY_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL);
 
     public void buildXML() {
@@ -49,7 +49,7 @@ public class SubjectAreas {
 
             new File("XMLFiles").mkdirs();
 
-            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/subjectAreas.xml"));
+            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/subject_areas.xml"));
             Properties outputProperties = new Properties();
             outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
             outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
