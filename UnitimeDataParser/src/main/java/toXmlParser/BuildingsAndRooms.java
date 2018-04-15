@@ -17,9 +17,11 @@ public class BuildingsAndRooms {
 
     //Select
     private final String QUERY_SQL_ROOM_FEATURES = "SELECT * FROM R_RUUM_VARUSTUS";
-    private final String QUERY_SQL_BUILDING = "SELECT V.fk_varustus_kood, H.bl_id, H.nimetus AS buildingName, R.kohtade_arv, R.rm_id, R.ruum_id, R.kood, R.nimetus AS roomName FROM R_HOONE AS H INNER JOIN R_RUUM AS R ON H.bl_id=R.fk_bl_id INNER JOIN R_RUUM_VARUSTUS AS V ON V.fk_ruum_id=R.ruum_id";
+    private final String QUERY_SQL_BUILDING = "SELECT V.fk_varustus_kood, H.bl_id, H.nimetus AS buildingName, R.kohtade_arv, R.rm_id, R.ruum_id, R.kood, R.nimetus AS roomName FROM R_HOONE AS H INNER JOIN R_RUUM AS R ON H.bl_id=R.fk_bl_id INNER JOIN R_RUUM_VARUSTUS AS V ON V.fk_ruum_id=R.ruum_id WHERE H.bl_id NOT IN ('KOPLI116', 'AKAD21F', 'AKAD21B')";
     private final String QUERY_SQL_ROOMS = "SELECT * FROM R_RUUM";
     private final ResultSet QUERY_SQL_RESULT_BUILDING = ParserUtility.queryDataFromDatabase(QUERY_SQL_BUILDING);
+
+    private int numberOfRoomsInBuilding = 0;
 
     public void buildXML() throws SQLException {
         System.out.println(ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOM_FEATURES).next());
@@ -29,6 +31,8 @@ public class BuildingsAndRooms {
                             .attribute("campus", "TTU")
                             .attribute("term", "Fall")
                             .attribute("year", "2018");
+//            String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
+//            String buildingName = QUERY_SQL_RESULT_BUILDING.getString("buildingName");
             while (QUERY_SQL_RESULT_BUILDING.next()) {
                 String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
                 String buildingName = QUERY_SQL_RESULT_BUILDING.getString("buildingName");
@@ -37,13 +41,23 @@ public class BuildingsAndRooms {
                 String roomCapacity = QUERY_SQL_RESULT_BUILDING.getString("kohtade_arv");
                 String roomNumber = QUERY_SQL_RESULT_BUILDING.getString("rm_id");
                 String roomClassification = QUERY_SQL_RESULT_BUILDING.getString("roomName");
-                if (roomClassification.length() > 20){
-                    roomClassification = roomClassification.substring(0, 20);
+                if (buildingName.length() > 20){
+                    buildingName = buildingName.substring(0, 20);
+                }
+                if (roomClassification.equals("Üldkasutatav auditoorium")){
+                    roomClassification = "Uld.auditoorium";
+                }
+                if (roomClassification.equals("Eriotstarbeline auditoorium")){
+                    roomClassification = "Eri.auditoorium";
+                }
+                if (roomClassification.equals("Kategooria: õppetegevus")){
+                    roomClassification = "õppetegevus";
                 }
                 String roomFeatures = QUERY_SQL_RESULT_BUILDING.getString("fk_varustus_kood");
                 String roomFeaturesValue = roomFeatures;
                 if (roomFeatures.length() > 20){
                     roomFeaturesValue = roomFeatures.substring(0, 20);
+                    roomFeatures = roomFeatures.substring(0, 20);
                 }
                 xmlBuilder.element("building")
                         .attribute("abbreviation", buildingAbbreviation)
@@ -57,10 +71,10 @@ public class BuildingsAndRooms {
                         .attribute("locationY", String.valueOf(0))
                         .attribute("roomClassification", roomClassification)
                         .attribute("roomNumber", roomNumber)
-                        .attribute("roomCapacity", String.valueOf(roomCapacity))
+                        .attribute("capacity", String.valueOf(roomCapacity))
                         .element("roomDepartments")
                         .element("assigned")
-                        .attribute("departmnetNumber", String.valueOf(1001))
+                        .attribute("departmentNumber", String.valueOf(1001))
                         .attribute("percent", "100")
                         .up()
                         .up()
@@ -77,6 +91,7 @@ public class BuildingsAndRooms {
             outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
             outputProperties.put("{http://xml.apache.org/xslt}indent-amount", "2");
             xmlBuilder.toWriter(writer, outputProperties);
+            System.out.println("FILE WITH BUILDINGS AND ROOMS WAS CREATED");
             } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
             e.printStackTrace();
         }
