@@ -1,5 +1,8 @@
-import toXmlParser.*;
-
+import toXmlParser.BuildingsAndRooms;
+import toXmlParser.CourseCatalog;
+import toXmlParser.Departments;
+import toXmlParser.SubjectAreas;
+import toXmlParser.sessionsetup.AcademicSessionSetup;
 import java.sql.SQLException;
 
 public class Main {
@@ -19,8 +22,8 @@ public class Main {
         CourseCatalog courseCatalog = new CourseCatalog();
         courseCatalog.buildXML();
 
-//        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup();
-//        academicSessionSetup.buildXML();
+        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup();
+        academicSessionSetup.buildXML();
 
     }
 }
