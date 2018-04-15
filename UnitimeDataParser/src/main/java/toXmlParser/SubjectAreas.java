@@ -20,7 +20,7 @@ public class SubjectAreas {
     private static final int FIRST_DEPARTMENT = 1001;
     private static final int LAST_DEPARTMENT = 1020;
 
-    private static final String QUERY_SQL = "SELECT ainekood, nimetus_est FROM TUNN_AINE";
+    private static final String QUERY_SQL = "SELECT * FROM SUBJECT_AREAS_TTU";
     private static final ResultSet QUERY_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL);
 
     public void buildXML() {
@@ -33,21 +33,23 @@ public class SubjectAreas {
             Random random = new Random();
 
             while (QUERY_RESULT_SET.next()) {
-                String abbreviation = QUERY_RESULT_SET.getString("ainekood");
-                String title = QUERY_RESULT_SET.getString("nimetus_est");
+                String externalID = QUERY_RESULT_SET.getString("EXTERNAL_ID");
+                String abbreviation = QUERY_RESULT_SET.getString("ABBV");
+                String title = QUERY_RESULT_SET.getString("TITLE");
                 String department = String.valueOf(random.nextInt((LAST_DEPARTMENT - FIRST_DEPARTMENT) + 1)
                         + FIRST_DEPARTMENT);
 
-
                 xmlBuilder.element("subjectArea")
+                        .attribute("externalId", externalID)
                         .attribute("abbreviation", abbreviation)
                         .attribute("title", title)
                         .attribute("department", department);
+
             }
 
             new File("XMLFiles").mkdirs();
 
-            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/subjectAreas.xml"));
+            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/subject_areas.xml"));
             Properties outputProperties = new Properties();
             outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
             outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");

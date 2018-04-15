@@ -46,7 +46,7 @@ public class CourseCatalog {
 
     private void printXMLFile(XMLBuilder courseCatalog) throws FileNotFoundException, TransformerException {
         new File("XMLFiles").mkdirs();
-        PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/courseCatalog.xml"));
+        PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/course_catalog.xml"));
         Properties outputProperties = new Properties();
 
         outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
