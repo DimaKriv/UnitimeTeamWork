@@ -24,12 +24,16 @@ Thumbs.db
 /EncodingRepairer/.idea/*
 /EncodingRepairer/gradle/*
 /EncodingRepairer/out/*
+/EncodingRepairer/build/*
 /UnitimeDataParser/.gradle/*
 /UnitimeDataParser/.idea/*
 /UnitimeDataParser/gradle/*
 /UnitimeDataParser/out/*
+/UnitimeDataParser/build/*
 /connection/.gradle/*
 /connection/.idea/*
 /connection/gradle/*
 /connection/out/*
+/connection/build/*
 
+UnitimeDataParser/.idea/workspace.xml
