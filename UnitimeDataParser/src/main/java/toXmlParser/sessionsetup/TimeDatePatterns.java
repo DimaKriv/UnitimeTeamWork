@@ -54,8 +54,12 @@ public class TimeDatePatterns {
                 }
 
                 for (int i = 0; i < timesTimePattern.length; i++) {
-                    timePattern.element("time")
-                            .attribute("start", timesTimePattern[i]);
+                    if ((timesTimePattern[i] != "")) {
+
+                        timePattern.element("time")
+                                .attribute("start", timesTimePattern[i]);
+
+                    }
                 }
 
 

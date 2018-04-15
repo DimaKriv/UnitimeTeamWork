@@ -110,17 +110,6 @@ public class AcademicSessionSetup {
 
             XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
 
-//            for (int i = 0; i < 10; i++) {
-//                String abbreviation = "dummyAB" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("AINEKOOD");
-//                String title = "dummyTitle" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("NIMETUS_EST");
-//                String department = "dummyDepartment" + i;//QUERY_TUNN_AINE_RESULT_SET.getString("FK_AINE_ID");
-//
-//                subjectAreas.element("subjectArea")
-//                        .attribute("abbrevation", abbreviation)
-//                        .attribute("title", title)
-//                        .attribute("department", department);
-//            }
-
 
             while (QUERY_SUBJECT_AREAS_SET.next()) {
 
