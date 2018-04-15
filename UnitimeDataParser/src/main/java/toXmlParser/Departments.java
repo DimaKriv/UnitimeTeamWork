@@ -27,16 +27,13 @@ public class Departments {
                         .attribute("year", "2018");
 
             while (QUERY_RESULT_SET.next()) {
-                String externalId = QUERY_RESULT_SET.getString("externalId");
-                String abbreviation = QUERY_RESULT_SET.getString("abbreviation");
-                String name = QUERY_RESULT_SET.getString("name");
-                String deptCode = QUERY_RESULT_SET.getString("deptCode");
+                String abbreviation = QUERY_RESULT_SET.getString("ABBV");
+                String name = QUERY_RESULT_SET.getString("NIMETUS");
+                String deptCode = QUERY_RESULT_SET.getString("EXTERNAL_ID");
                 xmlBuilder.element("department")
-                            .attribute("externalId", externalId)
                             .attribute("abbreviation", abbreviation)
                             .attribute("name", name)
-                            .attribute("deptCode", deptCode)
-                            .attribute("allowEvents", "true");
+                            .attribute("deptCode", deptCode);
             }
 
             new File("XMLFiles").mkdirs();  // create XMLFiles directory
@@ -47,6 +44,7 @@ public class Departments {
             outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
             outputProperties.put("{http://xml.apache.org/xslt}indent-amount", "2");
             xmlBuilder.toWriter(writer, outputProperties);
+            System.out.println("FILE WITH DEPARTMENTS WAS CREATED");
 
         } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
             e.printStackTrace();
