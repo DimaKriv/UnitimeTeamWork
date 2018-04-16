@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.Random;
 
 public class SubjectAreas {
 
@@ -30,20 +29,21 @@ public class SubjectAreas {
                     .attribute("term", "Fall")
                     .attribute("year", "2018");
 
-            Random random = new Random();
+            int currentDepartment = FIRST_DEPARTMENT;
 
-            while (QUERY_RESULT_SET.next()) {
+            while (QUERY_RESULT_SET.next() && currentDepartment <= LAST_DEPARTMENT) {
                 String externalID = QUERY_RESULT_SET.getString("EXTERNAL_ID");
                 String abbreviation = QUERY_RESULT_SET.getString("ABBV");
                 String title = QUERY_RESULT_SET.getString("TITLE");
-                String department = String.valueOf(random.nextInt((LAST_DEPARTMENT - FIRST_DEPARTMENT) + 1)
-                        + FIRST_DEPARTMENT);
+                String department = String.valueOf(currentDepartment);
 
                 xmlBuilder.element("subjectArea")
                         .attribute("externalId", externalID)
                         .attribute("abbreviation", abbreviation)
                         .attribute("title", title)
                         .attribute("department", department);
+
+                currentDepartment++;
 
             }
 
