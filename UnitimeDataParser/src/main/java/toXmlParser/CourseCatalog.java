@@ -15,8 +15,7 @@ import java.util.Properties;
 
 public class CourseCatalog {
 
-    private static final String QUERY_SQL = "SELECT fk_aine_id, ainekood, nimetus_est FROM TUNN_AINE" +
-            "WHERE Length(ainekood)<=10";
+    private static final String QUERY_SQL = "SELECT fk_aine_id, ainekood, nimetus_est FROM TUNN_AINE WHERE Length(ainekood)<=10";
     private static final ResultSet QUERY_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL);
 
     private static final int DEFAULT_FAKE_EAP = 5;
@@ -61,5 +60,7 @@ public class CourseCatalog {
         } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
             e.printStackTrace();
         }
+
+        System.out.println("Course catalog XML is successfully created");
     }
 }

@@ -60,5 +60,7 @@ public class SubjectAreas {
         } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
             e.printStackTrace();
         }
+
+        System.out.println("Subject Areas XML is successfully created");
     }
 }
