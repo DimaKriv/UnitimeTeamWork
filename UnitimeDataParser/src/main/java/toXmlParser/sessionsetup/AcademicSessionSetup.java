@@ -47,7 +47,7 @@ public class AcademicSessionSetup {
                     XMLBuilder.create(("sessionSetup"))
                             .attribute("term", "Fal")
                             .attribute("year", "2018")
-                            .attribute("campus", "TTUTEST_SESSION_TEST_2018")
+                            .attribute("campus", "TTU_SESSION_TEST_")
                             .attribute("dateFormat", "yyyy/M/d")
                             .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
 
@@ -104,7 +104,6 @@ public class AcademicSessionSetup {
                         .attribute("room", "false")
                         .attribute("distribution", "false");
             }
-
 
 
             //ADD SUBJECT AREAS

@@ -8,22 +8,19 @@ public class ExaminationPeriods {
     AcademicSessionSetup academicSessionSetup;
 
 
-
-    public ExaminationPeriods(AcademicSessionSetup academicSessionSetup){
+    public ExaminationPeriods(AcademicSessionSetup academicSessionSetup) {
         this.academicSessionSetup = academicSessionSetup;
     }
 
 
-
-
-    public void buildExaminationPeriods(){
+    public void buildExaminationPeriods() {
 
         XMLBuilder examinationPeriods = academicSessionSetup.xmlSessionSetup.element("examinationPeriods");
         XMLBuilder finalExaminationPeriods = examinationPeriods.element("periods")
                 .attribute("type", "final");
 
 
-        //counted as main final examinations lasts for 3 weeks, no preferences yet.
+        //counted as main final examinations lasts for 4 weeks, no preferences yet.
         //exams which lasts more than 1.5H doesn't counted yet. Need to do something with it.
 
         //loop for weeks
@@ -44,7 +41,7 @@ public class ExaminationPeriods {
 
         }
 
-        //no midterm examinations yet.
+        //no midterm examinations needed?.
 //        XMLBuilder midTerm = examinationPeriods.element("periods")
 //                .attribute("type", "midterm");
 //        midTerm.element("period")
@@ -53,10 +50,7 @@ public class ExaminationPeriods {
 //                .attribute("length", "90");
 
 
-
-
     }
-
 
 
 }
