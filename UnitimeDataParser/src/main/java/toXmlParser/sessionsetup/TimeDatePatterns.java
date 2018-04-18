@@ -34,8 +34,8 @@ public class TimeDatePatterns {
                 String nbrSlotsPerMeeting = academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.getString("nbr_slots_per_meeting");
                 String breakTime = academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.getString("break_time");
 
-                String[] timesTimePattern = academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.getString("time").split(" ");
-                String[] daysTimePattern = academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.getString("days").split(" ");
+                String[] timesTimePattern = academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.getString("time").split("\\s+");
+                String[] daysTimePattern = academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.getString("days").split("\\s+");
 
 
                 XMLBuilder timePattern = timePatterns.element("timePattern")
@@ -54,12 +54,11 @@ public class TimeDatePatterns {
                 }
 
                 for (int i = 0; i < timesTimePattern.length; i++) {
-                    if ((timesTimePattern[i] != "")) {
 
                         timePattern.element("time")
                                 .attribute("start", timesTimePattern[i]);
 
-                    }
+
                 }
 
 
