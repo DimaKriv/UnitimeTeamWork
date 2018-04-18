@@ -46,8 +46,8 @@ public class AcademicSessionSetup {
             xmlSessionSetup =
                     XMLBuilder.create(("sessionSetup"))
                             .attribute("term", "Fal")
-                            .attribute("year", "2011")
-                            .attribute("campus", "TTUTEST_SESSION_TEST")
+                            .attribute("year", "2018")
+                            .attribute("campus", "TTUTEST_SESSION_TEST_2018")
                             .attribute("dateFormat", "yyyy/M/d")
                             .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
 
@@ -233,7 +233,7 @@ public class AcademicSessionSetup {
     ResultSet getResultSetDayAndWeek(int day, int week) {
 
         return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM session_ajad" +
-                " WHERE fk_tunn_sessioon_id = 161" +
+                " WHERE fk_tunn_sessioon_id = 1123" +
                 " AND paev = " + day +
                 " AND nadal = " + week);
     }
@@ -246,7 +246,7 @@ public class AcademicSessionSetup {
     //1123 - 2018 spring semester default
     String getSQLQueryDatesBySessioonId() {
         return "SELECT * FROM sessioon_ajad" +
-                "WHERE fk_tunn_sessioon_id = '161'";
+                "WHERE fk_tunn_sessioon_id = '1123'";
     }
 
 

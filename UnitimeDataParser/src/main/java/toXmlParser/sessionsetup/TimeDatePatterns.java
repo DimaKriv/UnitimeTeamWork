@@ -98,8 +98,7 @@ public class TimeDatePatterns {
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
         }
-
-
+        
         //all weeks together ALTERNATIVE
 //        XMLBuilder allWeeksPattern = datePatterns.element("datePattern")
 //                .attribute("name", "all weeks")
@@ -120,7 +119,7 @@ public class TimeDatePatterns {
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
                 .attribute("default", "false");
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 16; i++) {
             if ((i + 1) % 2 != 0) {
                 oddWeeks.element("dates")
                         .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))

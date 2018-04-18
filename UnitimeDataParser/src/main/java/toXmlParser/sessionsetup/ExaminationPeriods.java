@@ -27,7 +27,7 @@ public class ExaminationPeriods {
         //exams which lasts more than 1.5H doesn't counted yet. Need to do something with it.
 
         //loop for weeks
-        for (int i = 16; i < 18; i++) {
+        for (int i = 16; i < 20; i++) {
             //loop for week-days
             for (int j = 0; j < 4; j++) {
                 //loop for times
@@ -40,6 +40,7 @@ public class ExaminationPeriods {
                             .attribute("length", "90");
                 }
             }
+
 
         }
 
