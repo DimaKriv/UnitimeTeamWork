@@ -141,8 +141,9 @@ public class AcademicSessionSetup {
 //                    .attribute("name","dummyName");
 
             //ADD TIME/DATE PATTERNS/
-            timeDatePatterns.buildTimePatternsXML();
             timeDatePatterns.buildDatePatterns();
+            timeDatePatterns.buildTimePatternsXML();
+
             // ADD EXAMINATION PERIODS
             examinationPeriods.buildExaminationPeriods();
 
