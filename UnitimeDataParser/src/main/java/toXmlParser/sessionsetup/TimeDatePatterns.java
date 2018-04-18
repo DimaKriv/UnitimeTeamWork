@@ -75,12 +75,12 @@ public class TimeDatePatterns {
         XMLBuilder datePatterns = academicSessionSetup.xmlSessionSetup.element("datePatterns");
 
         //all weeks separately
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 16; i++) {
             datePatterns.element("datePattern")
                     .attribute("name", "week " + Integer.toString(i + 1))
                     .attribute("type", "Standard")
                     .attribute("visible", "true")
-                    .attribute("default", "true")
+                    .attribute("default", "false")
 
                     .element("dates")
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
@@ -92,12 +92,26 @@ public class TimeDatePatterns {
                 .attribute("name", "all weeks")
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
-                .attribute("default", "true");
-        for (int i = 0; i < 15; i++) {
+                .attribute("default", "false");
+        for (int i = 0; i < 16; i++) {
             allWeeksPattern.element("dates")
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
         }
+
+
+        //all weeks together ALTERNATIVE
+//        XMLBuilder allWeeksPattern = datePatterns.element("datePattern")
+//                .attribute("name", "all weeks")
+//                .attribute("type", "Standard")
+//                .attribute("visible", "true")
+//                .attribute("default", "false");
+//        for (int i = 0; i < 16; i++) {
+//            allWeeksPattern.element("datePattern")
+//                    .attribute("name", "week " + (i+1));
+//        }
+
+
 
 
         //odd weeks
@@ -105,7 +119,7 @@ public class TimeDatePatterns {
                 .attribute("name", "odd weeks")
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
-                .attribute("default", "true");
+                .attribute("default", "false");
         for (int i = 0; i < 15; i++) {
             if ((i + 1) % 2 != 0) {
                 oddWeeks.element("dates")

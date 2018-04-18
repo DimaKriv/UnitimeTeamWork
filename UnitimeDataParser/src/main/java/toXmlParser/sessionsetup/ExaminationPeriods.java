@@ -40,15 +40,16 @@ public class ExaminationPeriods {
                             .attribute("length", "90");
                 }
             }
+
         }
 
         //no midterm examinations yet.
-        XMLBuilder midTerm = examinationPeriods.element("periods")
-                .attribute("type", "midterm");
-        midTerm.element("period")
-                .attribute("date", academicSessionSetup.getDateInFormat(2, 8))
-                .attribute("startTime", "1830")
-                .attribute("length", "90");
+//        XMLBuilder midTerm = examinationPeriods.element("periods")
+//                .attribute("type", "midterm");
+//        midTerm.element("period")
+//                .attribute("date", academicSessionSetup.getDateInFormat(2, 8))
+//                .attribute("startTime", "1830")
+//                .attribute("length", "90");
 
 
 

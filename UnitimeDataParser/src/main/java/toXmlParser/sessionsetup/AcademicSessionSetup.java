@@ -47,7 +47,7 @@ public class AcademicSessionSetup {
                     XMLBuilder.create(("sessionSetup"))
                             .attribute("term", "Fal")
                             .attribute("year", "2011")
-                            .attribute("campus", "TTUTEST")
+                            .attribute("campus", "TTUTEST_SESSION_TEST")
                             .attribute("dateFormat", "yyyy/M/d")
                             .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
 
@@ -106,7 +106,8 @@ public class AcademicSessionSetup {
             }
 
 
-            //NEED TO ADD SUBJECT AREAS---NOW DUMMY VALUES
+
+            //ADD SUBJECT AREAS
 
             XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
 
@@ -124,14 +125,14 @@ public class AcademicSessionSetup {
             }
 
 
-            XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
-            XMLBuilder solverGroup = solverGroups.element("solverGroup")
-                    .attribute("abbreviation", "testSOLVER GROUP")
-                    .attribute("name", "Instructional Planning TEST");
-            XMLBuilder manager1 = solverGroup.element("manager")
-                    .attribute("externalId", "7");
-            XMLBuilder department1 = solverGroup.element("department")
-                    .attribute("code", "0101");
+//            XMLBuilder solverGroups = xmlSessionSetup.element("solverGroups");
+//            XMLBuilder solverGroup = solverGroups.element("solverGroup")
+//                    .attribute("abbreviation", "testSOLVER GROUP")
+//                    .attribute("name", "Instructional Planning TEST");
+//            XMLBuilder manager1 = solverGroup.element("manager")
+//                    .attribute("externalId", "7");
+//            XMLBuilder department1 = solverGroup.element("department")
+//                    .attribute("code", "0101");
 
 
             //not filled. needed managers done
@@ -156,18 +157,18 @@ public class AcademicSessionSetup {
 
 
             //ADD ACADEMIC CLASSIFICATIONS. Only bachelor and magistracy yet.
-            XMLBuilder academicClassifications = xmlSessionSetup.element("academicClassifications");
-
-
-            academicClassifications.element("academicClassification")
-                    .attribute("externalId", "id1")
-                    .attribute("code", "01")
-                    .attribute("name", "bachelor");
-
-            academicClassifications.element("academicClassification")
-                    .attribute("externalId", "id2")
-                    .attribute("code", "02")
-                    .attribute("name", "magistracy");
+//            XMLBuilder academicClassifications = xmlSessionSetup.element("academicClassifications");
+//
+//
+//            academicClassifications.element("academicClassification")
+//                    .attribute("externalId", "id1")
+//                    .attribute("code", "01")
+//                    .attribute("name", "bachelor");
+//
+//            academicClassifications.element("academicClassification")
+//                    .attribute("externalId", "id2")
+//                    .attribute("code", "02")
+//                    .attribute("name", "magistracy");
 
 
             //ADD POSMAJORRS/POSMINORS/STUDENT GROUPS/STUDENTS ACCOMODATIONS. Not filled yet. Seems, not important...
