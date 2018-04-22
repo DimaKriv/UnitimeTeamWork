@@ -15,26 +15,24 @@ public class AcademicSessionSetup {
 
     TimeDatePatterns timeDatePatterns;
     ExaminationPeriods examinationPeriods;
+    String sessionID;
 
-
-    public AcademicSessionSetup() {
+    public AcademicSessionSetup(String sessionID) {
         this.timeDatePatterns = new TimeDatePatterns(this);
         this.examinationPeriods = new ExaminationPeriods(this);
+        this.sessionID = sessionID;
     }
 
-
-    private final String QUERY_SQL_TUNN_AINE = "SELECT * FROM TUNN_AINE";
-    private final ResultSet QUERY_TUNN_AINE_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TUNN_AINE);
 
     private final String QUERY_SQL_INSITUDID = "SELECT * FROM INSTITUDID";
     private final ResultSet QUERY_INSTITUDID_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_INSITUDID);
 
 
-    final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
+    private final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
     final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS);
 
-    final String QUERY_SQL_SUBJECT_AREAS = "SELECT * FROM SUBJECT_AREAS_TTU";
-    final ResultSet QUERY_SUBJECT_AREAS_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_SUBJECT_AREAS);
+    private final String QUERY_SQL_SUBJECT_AREAS = "SELECT * FROM SUBJECT_AREAS_TTU";
+    private final ResultSet QUERY_SUBJECT_AREAS_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_SUBJECT_AREAS);
 
     final String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
     XMLBuilder xmlSessionSetup;
@@ -202,7 +200,6 @@ public class AcademicSessionSetup {
 
             new File("XMLFiles").mkdirs();
 
-
             PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/academicSessionSetup.xml"));
             Properties outputProperties = new Properties();
             outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
@@ -232,21 +229,11 @@ public class AcademicSessionSetup {
     ResultSet getResultSetDayAndWeek(int day, int week) {
 
         return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM session_ajad" +
-                " WHERE fk_tunn_sessioon_id = 1123" +
+                " WHERE fk_tunn_sessioon_id = " + sessionID +
                 " AND paev = " + day +
                 " AND nadal = " + week);
     }
 
-    ResultSet getResultSetDatesBySessioonId() {
-
-        return ParserUtility.queryDataFromDatabase(getSQLQueryDatesBySessioonId());
-    }
-
-    //1123 - 2018 spring semester default
-    String getSQLQueryDatesBySessioonId() {
-        return "SELECT * FROM sessioon_ajad" +
-                "WHERE fk_tunn_sessioon_id = '1123'";
-    }
 
 
 }
