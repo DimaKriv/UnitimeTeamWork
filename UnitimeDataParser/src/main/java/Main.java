@@ -22,7 +22,7 @@ public class Main {
         CourseCatalog courseCatalog = new CourseCatalog();
         courseCatalog.buildXML();
 
-        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup();
+        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
         academicSessionSetup.buildXML();
 
     }
