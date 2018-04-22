@@ -14,7 +14,7 @@ public class Main {
         buildingsAndRooms.buildXML();
 
         Departments departments = new Departments();
-        departments.buildXML();
+        departments.createXMLFile("TTU", "Fall", "2018");
 
         SubjectAreas subjectAreas = new SubjectAreas();
         subjectAreas.buildXML();
