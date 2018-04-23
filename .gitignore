@@ -60,3 +60,7 @@ test/repairer/encoding-repairer-1.jar
 test/andmed/TUNNIPLAAN/TUNNIPLAAN.R_VARUSTUS.csv
 UnitimeDataParser/.idea/gradle.xml
 UnitimeDataParser/build/classes/main/toXmlParser/SubjectAreas.class
+UnitimeDataParser/test/directoryConfirmTest.xml
+UnitimeDataParser/test/directoryCreationTest.xml
+UnitimeDataParser/test/fileCreationTest.xml
+UnitimeDataParser/test/indentAmountTest.xml
