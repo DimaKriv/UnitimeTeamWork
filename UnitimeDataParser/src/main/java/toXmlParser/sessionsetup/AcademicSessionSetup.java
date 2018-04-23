@@ -15,11 +15,13 @@ public class AcademicSessionSetup {
 
     TimeDatePatterns timeDatePatterns;
     ExaminationPeriods examinationPeriods;
+    MainData mainData;
     String sessionID;
 
     public AcademicSessionSetup(String sessionID) {
         this.timeDatePatterns = new TimeDatePatterns(this);
         this.examinationPeriods = new ExaminationPeriods(this);
+        this.mainData = new MainData(this);
         this.sessionID = sessionID;
     }
 
@@ -49,19 +51,7 @@ public class AcademicSessionSetup {
                             .attribute("dateFormat", "yyyy/M/d")
                             .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
 
-            XMLBuilder session = xmlSessionSetup.element("session")
-                    .attribute("startDate", getDateInFormat(0, 0))
-                    .attribute("endDate", getDateInFormat(4, 18))
-                    .attribute("classEndDate", getDateInFormat(4, 15))
-                    .attribute("examStartDate", getDateInFormat(0, 16))
-                    .attribute("eventStartDate", getDateInFormat(0, -1))
-                    .attribute("eventEndDate", getDateInFormat(1, -1));
-
-
-//            holidays/managers are not important
-//            XMLBuilder holidays = session.element("holidays");
-//            XMLBuilder holiday = holidays.element("holiday")
-//                    .attribute("date", "2118/9/6");
+            mainData.buildXML();
 
             //add managers
 //            XMLBuilder managers = xmlSessionSetup.element("managers")
