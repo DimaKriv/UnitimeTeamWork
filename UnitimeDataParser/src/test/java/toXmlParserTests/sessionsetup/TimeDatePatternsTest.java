@@ -2,8 +2,8 @@ package toXmlParserTests.sessionsetup;
 
 
 import com.jamesmurty.utils.XMLBuilder;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import toXmlParser.sessionsetup.AcademicSessionSetup;
 import toXmlParser.sessionsetup.TimeDatePatterns;
 
@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,12 +21,11 @@ class TimeDatePatternsTest {
     AcademicSessionSetup academicSessionSetup;
     private ResultSet queryResultSetMock;
 
-    @BeforeEach
+    @Before
     void setup() throws SQLException {
         academicSessionSetup = new AcademicSessionSetup("1123");
         queryResultSetMock = mock(ResultSet.class);
         timeDatePatterns = new TimeDatePatterns(academicSessionSetup);
-
 
     }
 
@@ -54,15 +54,9 @@ class TimeDatePatternsTest {
         when(queryResultSetMock.getString("break_time")).thenReturn("br");
         timeDatePatterns.buildOneDatePattern(queryResultSetMock);
 
-        assert timeDatePatterns.buildOneDatePattern(queryResultSetMock).equals(xmlBuilder);
+        assertEquals(timeDatePatterns.buildOneDatePattern(queryResultSetMock), xmlBuilder);
 
     }
-
-
-
-
-
-
 
 
 }

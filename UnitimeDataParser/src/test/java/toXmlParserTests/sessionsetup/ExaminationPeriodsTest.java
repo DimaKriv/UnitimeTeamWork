@@ -1,6 +1,6 @@
 package toXmlParserTests.sessionsetup;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  * Created by lll on 22-Apr-18.
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 class ExaminationPeriodsTest {
     @Test
     void buildExaminationPeriods1() {
+
 
     }
 
