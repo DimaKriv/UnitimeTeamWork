@@ -1,7 +1,7 @@
 package toXmlParserTests.sessionsetup;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import toXmlParser.sessionsetup.AcademicSessionSetup;
 
 import java.sql.SQLException;
