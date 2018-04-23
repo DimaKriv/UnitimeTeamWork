@@ -6,35 +6,53 @@ import parserUtility.ParserUtility;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.*;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 
 public class AcademicSessionSetup {
-
+    private ParserUtility utility;
     TimeDatePatterns timeDatePatterns;
     ExaminationPeriods examinationPeriods;
     MainData mainData;
     String sessionID;
+    Statement statement;
+    public AcademicSessionSetup(String sessionID) throws SQLException {
+        utility = new ParserUtility();
+        Connection connection = null;
 
-    public AcademicSessionSetup(String sessionID) {
+        try {
+            connection = utility.connectToDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         this.timeDatePatterns = new TimeDatePatterns(this);
         this.examinationPeriods = new ExaminationPeriods(this);
         this.mainData = new MainData(this);
+
+        try {
+            statement = utility.createStatement(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         this.sessionID = sessionID;
     }
 
 
     private final String QUERY_SQL_INSITUDID = "SELECT * FROM INSTITUDID";
-    private final ResultSet QUERY_INSTITUDID_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_INSITUDID);
+    private final ResultSet QUERY_INSTITUDID_RESULT_SET = utility.queryDataFromDatabase(QUERY_SQL_INSITUDID, statement);
 
 
     private final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
-    final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS);
+    final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = utility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS, statement);
 
     private final String QUERY_SQL_SUBJECT_AREAS = "SELECT * FROM SUBJECT_AREAS_TTU";
-    private final ResultSet QUERY_SUBJECT_AREAS_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL_SUBJECT_AREAS);
+    private final ResultSet QUERY_SUBJECT_AREAS_SET = utility.queryDataFromDatabase(QUERY_SQL_SUBJECT_AREAS, statement);
 
     final String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
     XMLBuilder xmlSessionSetup;
@@ -216,12 +234,12 @@ public class AcademicSessionSetup {
     }
 
 
-    public ResultSet getResultSetDayAndWeek(int day, int week) {
+    public ResultSet getResultSetDayAndWeek(int day, int week) throws SQLException {
 
-        return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM session_ajad" +
+        return utility.queryDataFromDatabase("SELECT kuupaev FROM session_ajad" +
                 " WHERE fk_tunn_sessioon_id = " + sessionID +
                 " AND paev = " + day +
-                " AND nadal = " + week);
+                " AND nadal = " + week,statement);
     }
 
     public void setTimeDatePatterns(TimeDatePatterns timeDatePatterns) {
