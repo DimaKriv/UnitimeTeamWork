@@ -129,8 +129,8 @@ public class AcademicSessionSetup {
 //                    .attribute("name","dummyName");
 
             //ADD TIME/DATE PATTERNS/
-            timeDatePatterns.buildDatePatterns();
-            timeDatePatterns.buildTimePatternsXML();
+            xmlSessionSetup.importXMLBuilder(timeDatePatterns.buildTimePatterns());
+            xmlSessionSetup.importXMLBuilder(timeDatePatterns.buildDatePatterns());
 
             // ADD EXAMINATION PERIODS
             examinationPeriods.buildExaminationPeriods();
@@ -205,7 +205,7 @@ public class AcademicSessionSetup {
     }
 
 
-    String getDateInFormat(int day, int week) {
+    public String getDateInFormat(int day, int week) {
         String strings1 = null;
         try {
             strings1 = getResultSetDayAndWeek(day, week).getString("kuupaev").substring(0, 10).replaceAll("-", "/");
@@ -216,12 +216,24 @@ public class AcademicSessionSetup {
     }
 
 
-    ResultSet getResultSetDayAndWeek(int day, int week) {
+    public ResultSet getResultSetDayAndWeek(int day, int week) {
 
         return ParserUtility.queryDataFromDatabase("SELECT kuupaev FROM session_ajad" +
                 " WHERE fk_tunn_sessioon_id = " + sessionID +
                 " AND paev = " + day +
                 " AND nadal = " + week);
+    }
+
+    public void setTimeDatePatterns(TimeDatePatterns timeDatePatterns) {
+        this.timeDatePatterns = timeDatePatterns;
+    }
+
+    public void setExaminationPeriods(ExaminationPeriods examinationPeriods) {
+        this.examinationPeriods = examinationPeriods;
+    }
+
+    public void setMainData(MainData mainData) {
+        this.mainData = mainData;
     }
 
 
