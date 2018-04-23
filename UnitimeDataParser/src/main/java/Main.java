@@ -11,7 +11,7 @@ public class Main {
      */
     public static void main(String[] args) throws SQLException {
         BuildingsAndRooms buildingsAndRooms = new BuildingsAndRooms();
-        buildingsAndRooms.buildXML();
+        buildingsAndRooms.createXMLFile("TTU", "Fall", "2018");
 
         Departments departments = new Departments();
         departments.createXMLFile("TTU", "Fall", "2018");
@@ -22,8 +22,8 @@ public class Main {
         CourseCatalog courseCatalog = new CourseCatalog();
         courseCatalog.createXMLFile("TTU", "Fall", "2018");
 
-//        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
-//        academicSessionSetup.buildXML();
+        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
+        academicSessionSetup.buildXML();
 
     }
 }
