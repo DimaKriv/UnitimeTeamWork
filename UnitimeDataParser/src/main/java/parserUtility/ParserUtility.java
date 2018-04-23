@@ -68,7 +68,7 @@ public class ParserUtility {
         // create XMLFiles directory
         new File(xmlFilesDirectory).mkdirs();
         // create write for saving xml content in file with given name
-        PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("XMLFiles/" + fileName), Charset.forName("UTF-8").newEncoder()));
+        PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(xmlFilesDirectory + "/" + fileName), Charset.forName("UTF-8").newEncoder()));
         // set properties of indents for file
         Properties outputProperties = new Properties();
         outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");

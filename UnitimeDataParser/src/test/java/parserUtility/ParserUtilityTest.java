@@ -2,6 +2,7 @@ package parserUtility;
 
 import com.jamesmurty.utils.XMLBuilder;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,6 +30,11 @@ public class ParserUtilityTest {
     @Before
     public void setup() {
         utility = new ParserUtility();
+        new File("test/directoryCreationTest.xml").delete();
+        new File("test/directoryConfirmTest.xml").delete();
+        new File("test/fileCreationTest.xml").delete();
+        new File("test/indentAmountTest.xml").delete();
+        new File("test").delete();
     }
 
     @After
@@ -58,7 +64,7 @@ public class ParserUtilityTest {
         Statement statement = mock(Statement.class);
         String sqlQuery = anyString();
         utility.queryDataFromDatabase(sqlQuery, statement);
-        verify(statement.executeQuery(sqlQuery));
+        verify(statement).executeQuery(sqlQuery);
     }
 
     @Test
@@ -92,7 +98,7 @@ public class ParserUtilityTest {
     public void testIndentAmountInCreatedXMLFileIsTwo() throws ParserConfigurationException, IOException, TransformerException {
         utility = new ParserUtility("", "test");
         XMLBuilder xmlBuilder = XMLBuilder.create("test").element("subTest");
-        String expectedFileContent = xmlBuilder.asString();
+        String expectedFileContent = "<test>\r\n  <subTest/>\r\n</test>\r\n";
 
         utility.writeToXMLFile(xmlBuilder, "indentAmountTest.xml");
         String actualFileContent = new String(Files.readAllBytes(Paths.get("test/indentAmountTest.xml")));
