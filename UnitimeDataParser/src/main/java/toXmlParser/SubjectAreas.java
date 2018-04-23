@@ -19,48 +19,60 @@ public class SubjectAreas {
     private static final int FIRST_DEPARTMENT = 1001;
     private static final int LAST_DEPARTMENT = 1020;
 
-    private static final String QUERY_SQL = "SELECT * FROM SUBJECT_AREAS_TTU";
-    private static final ResultSet QUERY_RESULT_SET = ParserUtility.queryDataFromDatabase(QUERY_SQL);
+    private String querySql;
+    private ResultSet queryResultSet;
 
-    public void buildXML() {
+    public SubjectAreas() {
+        querySql = "SELECT * FROM SUBJECT_AREAS_TTU";
+        queryResultSet = ParserUtility.queryDataFromDatabase(querySql);
+    }
+
+    public SubjectAreas(String querySql, ResultSet queryResultSet) {
+        this.querySql = querySql;
+        this.queryResultSet = queryResultSet;
+    }
+
+    public XMLBuilder createSubjectAreasElementBuilder(String campus, String term, String year) throws ParserConfigurationException {
+        return XMLBuilder.create("departments")
+                .attribute("campus", campus)
+                .attribute("term", term)
+                .attribute("year", year);
+    }
+
+    public XMLBuilder buildXML(String campus, String term, String year) throws ParserConfigurationException, SQLException {
+        XMLBuilder xmlBuilder = createSubjectAreasElementBuilder(campus, term, year);
+
+        int currentDepartment = FIRST_DEPARTMENT;
+
+        while (queryResultSet.next() && currentDepartment <= LAST_DEPARTMENT) {
+            String externalID = queryResultSet.getString("EXTERNAL_ID");
+            String abbreviation = queryResultSet.getString("ABBV");
+            String title = queryResultSet.getString("TITLE");
+            String department = String.valueOf(currentDepartment);
+
+            xmlBuilder.element("subjectArea")
+                    .attribute("externalId", externalID)
+                    .attribute("abbreviation", abbreviation)
+                    .attribute("title", title)
+                    .attribute("department", department);
+
+            currentDepartment++;
+        }
+
+        return xmlBuilder;
+    }
+
+    public void writeXML(XMLBuilder xmlBuilder) throws FileNotFoundException, TransformerException {
+        ParserUtility.writeToXMLFile(xmlBuilder, "subject_areas.xml");
+    }
+
+    public void createXMLFile(String campus, String term, String year) {
         try {
-            XMLBuilder xmlBuilder = XMLBuilder.create("subjectAreas")
-                    .attribute("campus", "TTU")
-                    .attribute("term", "Fall")
-                    .attribute("year", "2018");
-
-            int currentDepartment = FIRST_DEPARTMENT;
-
-            while (QUERY_RESULT_SET.next() && currentDepartment <= LAST_DEPARTMENT) {
-                String externalID = QUERY_RESULT_SET.getString("EXTERNAL_ID");
-                String abbreviation = QUERY_RESULT_SET.getString("ABBV");
-                String title = QUERY_RESULT_SET.getString("TITLE");
-                String department = String.valueOf(currentDepartment);
-
-                xmlBuilder.element("subjectArea")
-                        .attribute("externalId", externalID)
-                        .attribute("abbreviation", abbreviation)
-                        .attribute("title", title)
-                        .attribute("department", department);
-
-                currentDepartment++;
-
-            }
-
-            new File("XMLFiles").mkdirs();
-
-            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/subject_areas.xml"));
-            Properties outputProperties = new Properties();
-            outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
-            outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
-            outputProperties.put("{http://xml.apache.org/xslt}indent-amount", "2");
-            xmlBuilder.toWriter(writer, outputProperties);
-
-
+            XMLBuilder xmlBuilder = buildXML(campus, term, year);
+            writeXML(xmlBuilder);
         } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
             e.printStackTrace();
         }
-
-        System.out.println("Subject Areas XML is successfully created");
     }
+
 }

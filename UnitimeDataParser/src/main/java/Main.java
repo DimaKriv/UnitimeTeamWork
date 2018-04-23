@@ -17,13 +17,13 @@ public class Main {
         departments.createXMLFile("TTU", "Fall", "2018");
 
         SubjectAreas subjectAreas = new SubjectAreas();
-        subjectAreas.buildXML();
+        subjectAreas.createXMLFile("TTU", "Fall", "2018");
 
         CourseCatalog courseCatalog = new CourseCatalog();
-        courseCatalog.buildXML();
+        courseCatalog.createXMLFile("TTU", "Fall", "2018");
 
-        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
-        academicSessionSetup.buildXML();
+//        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
+//        academicSessionSetup.buildXML();
 
     }
 }
