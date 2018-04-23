@@ -6,20 +6,27 @@ import parserUtility.ParserUtility;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Departments {
 
+    private ParserUtility utility;
     private String querySql;
     private ResultSet queryResultSet;
 
-    public Departments() {
+    public Departments() throws SQLException {
+        utility = new ParserUtility();
+        Connection connection = utility.connectToDatabase();
+        Statement statement = utility.createStatement(connection);
         querySql = "SELECT * FROM INSTITUDID";
-        queryResultSet = ParserUtility.queryDataFromDatabase(querySql);
+        queryResultSet = utility.queryDataFromDatabase(querySql, statement);
     }
 
     public Departments(String querySql, ResultSet queryResultSet) {
+        utility = new ParserUtility();
         this.querySql = querySql;
         this.queryResultSet = queryResultSet;
     }
@@ -50,7 +57,7 @@ public class Departments {
     }
 
     public void writeXML(XMLBuilder xmlBuilder) throws FileNotFoundException, TransformerException {
-        ParserUtility.writeToXMLFile(xmlBuilder, "departments.xml");
+        utility.writeToXMLFile(xmlBuilder, "departments.xml");
     }
 
     public void createXMLFile(String campus, String term, String year) {
