@@ -9,56 +9,86 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class BuildingsAndRooms {
 
     //Select
-    private final String QUERY_SQL_ROOM_FEATURES = "SELECT * FROM R_RUUM_VARUSTUS";
-    private final String QUERY_SQL_BUILDING = "SELECT V.fk_varustus_kood, H.bl_id, H.nimetus AS buildingName, R.kohtade_arv, R.rm_id, R.ruum_id, R.kood, R.nimetus AS roomName FROM R_HOONE AS H INNER JOIN R_RUUM AS R ON H.bl_id=R.fk_bl_id INNER JOIN R_RUUM_VARUSTUS AS V ON V.fk_ruum_id=R.ruum_id WHERE H.bl_id NOT IN ('KOPLI116', 'AKAD21F', 'AKAD21B')";
-    private final String QUERY_SQL_ROOMS = "SELECT * FROM R_RUUM";
-    private final ResultSet QUERY_SQL_RESULT_BUILDING = ParserUtility.queryDataFromDatabase(QUERY_SQL_BUILDING);
+    private String QUERY_SQL_BUILDING;
+    private ResultSet QUERY_SQL_RESULT_BUILDING;
+    private ParserUtility utility;
 
-    private int numberOfRoomsInBuilding = 0;
+    public BuildingsAndRooms(String querySql, ResultSet queryResultSet) {
+        this.QUERY_SQL_BUILDING = querySql;
+        this.QUERY_SQL_RESULT_BUILDING = queryResultSet;
+    }
 
-    public void buildXML() throws SQLException {
-        System.out.println(ParserUtility.queryDataFromDatabase(QUERY_SQL_ROOM_FEATURES).next());
-        try {
-            XMLBuilder xmlBuilder =
-                    XMLBuilder.create("buildingsRooms")
-                            .attribute("campus", "TTU")
-                            .attribute("term", "Fall")
-                            .attribute("year", "2018");
-//            String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
-//            String buildingName = QUERY_SQL_RESULT_BUILDING.getString("buildingName");
-            while (QUERY_SQL_RESULT_BUILDING.next()) {
-                String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
-                String buildingName = QUERY_SQL_RESULT_BUILDING.getString("buildingName");
-                String roomExternalId = QUERY_SQL_RESULT_BUILDING.getString("ruum_id");
-                String buildingAbbreviation = QUERY_SQL_RESULT_BUILDING.getString("kood").split("-")[0];
-                String roomCapacity = QUERY_SQL_RESULT_BUILDING.getString("kohtade_arv");
-                String roomNumber = QUERY_SQL_RESULT_BUILDING.getString("rm_id");
-                String roomClassification = QUERY_SQL_RESULT_BUILDING.getString("roomName");
-                if (buildingName.length() > 20){
-                    buildingName = buildingName.substring(0, 20);
-                }
-                if (roomClassification.equals("Üldkasutatav auditoorium")){
-                    roomClassification = "Uld.auditoorium";
-                }
-                if (roomClassification.equals("Eriotstarbeline auditoorium")){
-                    roomClassification = "Eri.auditoorium";
-                }
-                if (roomClassification.equals("Kategooria: õppetegevus")){
-                    roomClassification = "õppetegevus";
-                }
-                String roomFeatures = QUERY_SQL_RESULT_BUILDING.getString("fk_varustus_kood");
-                String roomFeaturesValue = roomFeatures;
-                if (roomFeatures.length() > 20){
-                    roomFeaturesValue = roomFeatures.substring(0, 20);
-                    roomFeatures = roomFeatures.substring(0, 20);
-                }
+    public BuildingsAndRooms() throws SQLException{
+        QUERY_SQL_BUILDING = "SELECT H.bl_id, H.nimetus AS buildingName, R.kohtade_arv, R.rm_id, R.ruum_id, R.kood, R.nimetus AS roomName FROM R_HOONE AS H INNER JOIN R_RUUM AS R ON H.bl_id=R.fk_bl_id LEFT JOIN R_RUUM_VARUSTUS AS V ON V.fk_ruum_id=R.ruum_id WHERE H.bl_id NOT IN ('KOPLI116', 'AKAD21F', 'AKAD21B', 'KOPLI101', 'KJARVE2')";
+        Connection connection = utility.connectToDatabase();
+        Statement statement = utility.createStatement(connection);
+        QUERY_SQL_RESULT_BUILDING = utility.queryDataFromDatabase(QUERY_SQL_BUILDING, statement);
+    }
+
+    public XMLBuilder createBuildingAndRoomsElementBuilder(String campus, String term, String year) throws ParserConfigurationException {
+        XMLBuilder xmlBuilder =
+                XMLBuilder.create("BuildingsRooms")
+                        .attribute("campus", campus)
+                        .attribute("term", term)
+                        .attribute("year", year);
+
+        return xmlBuilder;
+    }
+
+    public XMLBuilder buildXML(String campus, String term, String year) throws ParserConfigurationException, SQLException {
+        XMLBuilder xmlBuilder = createBuildingAndRoomsElementBuilder(campus, term, year);
+
+        while (QUERY_SQL_RESULT_BUILDING.next()) {
+            String departmentCode = "1001";
+            String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
+            String buildingName = QUERY_SQL_RESULT_BUILDING.getString("buildingName");
+            String roomExternalId = QUERY_SQL_RESULT_BUILDING.getString("ruum_id");
+            String buildingAbbreviation = QUERY_SQL_RESULT_BUILDING.getString("kood").split("-")[0];
+            System.out.println(buildingAbbreviation);
+            String roomCapacity = QUERY_SQL_RESULT_BUILDING.getString("kohtade_arv");
+            String roomNumber = QUERY_SQL_RESULT_BUILDING.getString("rm_id");
+            String roomClassification = QUERY_SQL_RESULT_BUILDING.getString("roomName");
+            if (buildingName.length() > 20){
+                buildingName = buildingName.substring(0, 20);
+            }
+            if (roomClassification.equals("Üldkasutatav auditoorium")){
+                roomClassification = "Uld.auditoorium";
+            }
+            if (roomClassification.equals("Eriotstarbeline auditoorium")){
+                roomClassification = "Eri.auditoorium";
+            }
+            if (roomClassification.equals("Kategooria: õppetegevus")){
+                roomClassification = "õppetegevus";
+            }
+            if (buildingName.equals("Õppehoone U02 (B korpus)")){
+                buildingName = "Õppehoone U02 (B)";
+            }
+            if (buildingName.equals("Õppehoone U04 (B korpus)")){
+                buildingName = "Õppehoone U04 (B)";
+            }
+            if (buildingName.equals("Õppehoone U05 (B korpus)")){
+                buildingName = "Õppehoone U05 (B)";
+            }
+            if (buildingName.equals("Õppehoone U06 (A korpus)")){
+                buildingName = "Õppehoone U02 (A)";
+            }
+//                String roomFeatures = QUERY_SQL_RESULT_BUILDING.getString("fk_varustus_kood");
+//                String roomFeaturesValue = roomFeatures;
+//                if (roomFeatures.length() > 20){
+//                    roomFeaturesValue = roomFeatures.substring(0, 20);
+//                    roomFeatures = roomFeatures.substring(0, 20);
+//                }
+            if (buildingAbbreviation.equals("SOC")){
+                departmentCode = "1017";
                 xmlBuilder.element("building")
                         .attribute("abbreviation", buildingAbbreviation)
                         .attribute("externalId", buildingExternalId)
@@ -74,25 +104,114 @@ public class BuildingsAndRooms {
                         .attribute("capacity", String.valueOf(roomCapacity))
                         .element("roomDepartments")
                         .element("assigned")
-                        .attribute("departmentNumber", String.valueOf(1001))
+                        .attribute("departmentNumber", departmentCode)
                         .attribute("percent", "100")
                         .up()
+                        .element("scheduling")
+                        .attribute("departmentNumber", "1002")
+                        .attribute("percent", "50")
                         .up()
-                        .element("roomFeatures")
+                        .up()
                         .element("roomFeature")
-                        .attribute("feature", roomFeatures)
-                        .attribute("value", roomFeaturesValue)
+                        .attribute("feature", "tahvel")
+                        .attribute("value", "tahvel")
                         .up()
                         .up();
             }
-            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/BuildingAndRooms.xml"));
-            Properties outputProperties = new Properties();
-            outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
-            outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
-            outputProperties.put("{http://xml.apache.org/xslt}indent-amount", "2");
-            xmlBuilder.toWriter(writer, outputProperties);
-            System.out.println("FILE WITH BUILDINGS AND ROOMS WAS CREATED");
-            } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
+            if (buildingAbbreviation.equals("EIK")){
+                departmentCode = "1005";
+                xmlBuilder.element("building")
+                        .attribute("abbreviation", buildingAbbreviation)
+                        .attribute("externalId", buildingExternalId)
+                        .attribute("locationX", String.valueOf(0))
+                        .attribute("locationY", String.valueOf(0))
+                        .attribute("name", buildingName)
+                        .element("room")
+                        .attribute("externalId", roomExternalId)
+                        .attribute("locationX", String.valueOf(0))
+                        .attribute("locationY", String.valueOf(0))
+                        .attribute("roomClassification", roomClassification)
+                        .attribute("roomNumber", roomNumber)
+                        .attribute("capacity", String.valueOf(roomCapacity))
+                        .element("roomDepartments")
+                        .element("assigned")
+                        .attribute("departmentNumber", departmentCode)
+                        .attribute("percent", "100")
+                        .up()
+                        .element("scheduling")
+                        .attribute("departmentNumber", "1002")
+                        .attribute("percent", "50")
+                        .up()
+                        .up()
+                        .element("roomFeature")
+                        .attribute("feature", "tahvel")
+                        .attribute("value", "tahvel")
+                        .up()
+                        .up();
+            }
+            if (buildingAbbreviation.equals("SCI")){
+                departmentCode = "1014";
+                xmlBuilder.element("building")
+                        .attribute("abbreviation", buildingAbbreviation)
+                        .attribute("externalId", buildingExternalId)
+                        .attribute("locationX", String.valueOf(0))
+                        .attribute("locationY", String.valueOf(0))
+                        .attribute("name", buildingName)
+                        .element("room")
+                        .attribute("externalId", roomExternalId)
+                        .attribute("locationX", String.valueOf(0))
+                        .attribute("locationY", String.valueOf(0))
+                        .attribute("roomClassification", roomClassification)
+                        .attribute("roomNumber", roomNumber)
+                        .attribute("capacity", String.valueOf(roomCapacity))
+                        .element("roomDepartments")
+                        .element("assigned")
+                        .attribute("departmentNumber", departmentCode)
+                        .attribute("percent", "100")
+                        .up()
+                        .element("scheduling")
+                        .attribute("departmentNumber", "1002")
+                        .attribute("percent", "50")
+                        .up()
+                        .up()
+                        .element("roomFeature")
+                        .attribute("feature", "tahvel")
+                        .attribute("value", "tahvel")
+                        .up()
+                        .up();
+            }
+            xmlBuilder.element("building")
+                    .attribute("abbreviation", buildingAbbreviation)
+                    .attribute("externalId", buildingExternalId)
+                    .attribute("locationX", String.valueOf(0))
+                    .attribute("locationY", String.valueOf(0))
+                    .attribute("name", buildingName)
+                    .element("room")
+                    .attribute("externalId", roomExternalId)
+                    .attribute("locationX", String.valueOf(0))
+                    .attribute("locationY", String.valueOf(0))
+                    .attribute("roomClassification", roomClassification)
+                    .attribute("roomNumber", roomNumber)
+                    .attribute("capacity", String.valueOf(roomCapacity))
+                    .element("roomFeatures")
+                    .element("roomFeature")
+                    .attribute("feature", "tahvel")
+                    .attribute("value", "tahvel")
+                    .up()
+                    .up();
+        }
+        return xmlBuilder;
+    }
+
+    public void writeXML(XMLBuilder xmlBuilder) throws FileNotFoundException, TransformerException {
+        ParserUtility.writeToXMLFile(xmlBuilder, "BuildingsAndRooms.xml");
+    }
+
+    public void createXMLFile(String campus, String term, String year) {
+        try {
+            XMLBuilder xmlBuilder = buildXML(campus, term, year);
+            writeXML(xmlBuilder);
+        } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
             e.printStackTrace();
         }
     }
