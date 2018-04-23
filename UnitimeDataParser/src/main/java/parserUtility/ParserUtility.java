@@ -15,40 +15,46 @@ import java.util.Properties;
 
 public class ParserUtility {
 
-    // SQLite connection string
-    public final static String DATABASE_URL = "jdbc:sqlite:../Tunniplaan.db";
+    // SQLite connection url
+    private String databaseUrl;
     // Directory name, in which xml file are saved
-    public final static String XML_FILES_DIRECTORY = "XMLFiles";
+    private String xmlFilesDirectory;
+
+    public ParserUtility() {
+        databaseUrl = "jdbc:sqlite:../Tunniplaan.db";
+        xmlFilesDirectory = "XMLFiles";
+    }
+
+    public ParserUtility(String databaseUrl, String xmlFilesDirectory) {
+        this.databaseUrl = databaseUrl;
+        this.xmlFilesDirectory = xmlFilesDirectory;
+    }
 
     /**
      * Connect to the database
      * @return the Connection object
      */
-    public static Connection connectToDatabase() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
+    public Connection connectToDatabase() throws SQLException {
+        return DriverManager.getConnection(databaseUrl);
     }
 
     /**
-     * Make query from database and return queried data in ResultSet object
-     * @param querySQL SQL statement to query from database
+     * Create Statement object, which can process SQL string, using given connection object.
+     * @param connection from which will be created Statement object
+     * @return Statement object for executing given SQL query in database to which it is connected.
+     */
+    public Statement createStatement(Connection connection) throws SQLException {
+        return connection.createStatement();
+    }
+
+    /**
+     * Make query from database and return queried data in ResultSet object.
+     * @param querySQL SQL statement to query from database.
+     * @param statement is Statement object which will process given SQL string.
      * @return queried data in ResultSet object.
      */
-    public static ResultSet queryDataFromDatabase(String querySQL){
-        ResultSet resultSet = null;
-        try {
-            Connection connection = connectToDatabase();
-            Statement statement  = connection.createStatement();
-            resultSet = statement.executeQuery(querySQL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultSet;
+    public ResultSet queryDataFromDatabase(String querySQL, Statement statement) throws SQLException {
+        return statement.executeQuery(querySQL);
     }
 
     /**
@@ -58,9 +64,9 @@ public class ParserUtility {
      * @throws FileNotFoundException is thrown if file where is needed to write xml content does not exist.
      * @throws TransformerException occurred on transformation XMLBuilder toWriter function.
      */
-    public static void writeToXMLFile(XMLBuilder xmlBuilder, String fileName) throws FileNotFoundException, TransformerException {
+    public void writeToXMLFile(XMLBuilder xmlBuilder, String fileName) throws FileNotFoundException, TransformerException {
         // create XMLFiles directory
-        new File("XMLFiles").mkdirs();
+        new File(xmlFilesDirectory).mkdirs();
         // create write for saving xml content in file with given name
         PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("XMLFiles/" + fileName), Charset.forName("UTF-8").newEncoder()));
         // set properties of indents for file
