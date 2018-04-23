@@ -23,6 +23,7 @@ public class BuildingsAndRooms {
     private ParserUtility utility;
 
     public BuildingsAndRooms(String querySql, ResultSet queryResultSet) {
+        utility = new ParserUtility();
         this.QUERY_SQL_BUILDING = querySql;
         this.QUERY_SQL_RESULT_BUILDING = queryResultSet;
     }
@@ -204,7 +205,7 @@ public class BuildingsAndRooms {
     }
 
     public void writeXML(XMLBuilder xmlBuilder) throws FileNotFoundException, TransformerException {
-        ParserUtility.writeToXMLFile(xmlBuilder, "BuildingsAndRooms.xml");
+        utility.writeToXMLFile(xmlBuilder, "BuildingsAndRooms.xml");
     }
 
     public void createXMLFile(String campus, String term, String year) {
