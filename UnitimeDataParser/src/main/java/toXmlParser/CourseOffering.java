@@ -53,7 +53,8 @@ public class CourseOffering {
             String lecture = queryResultSet.getString("loeng");
             String paktikum = queryResultSet.getString("praktikum");
             String harjutus = queryResultSet.getString("harjutus");
-            if (lecture.indexOf(",")==0) {
+            int[] allTypeOfClass = new int[3];
+    /*        if (lecture.indexOf(",")==0) {
                 lecture = "0" + lecture;
             }
             lecture = lecture.replace(",",".");
@@ -78,8 +79,92 @@ public class CourseOffering {
             try {
                 harjutusTime = new Double(Double.parseDouble(harjutus) * 45).intValue();
             } catch (Exception e) {
-                System.out.println(lecture);
+                System.out.println("Exception harjutus");
             }
+      */
+
+            if (lecture.length() < 3) {
+                lecture += "0";
+            }
+            if (lecture.length() < 3) {
+                lecture += "0";
+            }
+            lecture = lecture.replace(",","");
+            try {
+            // Old code.
+            // lectureTime =new Double.parseDouble(lecture).intValue();
+            allTypeOfClass[0] = Integer.parseInt(lecture);
+            } catch (Exception e) {
+                System.out.println(" Exp l" + lecture);
+            }
+            if (harjutus.length() < 3) {
+                harjutus += "0";
+            }
+            if (harjutus.length() < 3) {
+                harjutus += "0";
+            }
+            harjutus = harjutus.replace(",","");
+            try {
+                // Old code.
+                // harjutusTime =new Double.parseDouble(harjutus).intValue();
+                allTypeOfClass[2] = Integer.parseInt(harjutus);
+            } catch (Exception e) {
+                System.out.println("Exp h " + harjutus);
+            }
+            if (paktikum.length() < 3) {
+                paktikum += "0";
+            }
+            if (paktikum.length() < 3) {
+                paktikum += "0";
+            }
+            paktikum = paktikum.replace(",","");
+            try {
+                // Old code.
+                // paktikumTime =new Double.parseDouble(paktikum).intValue();
+                allTypeOfClass[1] = Integer.parseInt(paktikum);
+            } catch (Exception e) {
+                System.out.println("Exp p" + paktikum);
+            }
+            // After creating doubles lecture,praktikum,harjutus
+            int[][] subpartMin = new int[3][3];
+            loop: for (int k = 0; k < subpartMin.length;k++) {
+                if (allTypeOfClass[k] == 0) continue;
+                subpartMin[k][k]= allTypeOfClass[k];
+                if (allTypeOfClass[k] % 100 != 0) {
+                    for (int j = 1; j < allTypeOfClass.length - k; j++) {
+                        if ((allTypeOfClass[k] + allTypeOfClass[(k + j)]) % 100 == 0) {
+                            subpartMin[k][k + j] = allTypeOfClass[k + j];
+                            allTypeOfClass[k + j] = 0;
+                            continue loop;
+                        }
+                    }
+                    if (k == 0 && (allTypeOfClass[0] + allTypeOfClass[1] + allTypeOfClass[2]) % 100 == 0) {
+                        subpartMin[0][1] = allTypeOfClass[1];
+                        allTypeOfClass[1] = 0;
+                        subpartMin[0][2] = allTypeOfClass[2];
+                        allTypeOfClass[2] = 0;
+                        continue loop;
+                    }
+                    if (allTypeOfClass[k] < 100) {
+                        for (int e = 1; e < allTypeOfClass.length - k; e++) {
+                            if (allTypeOfClass[k] < 100) {
+                                for (int j = 1; j < allTypeOfClass.length - k; j++) {
+                                    if ((allTypeOfClass[k] + allTypeOfClass[(k + j)]) > 100) {
+                                        subpartMin[k][k + j] = allTypeOfClass[k + j];
+                                        allTypeOfClass[k + j] = 0;
+                                        continue loop;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            System.out.println(subpartMin[0][0] + subpartMin[0][1] + subpartMin[0][2]);
+            System.out.println(subpartMin[1][0] + subpartMin[1][1] + subpartMin[1][2]);
+            System.out.println(subpartMin[2][0] + subpartMin[2][1] + subpartMin[2][2]);
+            System.out.println();
             xmlBuilder.element("offering")
                     .attribute("id", String.valueOf(i++))
                     .attribute("offered", "true")
@@ -130,7 +215,7 @@ public class CourseOffering {
                     .attribute("limit", "15")
                     .element("date")
             .attribute("startDate", "01/29")
-            .attribute("endDate", "06/07")
+            .attribute("endDate", "05/18")
             .element("time")
             .attribute("days", "MTWThF")
             .attribute("startTime", "1000")
