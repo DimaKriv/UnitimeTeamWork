@@ -5,45 +5,33 @@ import parserUtility.ParserUtility;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.io.*;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 
 public class AcademicSessionSetup {
 
 
-    ParserUtility utility;
-    Connection connection;
-//    Statement statement;
+    private ParserUtility utility;
+    private Connection connection;
 
-    MainData mainData;
+    private MainData mainData;
 
-    ResultSet resultSetDepartments;
+    private ResultSet resultSetDepartments;
     ResultSet resultSetTimePatterns;
-    ResultSet resultSetSubjectAreas;
+    private ResultSet resultSetSubjectAreas;
 
-    TimeDatePatterns timeDatePatterns;
-    ExaminationPeriods examinationPeriods;
+    private TimeDatePatterns timeDatePatterns;
+    private ExaminationPeriods examinationPeriods;
 
-    String sessionID;
+    private String sessionID;
 
-    XMLBuilder xmlSessionSetup = XMLBuilder.create(("sessionSetup"))
-            .attribute("term", "Fal")
-            .attribute("year", "2018")
-            .attribute("campus", "TTU_SESSION_TEST_")
-            .attribute("dateFormat", "yyyy/M/d")
-            .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
+    private XMLBuilder xmlSessionSetup;
 
-
-    public AcademicSessionSetup(String sessionID) throws SQLException, ParserConfigurationException {
-
-
-        this.mainData = new MainData(this);
-
+    public AcademicSessionSetup(String sessionID) throws SQLException {
 
         String queryDepartments = "SELECT * FROM INSTITUDID";
         String queryTimePatters = "SELECT * FROM TIME_PATTERN";
@@ -51,12 +39,10 @@ public class AcademicSessionSetup {
 
         this.sessionID = sessionID;
 
-
         utility = new ParserUtility();
         connection = utility.connectToDatabase();
-//        statement = utility.createStatement(connection);
 
-
+        this.mainData = new MainData(this);
         this.timeDatePatterns = new TimeDatePatterns(this);
         this.examinationPeriods = new ExaminationPeriods(this);
 
@@ -65,25 +51,18 @@ public class AcademicSessionSetup {
         resultSetTimePatterns = utility.queryDataFromDatabase(queryTimePatters, getNewStatement());
         resultSetSubjectAreas = utility.queryDataFromDatabase(queryAreas, getNewStatement());
 
-
     }
-
-
-    public Statement getNewStatement() throws SQLException {
-        return utility.createStatement(connection);
-    }
-
 
     String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
 
+    public XMLBuilder buildXML(String campus, String term, String year) {
 
-    public void buildXML() {
         try {
-            mainData.buildXML();
+            createSessionSetupElementBuilder(campus, term, year);
 
+            xmlSessionSetup.importXMLBuilder(mainData.buildXML());
 
             XMLBuilder departments = xmlSessionSetup.element("departments");
-
             while (resultSetDepartments.next()) {
                 String code = resultSetDepartments.getString("EXTERNAL_ID");
                 String abbreviation = resultSetDepartments.getString("ABBV");
@@ -109,8 +88,6 @@ public class AcademicSessionSetup {
             //ADD SUBJECT AREAS
 
             XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
-
-
             while (resultSetSubjectAreas.next()) {
 
                 String abbreviation = resultSetSubjectAreas.getString("abbv");
@@ -129,24 +106,40 @@ public class AcademicSessionSetup {
             xmlSessionSetup.importXMLBuilder(timeDatePatterns.buildDatePatterns());
 
             // ADD EXAMINATION PERIODS
-            examinationPeriods.buildExaminationPeriods();
+            xmlSessionSetup.importXMLBuilder(examinationPeriods.buildExaminationPeriods());
 
-            new File("XMLFiles").mkdirs();
+        } catch (ParserConfigurationException | SQLException e) {
+            e.printStackTrace();
+        }
+        return xmlSessionSetup;
+    }
 
-            PrintWriter writer = new PrintWriter(new FileOutputStream("XMLFiles/academicSessionSetup.xml"));
-            Properties outputProperties = new Properties();
-            outputProperties.put(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
-            outputProperties.put(javax.xml.transform.OutputKeys.INDENT, "yes");
-            outputProperties.put("{http://xml.apache.org/xslt}indent-amount", "2");
-            xmlSessionSetup.toWriter(writer, outputProperties);
-            System.out.println("Academic session setup XML is successfully created");
+    private void createSessionSetupElementBuilder(String campus, String term, String year) throws ParserConfigurationException {
+        xmlSessionSetup = XMLBuilder.create(("sessionSetup"))
+                .attribute("term", term)
+                .attribute("year", year)
+                .attribute("campus", campus)
+                .attribute("dateFormat", "yyyy/M/d")
+                .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
+
+    }
+
+    private Statement getNewStatement() throws SQLException {
+        return utility.createStatement(connection);
+    }
+
+    private void writeXML(XMLBuilder xmlBuilder) throws FileNotFoundException, TransformerException {
+        utility.writeToXMLFile(xmlBuilder, "sessionSetup.xml");
+    }
 
 
-        } catch (ParserConfigurationException | SQLException | FileNotFoundException | TransformerException e) {
+    public void createXMLFile(String campus, String term, String year) {
+        try {
+            writeXML(buildXML(campus, term, year));
+        } catch (FileNotFoundException | TransformerException e) {
             e.printStackTrace();
         }
     }
-
 
     public String getDateInFormat(int day, int week) {
         String strings1 = null;

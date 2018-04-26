@@ -3,21 +3,20 @@ package toXmlParser.sessionsetup;
 
 import com.jamesmurty.utils.XMLBuilder;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 public class MainData {
     AcademicSessionSetup academicSessionSetup;
 
-    MainData(AcademicSessionSetup academicSessionSetup){
+    MainData(AcademicSessionSetup academicSessionSetup) {
         this.academicSessionSetup = academicSessionSetup;
     }
 
 
+    XMLBuilder buildXML() throws ParserConfigurationException {
 
 
-
-    void buildXML(){
-
-
-        XMLBuilder session = academicSessionSetup.xmlSessionSetup.element("session")
+        XMLBuilder session = XMLBuilder.create("session")
                 .attribute("startDate", academicSessionSetup.getDateInFormat(0, 0))
                 .attribute("endDate", academicSessionSetup.getDateInFormat(4, 18))
                 .attribute("classEndDate", academicSessionSetup.getDateInFormat(4, 15))
@@ -31,11 +30,9 @@ public class MainData {
 //            XMLBuilder holiday = holidays.element("holiday")
 //                    .attribute("date", "2118/9/6");
 
-
+        return session;
 
     }
-
-
 
 
 }

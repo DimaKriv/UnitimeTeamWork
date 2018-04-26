@@ -2,6 +2,8 @@ package toXmlParser.sessionsetup;
 
 import com.jamesmurty.utils.XMLBuilder;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 
 public class ExaminationPeriods {
 
@@ -14,9 +16,10 @@ public class ExaminationPeriods {
     }
 
 
-    public void buildExaminationPeriods() {
+    public XMLBuilder buildExaminationPeriods() throws ParserConfigurationException {
 
-        XMLBuilder examinationPeriods = academicSessionSetup.xmlSessionSetup.element("examinationPeriods");
+        XMLBuilder examinationPeriods = XMLBuilder.create("examinationPeriods");
+
         XMLBuilder finalExaminationPeriods = examinationPeriods.element("periods")
                 .attribute("type", "final");
 
@@ -50,7 +53,7 @@ public class ExaminationPeriods {
 //                .attribute("startTime", "1830")
 //                .attribute("length", "90");
 
-
+        return examinationPeriods;
     }
 
 

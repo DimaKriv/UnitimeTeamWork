@@ -12,16 +12,11 @@ public class TimeDatePatterns {
 
 
     AcademicSessionSetup academicSessionSetup;
-    XMLBuilder datePatterns;
-    XMLBuilder timePatterns;
 
     public TimeDatePatterns(AcademicSessionSetup academicSessionSetup) {
-        this.academicSessionSetup = academicSessionSetup;
-//        timePatterns
-//        datePatterns = academicSessionSetup.xmlSessionSetup.element("datePatterns");
-        timePatterns = academicSessionSetup.xmlSessionSetup.element("timePatterns");
 
-        datePatterns = academicSessionSetup.xmlSessionSetup.element("datePatterns");
+        this.academicSessionSetup = academicSessionSetup;
+
     }
 
 
@@ -50,6 +45,7 @@ public class TimeDatePatterns {
     }
 
     public XMLBuilder buildTimePatterns() throws ParserConfigurationException {
+        XMLBuilder timePatterns = XMLBuilder.create("timePatterns");
 
         try {
             while (academicSessionSetup.resultSetTimePatterns.next()) {
@@ -58,7 +54,6 @@ public class TimeDatePatterns {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return timePatterns;
     }
 
@@ -89,6 +84,7 @@ public class TimeDatePatterns {
 
 
     public XMLBuilder buildDatePatterns() throws ParserConfigurationException {
+        XMLBuilder datePatterns = XMLBuilder.create("datePatterns");
         try {
             for (int i = 0; i < addAllWeeksSeparately().size(); i++) {
 
