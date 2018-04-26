@@ -52,8 +52,8 @@ public class TimeDatePatterns {
     public XMLBuilder buildTimePatterns() throws ParserConfigurationException {
 
         try {
-            while (academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.next()) {
-                timePatterns.importXMLBuilder(buildOneDatePattern(academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET));
+            while (academicSessionSetup.resultSetTimePatterns.next()) {
+                timePatterns.importXMLBuilder(buildOneDatePattern(academicSessionSetup.resultSetTimePatterns));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,8 +67,8 @@ public class TimeDatePatterns {
         String[] timesTimePattern = new String[0];
         String[] daysTimePattern = new String[0];
         try {
-            timesTimePattern = academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.getString("time").split("\\s+");
-            daysTimePattern = academicSessionSetup.QUERY_TIME_PATTERNS_RESULT_SET.getString("days").split("\\s+");
+            timesTimePattern = academicSessionSetup.resultSetTimePatterns.getString("time").split("\\s+");
+            daysTimePattern = academicSessionSetup.resultSetTimePatterns.getString("days").split("\\s+");
 
         } catch (SQLException e) {
             e.printStackTrace();
