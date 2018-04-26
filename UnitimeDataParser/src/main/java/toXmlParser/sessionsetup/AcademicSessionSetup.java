@@ -14,60 +14,72 @@ import java.util.Properties;
 
 
 public class AcademicSessionSetup {
-    private ParserUtility utility;
+
+
+    ParserUtility utility;
+    Connection connection;
+    Statement statement;
+
+
+    MainData mainData;
+
+
+    ResultSet QUERY_INSTITUDID_RESULT_SET;
+    ResultSet QUERY_TIME_PATTERNS_RESULT_SET;
+    ResultSet QUERY_SUBJECT_AREAS_SET;
+
     TimeDatePatterns timeDatePatterns;
     ExaminationPeriods examinationPeriods;
-    MainData mainData;
-    String sessionID;
-    Statement statement;
-    public AcademicSessionSetup(String sessionID) throws SQLException {
-        utility = new ParserUtility();
-        Connection connection = null;
 
-        try {
-            connection = utility.connectToDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+    String sessionID;
+
+    XMLBuilder xmlSessionSetup  = XMLBuilder.create(("sessionSetup"))
+            .attribute("term", "Fal")
+                            .attribute("year", "2018")
+                            .attribute("campus", "TTU_SESSION_TEST_")
+                            .attribute("dateFormat", "yyyy/M/d")
+                            .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
+
+
+    public AcademicSessionSetup(String sessionID) throws SQLException, ParserConfigurationException {
+
+
+        this.mainData = new MainData(this);
+
+
+        String QUERY_SQL_INSITUDID = "SELECT * FROM INSTITUDID";
+        String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
+        String QUERY_SQL_SUBJECT_AREAS = "SELECT * FROM SUBJECT_AREAS_TTU";
+
+        this.sessionID = sessionID;
+
+
+
+
+        utility = new ParserUtility();
+        connection = utility.connectToDatabase();
+        statement = utility.createStatement(connection);
+
+
+        QUERY_INSTITUDID_RESULT_SET = utility.queryDataFromDatabase(QUERY_SQL_INSITUDID, statement);
+        QUERY_TIME_PATTERNS_RESULT_SET = utility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS, statement);
+        QUERY_SUBJECT_AREAS_SET = utility.queryDataFromDatabase(QUERY_SQL_SUBJECT_AREAS, statement);
+
 
         this.timeDatePatterns = new TimeDatePatterns(this);
         this.examinationPeriods = new ExaminationPeriods(this);
-        this.mainData = new MainData(this);
-
-        try {
-            statement = utility.createStatement(connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        this.sessionID = sessionID;
     }
 
 
-    private final String QUERY_SQL_INSITUDID = "SELECT * FROM INSTITUDID";
-    private final ResultSet QUERY_INSTITUDID_RESULT_SET = utility.queryDataFromDatabase(QUERY_SQL_INSITUDID, statement);
-
-
-    private final String QUERY_SQL_TIME_PATTERNS = "SELECT * FROM TIME_PATTERN";
-    final ResultSet QUERY_TIME_PATTERNS_RESULT_SET = utility.queryDataFromDatabase(QUERY_SQL_TIME_PATTERNS, statement);
-
-    private final String QUERY_SQL_SUBJECT_AREAS = "SELECT * FROM SUBJECT_AREAS_TTU";
-    private final ResultSet QUERY_SUBJECT_AREAS_SET = utility.queryDataFromDatabase(QUERY_SQL_SUBJECT_AREAS, statement);
-
-    final String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
-    XMLBuilder xmlSessionSetup;
+    String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
 
 
     public void buildXML() {
         try {
 
-            xmlSessionSetup =
-                    XMLBuilder.create(("sessionSetup"))
-                            .attribute("term", "Fal")
-                            .attribute("year", "2018")
-                            .attribute("campus", "TTU_SESSION_TEST_")
-                            .attribute("dateFormat", "yyyy/M/d")
-                            .attribute("created", "Fri Jun 23 15:21:28 CEST 2117");
+//            xmlSessionSetup =
+
 
             mainData.buildXML();
 
@@ -88,10 +100,11 @@ public class AcademicSessionSetup {
 //                    .attribute("emails", "true");
 
 
+
             XMLBuilder departments = xmlSessionSetup.element("departments");
 
             while (QUERY_INSTITUDID_RESULT_SET.next()) {
-                String code = QUERY_INSTITUDID_RESULT_SET.getString("EXTERNAL_ID");
+                String code = QUERY_INSTITUDID_RESULT_SET.getString("PK_EXTERNAL_ID");
                 String abbreviation = QUERY_INSTITUDID_RESULT_SET.getString("ABBV");
                 String name = QUERY_INSTITUDID_RESULT_SET.getString("NIMETUS");
 //                String externalId = QUERY_INSTITUDID_RESULT_SET.getString("EXTERNALID");
@@ -239,19 +252,7 @@ public class AcademicSessionSetup {
         return utility.queryDataFromDatabase("SELECT kuupaev FROM session_ajad" +
                 " WHERE fk_tunn_sessioon_id = " + sessionID +
                 " AND paev = " + day +
-                " AND nadal = " + week,statement);
-    }
-
-    public void setTimeDatePatterns(TimeDatePatterns timeDatePatterns) {
-        this.timeDatePatterns = timeDatePatterns;
-    }
-
-    public void setExaminationPeriods(ExaminationPeriods examinationPeriods) {
-        this.examinationPeriods = examinationPeriods;
-    }
-
-    public void setMainData(MainData mainData) {
-        this.mainData = mainData;
+                " AND nadal = " + week, statement);
     }
 
 

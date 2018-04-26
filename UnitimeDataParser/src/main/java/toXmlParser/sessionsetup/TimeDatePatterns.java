@@ -7,20 +7,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * Created by lll on 11-Apr-18.
- */
+
 public class TimeDatePatterns {
 
 
     AcademicSessionSetup academicSessionSetup;
-
-    private XMLBuilder timePatterns = academicSessionSetup.xmlSessionSetup.element("timePatterns");
-
-    private XMLBuilder datePatterns = academicSessionSetup.xmlSessionSetup.element("datePatterns");
+    XMLBuilder datePatterns;
+    XMLBuilder timePatterns;
 
     public TimeDatePatterns(AcademicSessionSetup academicSessionSetup) {
         this.academicSessionSetup = academicSessionSetup;
+//        timePatterns
+//        datePatterns = academicSessionSetup.xmlSessionSetup.element("datePatterns");
+        timePatterns = academicSessionSetup.xmlSessionSetup.element("timePatterns");
+
+        datePatterns = academicSessionSetup.xmlSessionSetup.element("datePatterns");
     }
 
 
@@ -48,7 +49,6 @@ public class TimeDatePatterns {
         return timePattern;
     }
 
-
     public XMLBuilder buildTimePatterns() throws ParserConfigurationException {
 
         try {
@@ -61,6 +61,7 @@ public class TimeDatePatterns {
 
         return timePatterns;
     }
+
 
     public void addDaysAndWeeksToTimePattern(XMLBuilder timePattern) {
         String[] timesTimePattern = new String[0];
@@ -81,6 +82,7 @@ public class TimeDatePatterns {
 
             timePattern.element("time")
                     .attribute("start", timesTimePattern[i]);
+
 
         }
     }
