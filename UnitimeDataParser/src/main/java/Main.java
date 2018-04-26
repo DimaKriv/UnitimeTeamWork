@@ -3,6 +3,7 @@ import toXmlParser.CourseCatalog;
 import toXmlParser.Departments;
 import toXmlParser.SubjectAreas;
 import toXmlParser.sessionsetup.AcademicSessionSetup;
+
 import java.sql.SQLException;
 
 public class Main {
@@ -22,8 +23,11 @@ public class Main {
         CourseCatalog courseCatalog = new CourseCatalog();
         courseCatalog.createXMLFile("TTU", "Fall", "2018");
 
+
+        //need to select session id manually. Session also cannot be newer, than spring session 2018
         AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
-        academicSessionSetup.buildXML();
+        academicSessionSetup.createXMLFile("TTU","FALL","2018");
 
     }
+
 }
