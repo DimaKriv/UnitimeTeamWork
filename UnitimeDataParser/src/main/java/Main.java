@@ -19,8 +19,8 @@ public class Main {
         CourseOffering courseCatalog = new CourseOffering();
         courseCatalog.createXMLFile("TTU", "Fall", "2018");
 
-       // AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
-       // academicSessionSetup.buildXML();
+        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
+        academicSessionSetup.createXMLFile("TTU","FALL","2018");
 
     }
 }
