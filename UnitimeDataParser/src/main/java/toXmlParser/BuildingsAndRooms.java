@@ -39,7 +39,7 @@ public class BuildingsAndRooms {
 
     public XMLBuilder createBuildingAndRoomsElementBuilder(String campus, String term, String year) throws ParserConfigurationException {
         XMLBuilder xmlBuilder =
-                XMLBuilder.create("BuildingsRooms")
+                XMLBuilder.create("buildingsRooms")
                         .attribute("campus", campus)
                         .attribute("term", term)
                         .attribute("year", year);
