@@ -2,16 +2,106 @@ package encodingRepairer;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class CSVEncodingRepairer {
 
-    private final String PATH_TO_CSV_FILES = "../andmed/TUNNIPLAAN";
+    private String pathToPropertiesFile;
+    private String pathToCsvFilesDirectory;
+
+    public CSVEncodingRepairer() {
+        pathToPropertiesFile = "properties.txt";
+        pathToCsvFilesDirectory = getPathToCsvFilesDirectoryFromPropertiesFile(pathToPropertiesFile);
+    }
+
+    public CSVEncodingRepairer(String pathToPropertiesFile, String pathToCsvFilesDirectory) {
+        this.pathToPropertiesFile = pathToPropertiesFile;
+        this.pathToCsvFilesDirectory = pathToCsvFilesDirectory;
+    }
+
+    /**
+     * Gets path to directory in which are placed incorrectly encoded files from properties file
+     * (this path should be written in properties file like PathToCsvFilesDirectory=SOME_PATH_HERE)
+     * @param pathToPropertiesFile path to properties file location (including filename)
+     * @return path to directory in which should be repaired incorrectly encoded files
+     *         if properties file is presented and PathToCsvFilesDirectory value is not empty or
+     *         otherwise returns . (path to current repairer location)
+     */
+    private String getPathToCsvFilesDirectoryFromPropertiesFile(String pathToPropertiesFile) {
+        File propertiesFile = new File(pathToPropertiesFile);
+        String pathToCsvFilesDirectory = ".";
+        if (propertiesFile.canRead()) {
+            try {
+                Optional<String> pathToCsvFilesDirectoryOptional = Files.lines(Paths.get(pathToPropertiesFile), Charset.forName("UTF-8"))
+                        .filter(line -> line.contains("PathToCsvFilesDirectory")).findFirst();
+                if (pathToCsvFilesDirectoryOptional.isPresent()) {
+                    pathToCsvFilesDirectory = pathToCsvFilesDirectoryOptional.get();
+                    if (pathToCsvFilesDirectory.split("=").length > 1) {
+                        // get value from string like PathToCsvFilesDirectory=SOME_VALUE (value is after equals sign)
+                        pathToCsvFilesDirectory = pathToCsvFilesDirectory.split("=")[1];
+                        pathToCsvFilesDirectory = pathToCsvFilesDirectory.trim();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return pathToCsvFilesDirectory;
+    }
+
+    /**
+     * List all the files under a directory
+     * @param directoryName to be listed
+     */
+    private List<File> getFilesList(String directoryName){
+        List<File> filesList = new LinkedList<>();
+
+        File directory = new File(directoryName);
+        Optional<File[]> filesArrayOptional = Optional.ofNullable(directory.listFiles());
+        if (filesArrayOptional.isPresent()) {
+            File[] filesArray = filesArrayOptional.get();
+            filesList = Arrays.asList(filesArray);
+        }
+        return filesList;
+    }
+
+    /**
+     * Get file extension (using pattern like filename.extension)
+     * @param file file, which extension to get
+     * @return extension of file (like extension) if it is presented or
+     *         empty string if there is not fount file extension
+     */
+    private String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
+            return fileName.substring(fileName.lastIndexOf(".") + 1);
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Get list of files with csv extension from unchecked files list
+     * @param files list of files from which files with csv extension will be gotten
+     * @return list of files with csv extension (like filename.csv)
+     */
+    private List<File> getCSVFilesList(List<File> files) {
+        List<File> csvFilesList = new ArrayList<>();
+        for (File file : files) {
+            if (getFileExtension(file).equals("csv")) {
+                csvFilesList.add(file);
+            }
+        }
+        return csvFilesList;
+    }
 
     public void repairEncodingInCSVFiles() {
-        List<File> files = getFilesList(PATH_TO_CSV_FILES);
+        List<File> files = getFilesList(pathToCsvFilesDirectory);
+        List<File> csvFiles = getCSVFilesList(files);
 
-        for (File oldFile : files) {
+        for (File oldFile : csvFiles) {
 
             // rename current file to filename + .temp
             String oldFilePath = oldFile.getPath();
@@ -81,21 +171,5 @@ public class CSVEncodingRepairer {
                 }
             }
         }
-    }
-
-    /**
-     * List all the files under a directory
-     * @param directoryName to be listed
-     */
-    private List<File> getFilesList(String directoryName){
-        List<File> filesList = new LinkedList<>();
-
-        File directory = new File(directoryName);
-        Optional<File[]> filesArrayOptional = Optional.ofNullable(directory.listFiles());
-        if (filesArrayOptional.isPresent()) {
-            File[] filesArray = filesArrayOptional.get();
-            filesList = Arrays.asList(filesArray);
-        }
-        return filesList;
     }
 }

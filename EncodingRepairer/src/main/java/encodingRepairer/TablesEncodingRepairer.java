@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 
 public class TablesEncodingRepairer {
 
+    // NB! This code is not used in project and is not finished
+
     /**
      * SQL query for getting names of all tables in database.
      */

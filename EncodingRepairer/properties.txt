@@ -1,0 +1,1 @@
+PathToCsvFilesDirectory=path_to_folder_with_csv_files

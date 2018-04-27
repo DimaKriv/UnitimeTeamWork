@@ -64,3 +64,6 @@ UnitimeDataParser/test/directoryConfirmTest.xml
 UnitimeDataParser/test/directoryCreationTest.xml
 UnitimeDataParser/test/fileCreationTest.xml
 UnitimeDataParser/test/indentAmountTest.xml
+EncodingRepairer/test/testCSV.csv
+EncodingRepairer/test/testNotExtension
+EncodingRepairer/test/testTXT.txt
