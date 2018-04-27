@@ -1,0 +1,41 @@
+group 'EapParser'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'Main'
+
+sourceCompatibility = 1.8
+
+compileJava.options.encoding = "UTF-8"
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    // configuration that holds jars to include in the jar
+    extraLibs
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    extraLibs group: 'org.xerial', name: 'sqlite-jdbc', version: '3.21.0.1'
+    extraLibs group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
+    extraLibs group: 'org.apache.commons', name: 'commons-csv', version: '1.1'
+    configurations.compile.extendsFrom(configurations.extraLibs)
+}
+
+jar {
+    baseName = 'EAPparser'
+    version =  '1'
+    manifest {
+        attributes(
+                'Main-Class': 'Main'
+        )
+    }
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

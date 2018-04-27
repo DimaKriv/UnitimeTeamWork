@@ -1,8 +1,9 @@
 import toXmlParser.BuildingsAndRooms;
-import toXmlParser.CourseCatalog;
+import toXmlParser.CourseOffering;
 import toXmlParser.Departments;
 import toXmlParser.SubjectAreas;
 import toXmlParser.sessionsetup.AcademicSessionSetup;
+
 import java.sql.SQLException;
 
 public class Main {
@@ -19,11 +20,12 @@ public class Main {
         SubjectAreas subjectAreas = new SubjectAreas();
         subjectAreas.createXMLFile("TTU", "Fall", "2018");
 
-        CourseCatalog courseCatalog = new CourseCatalog();
+        CourseOffering courseCatalog = new CourseOffering();
         courseCatalog.createXMLFile("TTU", "Fall", "2018");
 
-        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
-        academicSessionSetup.buildXML();
+        //sessionID you can take from SESSION_AJAD
+        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1083");
+        academicSessionSetup.createXMLFile("TTUTESTTIMEPATTERNS","FALL","2018");
 
     }
 }

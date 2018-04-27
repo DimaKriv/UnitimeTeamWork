@@ -7,7 +7,6 @@ import toXmlParser.Departments;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
