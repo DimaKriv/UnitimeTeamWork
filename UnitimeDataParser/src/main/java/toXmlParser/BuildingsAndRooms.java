@@ -22,6 +22,7 @@ public class BuildingsAndRooms {
     private ResultSet QUERY_SQL_RESULT_BUILDING;
     private ParserUtility utility;
 
+
     public BuildingsAndRooms(String querySql, ResultSet queryResultSet) {
         utility = new ParserUtility();
         this.QUERY_SQL_BUILDING = querySql;
@@ -29,7 +30,8 @@ public class BuildingsAndRooms {
     }
 
     public BuildingsAndRooms() throws SQLException{
-        QUERY_SQL_BUILDING = "SELECT H.bl_id, H.nimetus AS buildingName, R.kohtade_arv, R.rm_id, R.ruum_id, R.kood, R.nimetus AS roomName FROM R_HOONE AS H INNER JOIN R_RUUM AS R ON H.bl_id=R.fk_bl_id LEFT JOIN R_RUUM_VARUSTUS AS V ON V.fk_ruum_id=R.ruum_id WHERE H.bl_id NOT IN ('KOPLI116', 'AKAD21F', 'AKAD21B', 'KOPLI101', 'KJARVE2')";
+        utility = new ParserUtility();
+        QUERY_SQL_BUILDING = "SELECT V.FK_VARUSTUS_KOOD, H.bl_id, H.nimetus AS buildingName, R.kohtade_arv, R.rm_id, R.ruum_id, R.kood, R.nimetus AS roomName FROM R_HOONE AS H INNER JOIN R_RUUM AS R ON H.bl_id=R.fk_bl_id LEFT JOIN R_RUUM_VARUSTUS AS V ON V.fk_ruum_id=R.ruum_id WHERE H.bl_id NOT IN ('KOPLI116', 'AKAD21F', 'AKAD21B', 'KOPLI101', 'KJARVE2')";
         Connection connection = utility.connectToDatabase();
         Statement statement = utility.createStatement(connection);
         QUERY_SQL_RESULT_BUILDING = utility.queryDataFromDatabase(QUERY_SQL_BUILDING, statement);
@@ -50,16 +52,20 @@ public class BuildingsAndRooms {
 
         while (QUERY_SQL_RESULT_BUILDING.next()) {
             String departmentCode = "1001";
+            String roomFeature = "";
             String buildingExternalId = QUERY_SQL_RESULT_BUILDING.getString("bl_id");
             String buildingName = QUERY_SQL_RESULT_BUILDING.getString("buildingName");
             String roomExternalId = QUERY_SQL_RESULT_BUILDING.getString("ruum_id");
             String buildingAbbreviation = QUERY_SQL_RESULT_BUILDING.getString("kood").split("-")[0];
-            System.out.println(buildingAbbreviation);
             String roomCapacity = QUERY_SQL_RESULT_BUILDING.getString("kohtade_arv");
             String roomNumber = QUERY_SQL_RESULT_BUILDING.getString("rm_id");
             String roomClassification = QUERY_SQL_RESULT_BUILDING.getString("roomName");
-            if (buildingName.length() > 20){
-                buildingName = buildingName.substring(0, 20);
+            roomFeature = QUERY_SQL_RESULT_BUILDING.getString("FK_VARUSTUS_KOOD");
+            if (roomFeature == null){
+                roomFeature = "";
+            }
+            if (roomFeature.length() > 20){
+                roomFeature = roomFeature.substring(0,20);
             }
             if (roomClassification.equals("Üldkasutatav auditoorium")){
                 roomClassification = "Uld.auditoorium";
@@ -113,9 +119,10 @@ public class BuildingsAndRooms {
                         .attribute("percent", "50")
                         .up()
                         .up()
+                        .element("roomFeatures")
                         .element("roomFeature")
-                        .attribute("feature", "tahvel")
-                        .attribute("value", "tahvel")
+                        .attribute("feature", roomFeature)
+                        .attribute("value", roomFeature)
                         .up()
                         .up();
             }
@@ -144,9 +151,10 @@ public class BuildingsAndRooms {
                         .attribute("percent", "50")
                         .up()
                         .up()
+                        .element("roomFeatures")
                         .element("roomFeature")
-                        .attribute("feature", "tahvel")
-                        .attribute("value", "tahvel")
+                        .attribute("feature", roomFeature)
+                        .attribute("value", roomFeature)
                         .up()
                         .up();
             }
@@ -175,9 +183,10 @@ public class BuildingsAndRooms {
                         .attribute("percent", "50")
                         .up()
                         .up()
+                        .element("roomFeatures")
                         .element("roomFeature")
-                        .attribute("feature", "tahvel")
-                        .attribute("value", "tahvel")
+                        .attribute("feature", roomFeature)
+                        .attribute("value", roomFeature)
                         .up()
                         .up();
             }
@@ -196,8 +205,8 @@ public class BuildingsAndRooms {
                     .attribute("capacity", String.valueOf(roomCapacity))
                     .element("roomFeatures")
                     .element("roomFeature")
-                    .attribute("feature", "tahvel")
-                    .attribute("value", "tahvel")
+                    .attribute("feature", roomFeature)
+                    .attribute("value", roomFeature)
                     .up()
                     .up();
         }

@@ -4,7 +4,6 @@ import com.jamesmurty.utils.XMLBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import toXmlParser.BuildingsAndRooms;
-import toXmlParser.Departments;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -14,7 +13,6 @@ import java.sql.SQLException;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 public class BuildingAndRoomsTest{
 
     private BuildingsAndRooms buildingsAndRooms;
@@ -81,7 +79,7 @@ public class BuildingAndRoomsTest{
         when(queryResultSetMock.getString("rm_id")).thenReturn("120");
         when(queryResultSetMock.getString("roomName")).thenReturn("Classroom");
 
-        XMLBuilder actualBuilder = buildingsAndRooms.buildXML("TTU", "Fall", "2018");
+        XMLBuilder actualBuilder = buildingsAndRooms.createBuildingAndRoomsElementBuilder("TTU", "Fall", "2018");
 //            assertEquals(expectedBuilder.asString(), actualBuilder.asString());
     }
 

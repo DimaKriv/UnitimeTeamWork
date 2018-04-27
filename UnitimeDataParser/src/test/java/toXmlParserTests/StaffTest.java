@@ -3,18 +3,14 @@ package toXmlParserTests;
 import com.jamesmurty.utils.XMLBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import toXmlParser.Departments;
 import toXmlParser.StaffParser;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class StaffTest {
 
