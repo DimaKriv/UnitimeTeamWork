@@ -196,7 +196,7 @@ public class TimeDatePatterns {
     public XMLBuilder addWeeksFromNineToSixteen() throws ParserConfigurationException {
 
         XMLBuilder weeksFromEightToSixteen = XMLBuilder.create("datePattern")
-                .attribute("name", "weeks 1-8")
+                .attribute("name", "weeks 9-16")
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
                 .attribute("default", "true");
@@ -208,6 +208,5 @@ public class TimeDatePatterns {
         }
         return weeksFromEightToSixteen;
     }
-
 
 }
