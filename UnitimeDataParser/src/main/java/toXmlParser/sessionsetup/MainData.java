@@ -8,12 +8,12 @@ import javax.xml.parsers.ParserConfigurationException;
 public class MainData {
     AcademicSessionSetup academicSessionSetup;
 
-    MainData(AcademicSessionSetup academicSessionSetup) {
+    public MainData(AcademicSessionSetup academicSessionSetup) {
         this.academicSessionSetup = academicSessionSetup;
     }
 
 
-    XMLBuilder buildXML() throws ParserConfigurationException {
+    public XMLBuilder buildXML() throws ParserConfigurationException {
 
 
         XMLBuilder session = XMLBuilder.create("session")
