@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\encoding-repairer-1.jar;%APP_HOME%\lib\sqlite-jdbc-3.21.0.1.jar
+set CLASSPATH=%APP_HOME%\lib\encoding-repairer-1.1.jar;%APP_HOME%\lib\sqlite-jdbc-3.21.0.1.jar
 
 @rem Execute EncodingRepairer
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %ENCODING_REPAIRER_OPTS%  -classpath "%CLASSPATH%" Main %CMD_LINE_ARGS%
