@@ -28,7 +28,7 @@ public class BuildingAndRoomsTest{
 
     @Test
     public void testXMLBuilderWithGivenCampusAndTermAndYearIsCreatedCorrectly() throws ParserConfigurationException, TransformerException {
-        XMLBuilder expectedBuilder = XMLBuilder.create("BuildingsRooms")
+        XMLBuilder expectedBuilder = XMLBuilder.create("buildingsRooms")
                 .attribute("campus", "TTU")
                 .attribute("term", "Fall")
                 .attribute("year", "2018");
@@ -85,7 +85,7 @@ public class BuildingAndRoomsTest{
 
     @Test
     public void testBuildingXMLWithZeroEntryInResultSet() throws ParserConfigurationException, SQLException, TransformerException {
-        XMLBuilder expectedBuilder = XMLBuilder.create("BuildingsRooms")
+        XMLBuilder expectedBuilder = XMLBuilder.create("buildingsRooms")
                 .attribute("campus", "TTU")
                 .attribute("term", "Fall")
                 .attribute("year", "2018");

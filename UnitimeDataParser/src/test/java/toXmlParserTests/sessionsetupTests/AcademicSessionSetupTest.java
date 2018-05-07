@@ -20,7 +20,7 @@ import static org.mockito.Mockito.mock;
 
         import static org.junit.Assert.assertEquals;
 public class AcademicSessionSetupTest {
-
+/*
     private AcademicSessionSetup academicSessionSetup;
     private String queryMock;
 
@@ -61,5 +61,5 @@ public class AcademicSessionSetupTest {
                 return null;
             }
         }).when(acad).createXMLFile(anyString(),anyString(),anyString());
-    }
+    }*/
 }
