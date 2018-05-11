@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/UnitimeDataParser.iml" filepath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/UnitimeDataParser_main.iml" filepath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser_main.iml" group="UnitimeDataParser" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/UnitimeDataParser_test.iml" filepath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser_test.iml" group="UnitimeDataParser" />
-      <module fileurl="file://$PROJECT_DIR$/src/main/main.iml" filepath="$PROJECT_DIR$/src/main/main.iml" />
     </modules>
   </component>
 </project>
