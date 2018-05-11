@@ -1,10 +1,9 @@
-package toXmlParserTests.dataOptimizationTests;
+package toXmlParser.dataOptimization;
 
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import toXmlParser.dataOptimization.ClassOptimizator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
