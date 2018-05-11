@@ -1,9 +1,8 @@
-package toXmlParserTests;
+package toXmlParser;
 
 import com.jamesmurty.utils.XMLBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import toXmlParser.BuildingsAndRooms;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;

@@ -1,20 +1,5 @@
-package toXmlParserTests.sessionsetupTests;
+package toXmlParser.sessionsetup;
 
-import com.jamesmurty.utils.XMLBuilder;
-        import org.junit.Before;
-        import org.junit.Test;
-
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import toXmlParser.sessionsetup.AcademicSessionSetup;
-
-import javax.xml.parsers.ParserConfigurationException;
-        import javax.xml.transform.TransformerException;
-        import java.sql.SQLException;
-import java.util.Arrays;
-
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
 

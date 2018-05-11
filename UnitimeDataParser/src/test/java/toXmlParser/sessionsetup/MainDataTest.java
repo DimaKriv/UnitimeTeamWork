@@ -1,10 +1,8 @@
-package toXmlParserTests.sessionsetupTests;
+package toXmlParser.sessionsetup;
 
 import com.jamesmurty.utils.XMLBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import toXmlParser.sessionsetup.AcademicSessionSetup;
-import toXmlParser.sessionsetup.MainData;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;

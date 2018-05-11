@@ -1,16 +1,7 @@
-package toXmlParserTests.sessionsetupTests;
+package toXmlParser.sessionsetup;
 
-import com.jamesmurty.utils.XMLBuilder;
 import org.junit.Before;
-import org.junit.Test;
-import toXmlParser.sessionsetup.AcademicSessionSetup;
-import toXmlParser.sessionsetup.ExaminationPeriods;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.sql.ResultSet;
-
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 public class ExaminationPeriodsTest {

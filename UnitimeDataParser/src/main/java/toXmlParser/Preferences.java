@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class Preferences {
@@ -21,6 +20,10 @@ public class Preferences {
     private String querySql;
     private ResultSet queryResultSet;
     private ClassOptimizator optimizer;
+    private static final int LECTURE_CLASS_TYPE_CAPACITY = 200;
+    private static final int LABORATORY_CLASS_TYPE_CAPACITY = 20;
+    private static final int RECITATION_CLASS_TYPE_CAPACITY = 20;
+
 
     public Preferences() throws SQLException {
         utility = new ParserUtility();
@@ -31,16 +34,16 @@ public class Preferences {
         optimizer = new ClassOptimizator();
     }
 
-    public Preferences(String querySql, ResultSet queryResultSet) {
-        utility = new ParserUtility();
+    public Preferences(ParserUtility utility, String querySql, ResultSet queryResultSet, ClassOptimizator optimizer) {
+        this.utility = utility;
         this.querySql = querySql;
         this.queryResultSet = queryResultSet;
-        optimizer = new ClassOptimizator();
+        this.optimizer = optimizer;
     }
 
-    public XMLBuilder createDepartmentsElementBuilder(String campus, String term, String year) throws ParserConfigurationException {
+    public XMLBuilder createPreferencesElementBuilder(String campus, String term, String year) throws ParserConfigurationException {
         XMLBuilder xmlBuilder =
-            XMLBuilder.create("departments")
+            XMLBuilder.create("preferences")
                 .attribute("campus", campus)
                 .attribute("term", term)
                 .attribute("year", year);
@@ -49,7 +52,7 @@ public class Preferences {
     }
 
     public XMLBuilder buildXML(String campus, String term, String year) throws ParserConfigurationException, SQLException {
-        XMLBuilder xmlBuilder = createDepartmentsElementBuilder(campus, term, year);
+        XMLBuilder xmlBuilder = createPreferencesElementBuilder(campus, term, year);
 
         while (queryResultSet.next()) {
             String subject = queryResultSet.getString("ainekood");
@@ -57,70 +60,37 @@ public class Preferences {
             String laboratoryHoursPerWeek = queryResultSet.getString("praktikum");
             String recitationHoursPerWeek = queryResultSet.getString("harjutus");
             int studentsNumber = Integer.parseInt(queryResultSet.getString("inimeste_arv"));
-            int[] classTypes = optimizer.makeIntMassiveFromStringInput(lectureHoursPerWeek, laboratoryHoursPerWeek, recitationHoursPerWeek);
+            int[] classTypes = optimizer.makeIntMassiveFromStringInput(
+                    lectureHoursPerWeek, laboratoryHoursPerWeek, recitationHoursPerWeek);
             int[][] subPartsForTypes = optimizer.makeCourceOfferringData(classTypes);
             for (int index = 0; index < 2; index++) {
                 if (classTypes[index] != 0) {
-                    String type;
-                    int numberOfClasses;
-                    switch (index) {
-                        case 0:
-                            type = "Lec";
-                            numberOfClasses = countNumberOfClasses(studentsNumber, 200);
-                            break;
-                        case 1:
-                            type = "Lab";
-                            numberOfClasses = countNumberOfClasses(studentsNumber, 20);
-                            break;
-                        case 2:
-                            type = "Rec";
-                            numberOfClasses = countNumberOfClasses(studentsNumber, 20);
-                            break;
-                        default:
-                            numberOfClasses = 0;
-                            type = "Undefined";
-                            break;
-                    }
+                    String classType = getClassType(index);
+                    int numberOfClasses = getNumberOfClassesForClassType(classType, studentsNumber);
                     ArrayList<Integer> classTypeTimeDistributionInfo = optimizer.countDatePattern(subPartsForTypes, index);
-                    String[] timePatterns = optimizer.getTimePattern(classTypeTimeDistributionInfo);
-                    Optional<String[]> optionalTimePatterns = Optional.ofNullable(timePatterns);
-                    String timePattern = "Empty time pattern";
-                    if (optionalTimePatterns.isPresent())  {
-                        timePattern = timePatterns[0];
-                    }
-                    String[] datePatterns = optimizer.getDatePattern(classTypeTimeDistributionInfo);
-                    Optional<String[]> optionalDatePatterns = Optional.ofNullable(datePatterns);
-                    String datePattern = "Empty date pattern";
-                    if (optionalDatePatterns.isPresent())  {
-                        datePattern = datePatterns[0];
-                    }
-                    xmlBuilder = xmlBuilder.element("subpart")
-                        .attribute("subject", subject)
-                        .attribute("course", "1")
-                        .attribute("type", type)
-                            .element("timePref")
-                            // pattern need some improvements after fixes will be made in ClassOptimizator class.
-                            .attribute("pattern", timePattern)
-                            .attribute("level", "0")
-                            .up()
-                            .element("datePref")
-                            .attribute("pattern", datePattern)
-                            .attribute("level", "0")
-                            .up()
-                        .up();
-                    for (int classNumber = 1; classNumber <= numberOfClasses; classNumber++) {
-                        xmlBuilder = xmlBuilder.element("class")
-                            .attribute("subject", subject)
-                            .attribute("course", "1")
-                            .attribute("type", type)
-                            .attribute("suffix", String.valueOf(classNumber))
-                            .up();
-                    }
+                    String timePattern = getTimePattern(classTypeTimeDistributionInfo);
+                    String datePattern = getDatePattern(classTypeTimeDistributionInfo);
+                    xmlBuilder = createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
+                            xmlBuilder, subject, classType, timePattern, datePattern);
+                    xmlBuilder = createClassElements(xmlBuilder, subject, classType, numberOfClasses);
                 }
             }
         }
         xmlBuilder = xmlBuilder.up();
         return xmlBuilder;
+    }
+
+    public String getClassType(int classTypeIndex) {
+        switch (classTypeIndex) {
+            case 0:
+                return "Lec";
+            case 1:
+                return "Lab";
+            case 2:
+                return "Rec";
+            default:
+                return "Undefined type (classTypeIndex not in range from 0 to 2)";
+        }
     }
 
     public int countNumberOfClasses(int studentsNumber, int classCapacity) {
@@ -135,6 +105,85 @@ public class Preferences {
             }
         }
         return numberOfClasses;
+    }
+
+    public int getNumberOfClassesForClassType(String classType, int studentsNumber) {
+        switch (classType) {
+            case "Lec":
+                return countNumberOfClasses(studentsNumber, LECTURE_CLASS_TYPE_CAPACITY);
+            case "Lab":
+                return countNumberOfClasses(studentsNumber, LABORATORY_CLASS_TYPE_CAPACITY);
+            case "Rec":
+                return countNumberOfClasses(studentsNumber, RECITATION_CLASS_TYPE_CAPACITY);
+            default:
+                return 0;
+        }
+    }
+
+    public String getTimePattern(ArrayList<Integer> classTypeTimeDistributionInfo) {
+        String[] timePatterns = optimizer.getTimePattern(classTypeTimeDistributionInfo);
+        Optional<String[]> optionalTimePatterns = Optional.ofNullable(timePatterns);
+        String timePattern = "Empty time pattern (Time patterns array is null)";
+        if (optionalTimePatterns.isPresent())  {
+            timePattern = timePatterns[0];
+        }
+        return timePattern;
+    }
+
+    public String getDatePattern(ArrayList<Integer> classTypeTimeDistributionInfo) {
+        String[] datePatterns = optimizer.getDatePattern(classTypeTimeDistributionInfo);
+        Optional<String[]> optionalDatePatterns = Optional.ofNullable(datePatterns);
+        String datePattern = "Empty date pattern (Date patterns array is null)";
+        if (optionalDatePatterns.isPresent())  {
+            datePattern = datePatterns[0];
+        }
+        return datePattern;
+    }
+
+    public XMLBuilder createTimePrefElement(XMLBuilder xmlBuilder, String timePattern) {
+        xmlBuilder = xmlBuilder.element("timePref")
+                // pattern need some improvements after fixes will be made in ClassOptimizator class.
+                .attribute("pattern", timePattern)
+                .attribute("level", "0")
+                .up();
+        return xmlBuilder;
+    }
+
+    public XMLBuilder createDatePrefElement(XMLBuilder xmlBuilder, String datePattern) {
+        xmlBuilder = xmlBuilder.element("datePref")
+                .attribute("pattern", datePattern)
+                .attribute("level", "0")
+                .up();
+        return xmlBuilder;
+    }
+
+    public XMLBuilder createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
+            XMLBuilder xmlBuilder, String subject, String classType, String timePattern, String datePattern) {
+        xmlBuilder = xmlBuilder.element("subpart")
+                .attribute("subject", subject)
+                .attribute("course", "1")
+                .attribute("type", classType);
+        xmlBuilder = createTimePrefElement(xmlBuilder, timePattern);
+        xmlBuilder = createDatePrefElement(xmlBuilder, datePattern);
+        xmlBuilder = xmlBuilder.up();
+        return xmlBuilder;
+    }
+
+    public XMLBuilder createClassElement(XMLBuilder xmlBuilder, String subject, String classType, int classNumber) {
+        xmlBuilder = xmlBuilder.element("class")
+                .attribute("subject", subject)
+                .attribute("course", "1")
+                .attribute("type", classType)
+                .attribute("suffix", String.valueOf(classNumber))
+                .up();
+        return xmlBuilder;
+    }
+
+    public XMLBuilder createClassElements(XMLBuilder xmlBuilder, String subject, String classType, int numberOfClasses) {
+        for (int classNumber = 1; classNumber <= numberOfClasses; classNumber++) {
+            xmlBuilder = createClassElement(xmlBuilder, subject, classType, classNumber);
+        }
+        return xmlBuilder;
     }
 
     public void writeXML(XMLBuilder xmlBuilder) throws FileNotFoundException, TransformerException {
