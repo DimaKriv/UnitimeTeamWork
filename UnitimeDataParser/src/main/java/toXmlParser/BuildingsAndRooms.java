@@ -67,27 +67,56 @@ public class BuildingsAndRooms {
             if (roomFeature.length() > 20){
                 roomFeature = roomFeature.substring(0,20);
             }
-            if (roomClassification.equals("Üldkasutatav auditoorium")){
-                roomClassification = "Uld.auditoorium";
+            switch (roomClassification){
+                case "Üldkasutatav auditoorium":
+                    roomClassification = "Uld.auditoorium";
+                    break;
+                case "Eriotstarbeline auditoorium":
+                    roomClassification = "Uld.auditoorium";
+                    break;
+                case "Kategooria: õppetegevus":
+                    roomClassification = "õppetegevus";
+                    break;
+                default:
+                    break;
             }
-            if (roomClassification.equals("Eriotstarbeline auditoorium")){
-                roomClassification = "Eri.auditoorium";
+//            if (roomClassification.equals("Üldkasutatav auditoorium")){
+//                roomClassification = "Uld.auditoorium";
+//            }
+//            if (roomClassification.equals("Eriotstarbeline auditoorium")){
+//                roomClassification = "Eri.auditoorium";
+//            }
+//            if (roomClassification.equals("Kategooria: õppetegevus")){
+//                roomClassification = "õppetegevus";
+//            }
+            switch (buildingName){
+                case "Õppehoone U02 (B korpus)":
+                    buildingName = "Õppehoone U02 (B)";
+                    break;
+                case "Õppehoone U04 (B korpus)":
+                    buildingName = "Õppehoone U04 (B)";
+                    break;
+                case "Õppehoone U05 (B korpus)":
+                    buildingName = "Õppehoone U05 (B)";
+                    break;
+                case "Õppehoone U06 (A korpus)":
+                    buildingName = "Õppehoone U02 (A)";
+                    break;
+                default:
+                    break;
             }
-            if (roomClassification.equals("Kategooria: õppetegevus")){
-                roomClassification = "õppetegevus";
-            }
-            if (buildingName.equals("Õppehoone U02 (B korpus)")){
-                buildingName = "Õppehoone U02 (B)";
-            }
-            if (buildingName.equals("Õppehoone U04 (B korpus)")){
-                buildingName = "Õppehoone U04 (B)";
-            }
-            if (buildingName.equals("Õppehoone U05 (B korpus)")){
-                buildingName = "Õppehoone U05 (B)";
-            }
-            if (buildingName.equals("Õppehoone U06 (A korpus)")){
-                buildingName = "Õppehoone U02 (A)";
-            }
+//            if (buildingName.equals("Õppehoone U02 (B korpus)")){
+//                buildingName = "Õppehoone U02 (B)";
+//            }
+//            if (buildingName.equals("Õppehoone U04 (B korpus)")){
+//                buildingName = "Õppehoone U04 (B)";
+//            }
+//            if (buildingName.equals("Õppehoone U05 (B korpus)")){
+//                buildingName = "Õppehoone U05 (B)";
+//            }
+//            if (buildingName.equals("Õppehoone U06 (A korpus)")){
+//                buildingName = "Õppehoone U02 (A)";
+//            }
 //                String roomFeatures = QUERY_SQL_RESULT_BUILDING.getString("fk_varustus_kood");
 //                String roomFeaturesValue = roomFeatures;
 //                if (roomFeatures.length() > 20){
