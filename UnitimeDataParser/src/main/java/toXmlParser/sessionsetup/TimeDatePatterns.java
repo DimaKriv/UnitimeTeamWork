@@ -265,7 +265,7 @@ public class TimeDatePatterns {
                 XMLBuilder xmlBuilder;
 
                 xmlBuilder = XMLBuilder.create("datePattern")
-                        .attribute("name", "weeks 1 -  " + Integer.toString(i + 1))
+                        .attribute("name", "weeks 1-" + Integer.toString(i + 1))
                         .attribute("type", "Standard")
                         .attribute("visible", "true")
                         .attribute("default", "false");
