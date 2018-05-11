@@ -188,7 +188,7 @@ public class TimeDatePatterns {
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
                 .attribute("default", "true");
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             weeksFromOneToEight.element("dates")
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
@@ -197,6 +197,7 @@ public class TimeDatePatterns {
         return weeksFromOneToEight;
     }
 
+
     public XMLBuilder addWeeksFromNineToSixteen() throws ParserConfigurationException {
 
         XMLBuilder weeksFromEightToSixteen = XMLBuilder.create("datePattern")
@@ -204,7 +205,7 @@ public class TimeDatePatterns {
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
                 .attribute("default", "true");
-        for (int i = 9; i < 16; i++) {
+        for (int i = 8; i < 16; i++) {
             weeksFromEightToSixteen.element("dates")
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
@@ -220,7 +221,7 @@ public class TimeDatePatterns {
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
                 .attribute("default", "true");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             firstFourWeeks.element("dates")
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
@@ -235,7 +236,7 @@ public class TimeDatePatterns {
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
                 .attribute("default", "true");
-        for (int i = 13; i < 16; i++) {
+        for (int i = 12; i < 16; i++) {
             lastFourWeeks.element("dates")
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
