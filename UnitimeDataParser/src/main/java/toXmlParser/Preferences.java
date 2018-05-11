@@ -70,9 +70,11 @@ public class Preferences {
                     ArrayList<Integer> classTypeTimeDistributionInfo = optimizer.countDatePattern(subPartsForTypes, index);
                     String timePattern = getTimePattern(classTypeTimeDistributionInfo);
                     String datePattern = getDatePattern(classTypeTimeDistributionInfo);
-                    xmlBuilder = createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
-                            xmlBuilder, subject, classType, timePattern, datePattern);
-                    xmlBuilder = createClassElements(xmlBuilder, subject, classType, numberOfClasses);
+                    if (timePattern.equals("Undefined time pattern") || datePattern.equals("Undefined date pattern")) {
+                        xmlBuilder = createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
+                                xmlBuilder, subject, classType, timePattern, datePattern);
+                        xmlBuilder = createClassElements(xmlBuilder, subject, classType, numberOfClasses);
+                    }
                 }
             }
         }
@@ -89,7 +91,7 @@ public class Preferences {
             case 2:
                 return "Rec";
             default:
-                return "Undefined type (classTypeIndex not in range from 0 to 2)";
+                return "Undefined type";
         }
     }
 
@@ -123,7 +125,7 @@ public class Preferences {
     public String getTimePattern(ArrayList<Integer> classTypeTimeDistributionInfo) {
         String[] timePatterns = optimizer.getTimePattern(classTypeTimeDistributionInfo);
         Optional<String[]> optionalTimePatterns = Optional.ofNullable(timePatterns);
-        String timePattern = "Empty time pattern (Time patterns array is null)";
+        String timePattern = "Undefined time pattern";
         if (optionalTimePatterns.isPresent())  {
             timePattern = timePatterns[0];
         }
@@ -133,7 +135,7 @@ public class Preferences {
     public String getDatePattern(ArrayList<Integer> classTypeTimeDistributionInfo) {
         String[] datePatterns = optimizer.getDatePattern(classTypeTimeDistributionInfo);
         Optional<String[]> optionalDatePatterns = Optional.ofNullable(datePatterns);
-        String datePattern = "Empty date pattern (Date patterns array is null)";
+        String datePattern = "Undefined date pattern";
         if (optionalDatePatterns.isPresent())  {
             datePattern = datePatterns[0];
         }
