@@ -49,15 +49,15 @@ public class SubjectAreasTest {
                 .attribute("year", "2018");
 
         expectedBuilder.element("subjectArea")
-                .attribute("externalId", "SA0000000000000000005")
-                .attribute("abbreviation", "INFR")
-                .attribute("title", "Informaatika")
-                .attribute("department", "1001");
+                .attribute("externalId", "1000")
+                .attribute("abbreviation", "AAR0020")
+                .attribute("title", "Automaatjuhtimise alused")
+                .attribute("department", "1007");
 
         when(queryResultSetMock.next()).thenReturn(true).thenReturn(false);
-        when(queryResultSetMock.getString("EXTERNAL_ID")).thenReturn("SA0000000000000000005");
-        when(queryResultSetMock.getString("ABBV")).thenReturn("INFR");
-        when(queryResultSetMock.getString("TITLE")).thenReturn("Informaatika");
+        when(queryResultSetMock.getString("ainekood")).thenReturn("AAR0020");
+        when(queryResultSetMock.getString("nimetus")).thenReturn("Automaatjuhtimise alused");
+        when(queryResultSetMock.getString("department_id")).thenReturn("1007");
 
         XMLBuilder actualBuilder = subjectAreas.buildXML("TTU", "Fall", "2018");
 
@@ -74,30 +74,30 @@ public class SubjectAreasTest {
                 .attribute("year", "2018");
 
         expectedBuilder.element("subjectArea")
-                .attribute("externalId", "SA0000000000000000005")
-                .attribute("abbreviation", "INFR")
-                .attribute("title", "Informaatika")
-                .attribute("department", "1001");
+                .attribute("externalId", "1000")
+                .attribute("abbreviation", "AAR0020")
+                .attribute("title", "Automaatjuhtimise alused")
+                .attribute("department", "1007");
 
         expectedBuilder.element("subjectArea")
-                .attribute("externalId", "SA0000000000000000006")
-                .attribute("abbreviation", "KUBR")
-                .attribute("title", "Küberturbe tehnoloogiad")
-                .attribute("department", "1002");
+                .attribute("externalId", "1001")
+                .attribute("abbreviation", "AAR0030")
+                .attribute("title", "Sissejuhatus robotitehnikasse")
+                .attribute("department", "1007");
 
         when(queryResultSetMock.next()).thenReturn(true).thenReturn(true).thenReturn(false);
 
-        when(queryResultSetMock.getString("EXTERNAL_ID"))
-                .thenReturn("SA0000000000000000005")
-                .thenReturn("SA0000000000000000006");
+        when(queryResultSetMock.getString("ainekood"))
+                .thenReturn("AAR0020")
+                .thenReturn("AAR0030");
 
-        when(queryResultSetMock.getString("ABBV"))
-                .thenReturn("INFR")
-                .thenReturn("KUBR");
+        when(queryResultSetMock.getString("nimetus"))
+                .thenReturn("Automaatjuhtimise alused")
+                .thenReturn("Sissejuhatus robotitehnikasse");
 
-        when(queryResultSetMock.getString("TITLE"))
-                .thenReturn("Informaatika")
-                .thenReturn("Küberturbe tehnoloogiad");
+        when(queryResultSetMock.getString("department_id"))
+                .thenReturn("1007")
+                .thenReturn("1007");
 
         XMLBuilder actualBuilder = subjectAreas.buildXML("TTU", "Fall", "2018");
 

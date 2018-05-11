@@ -18,8 +18,7 @@ import java.util.Properties;
 
 public class SubjectAreas {
 
-    private static final int FIRST_DEPARTMENT = 1001;
-    private static final int LAST_DEPARTMENT = 1020;
+    private static final int DEFAULT_INITIAL_EXTERNAL_ID = 1000;
 
     private ParserUtility utility;
     private String querySql;
@@ -29,7 +28,7 @@ public class SubjectAreas {
         utility = new ParserUtility();
         Connection connection = utility.connectToDatabase();
         Statement statement = utility.createStatement(connection);
-        querySql = "SELECT * FROM SUBJECT_AREAS_TTU";
+        querySql = "SELECT DISTINCT ainekood, department_id, nimetus FROM SUBJECT_DEPARTMENT WHERE Length(ainekood)=7 GROUP BY ainekood";
         queryResultSet = utility.queryDataFromDatabase(querySql, statement);
     }
 
@@ -53,21 +52,30 @@ public class SubjectAreas {
 
         XMLBuilder xmlBuilder = createSubjectAreasElementBuilder(campus, term, year);
 
-        int currentDepartment = FIRST_DEPARTMENT;
+        int i = DEFAULT_INITIAL_EXTERNAL_ID;
+        while (queryResultSet.next()) {
 
-        while (queryResultSet.next() && currentDepartment <= LAST_DEPARTMENT) {
-            String externalID = queryResultSet.getString("EXTERNAL_ID");
-            String abbreviation = queryResultSet.getString("ABBV");
-            String title = queryResultSet.getString("TITLE");
-            String department = String.valueOf(currentDepartment);
+            String rawTitle = queryResultSet.getString("nimetus");
+            String title;
+
+            if (rawTitle.length() > 100) {
+                title = rawTitle.substring(0, 100);
+            } else {
+                title = rawTitle;
+            }
+
+            String externalID = String.valueOf(i);
+            String abbreviation = queryResultSet.getString("ainekood");
+
+            String departmentID = queryResultSet.getString("department_id");
 
             xmlBuilder.element("subjectArea")
                     .attribute("externalId", externalID)
                     .attribute("abbreviation", abbreviation)
                     .attribute("title", title)
-                    .attribute("department", department);
+                    .attribute("department", departmentID);
 
-            currentDepartment++;
+            i++;
         }
 
         return xmlBuilder;
