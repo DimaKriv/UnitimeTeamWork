@@ -69,7 +69,7 @@ public class Preferences {
                     int[] classTypeTimeDistributionInfo = optimizer.countDatePattern(subPartsForTypes, index);
                     String timePattern = getTimePattern(classTypeTimeDistributionInfo);
                     String datePattern = getDatePattern(classTypeTimeDistributionInfo);
-                    if (timePattern.equals("Undefined time pattern") || datePattern.equals("Undefined date pattern")) {
+                    if (!timePattern.equals("Undefined time pattern") && !datePattern.equals("Undefined date pattern")) {
                         xmlBuilder = createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
                                 xmlBuilder, subject, classType, timePattern, datePattern);
                         xmlBuilder = createClassElements(xmlBuilder, subject, classType, numberOfClasses);
