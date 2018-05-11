@@ -127,7 +127,7 @@ public class CourseOffering {
                     else  limitClassCapacity = 20;
                   out =  out.element("class")
                             .attribute("type", type[i]).attribute("suffix"
-                                  , i + "" + suffixOfClass +"")
+                                  ,suffixOfClass + "")
                             .attribute("limit", limitClassCapacity+"").up();
                     if ((peopleNotInClass - limitClassCapacity) > 0) {
                         peopleNotInClass -= limitClassCapacity;
