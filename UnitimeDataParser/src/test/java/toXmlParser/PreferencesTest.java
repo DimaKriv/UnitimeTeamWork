@@ -4,7 +4,7 @@ import com.jamesmurty.utils.XMLBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import parserUtility.ParserUtility;
-import toXmlParser.dataOptimization.ClassOptimizator;
+import toXmlParser.dataOptimization.ClassOptimization;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -21,14 +21,14 @@ public class PreferencesTest {
     private ParserUtility utilityMock;
     private String queryMock;
     private ResultSet queryResultSetMock;
-    ClassOptimizator optimizerMock;
+    ClassOptimization optimizerMock;
 
     @Before
     public void setup() {
         utilityMock = mock(ParserUtility.class);
         queryMock = "";
         queryResultSetMock = mock(ResultSet.class);
-        optimizerMock = mock(ClassOptimizator.class);
+        optimizerMock = mock(ClassOptimization.class);
         preferences = new Preferences(utilityMock, queryMock, queryResultSetMock, optimizerMock);
     }
 
