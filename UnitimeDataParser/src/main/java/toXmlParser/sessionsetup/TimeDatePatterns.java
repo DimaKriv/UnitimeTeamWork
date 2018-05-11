@@ -101,6 +101,15 @@ public class TimeDatePatterns {
         datePatterns.importXMLBuilder(addWeeksFirstFour());
         datePatterns.importXMLBuilder(addWeeksLastFour());
 
+        try {
+            for (int i = 0; i < addAllWeeksFromTail().size(); i++) {
+
+                datePatterns.importXMLBuilder(addAllWeeksFromTail().get(i));
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
         return datePatterns;
 
     }
@@ -140,7 +149,6 @@ public class TimeDatePatterns {
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
         }
-
 
 
         return datePattern;
@@ -229,6 +237,7 @@ public class TimeDatePatterns {
         }
         return firstFourWeeks;
     }
+
     public XMLBuilder addWeeksLastFour() throws ParserConfigurationException {
 
         XMLBuilder lastFourWeeks = XMLBuilder.create("datePattern")
@@ -245,6 +254,35 @@ public class TimeDatePatterns {
         return lastFourWeeks;
     }
 
+    public ArrayList<XMLBuilder> addAllWeeksFromTail() throws ParserConfigurationException {
+        ArrayList<XMLBuilder> xmlBuilders;
+
+        xmlBuilders = new ArrayList<>();
+
+        for (int i = 0; i < 15; i++) {
+            if (i >= 1) {
+
+                XMLBuilder xmlBuilder;
+
+                xmlBuilder = XMLBuilder.create("datePattern")
+                        .attribute("name", "weeks 1-" + Integer.toString(i + 1))
+                        .attribute("type", "Standard")
+                        .attribute("visible", "true")
+                        .attribute("default", "false");
+
+                for (int j = 0; j <= i; j++) {
+
+                    xmlBuilder.element("dates")
+                            .attribute("fromDate", academicSessionSetup.getDateInFormat(0, j))
+                            .attribute("toDate", academicSessionSetup.getDateInFormat(4, j));
+
+
+                }
+                xmlBuilders.add(xmlBuilder);
+            }
+        }
+        return xmlBuilders;
+    }
 
 
 }
