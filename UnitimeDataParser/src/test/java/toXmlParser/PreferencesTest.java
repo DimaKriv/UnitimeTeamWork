@@ -142,39 +142,39 @@ public class PreferencesTest {
 
     @Test
     public void testGetTimePatternWhenTimePatternFromOptimizerIsNull() {
-        ArrayList<Integer> dummyList = new ArrayList<>();
-        when(optimizerMock.getTimePattern(dummyList)).thenReturn(null);
-        String actualTimePattern = preferences.getTimePattern(dummyList);
+        int[] dummyTimeDistribution = new int[3];
+        when(optimizerMock.getTimePattern(dummyTimeDistribution)).thenReturn(null);
+        String actualTimePattern = preferences.getTimePattern(dummyTimeDistribution);
         String expectedTimePattern = "Undefined time pattern";
         assertEquals(expectedTimePattern, actualTimePattern);
     }
 
     @Test
     public void testGetTimePatternWhenTimePatternFromOptimizerIsStringArray() {
-        ArrayList<Integer> dummyList = new ArrayList<>();
-        String[] dummyArray = new String[]{"first pattern", "second pattern"};
-        when(optimizerMock.getTimePattern(dummyList)).thenReturn(dummyArray);
-        String actualTimePattern = preferences.getTimePattern(dummyList);
-        String expectedTimePattern = "first pattern";
+        int[] dummyTimeDistribution = new int[3];
+        String dummyTimePattern = "dummy pattern";
+        when(optimizerMock.getTimePattern(dummyTimeDistribution)).thenReturn(dummyTimePattern);
+        String actualTimePattern = preferences.getTimePattern(dummyTimeDistribution);
+        String expectedTimePattern = "dummy pattern";
         assertEquals(expectedTimePattern, actualTimePattern);
     }
 
     @Test
     public void testGetDatePatternWhenDatePatternFromOptimizerIsNull() {
-        ArrayList<Integer> dummyList = new ArrayList<>();
-        when(optimizerMock.getDatePattern(dummyList)).thenReturn(null);
-        String actualDatePattern = preferences.getDatePattern(dummyList);
+        int[] dummyTimeDistribution = new int[3];
+        when(optimizerMock.getDatePattern(dummyTimeDistribution)).thenReturn(null);
+        String actualDatePattern = preferences.getDatePattern(dummyTimeDistribution);
         String expectedDatePattern = "Undefined date pattern";
         assertEquals(expectedDatePattern, actualDatePattern);
     }
 
     @Test
     public void testGetDatePatternWhenDatePatternFromOptimizerIsStringArray() {
-        ArrayList<Integer> dummyList = new ArrayList<>();
-        String[] dummyArray = new String[]{"first pattern", "second pattern"};
-        when(optimizerMock.getDatePattern(dummyList)).thenReturn(dummyArray);
-        String actualDatePattern = preferences.getDatePattern(dummyList);
-        String expectedDatePattern = "first pattern";
+        int[] dummyTimeDistribution = new int[3];
+        String dummyDatePattern = "dummy pattern";
+        when(optimizerMock.getDatePattern(dummyTimeDistribution)).thenReturn(dummyDatePattern);
+        String actualDatePattern = preferences.getDatePattern(dummyTimeDistribution);
+        String expectedDatePattern = "dummy pattern";
         assertEquals(expectedDatePattern, actualDatePattern);
     }
 
