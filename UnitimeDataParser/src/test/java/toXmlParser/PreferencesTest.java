@@ -66,7 +66,7 @@ public class PreferencesTest {
     @Test
     public void testGetClassTypeWithUnhandledIndex() {
         String actualClassType = preferences.getClassType(30);
-        String expectedClassType = "Undefined type (classTypeIndex not in range from 0 to 2)";
+        String expectedClassType = "Undefined type";
         assertEquals(expectedClassType, actualClassType);
     }
 
@@ -145,7 +145,7 @@ public class PreferencesTest {
         ArrayList<Integer> dummyList = new ArrayList<>();
         when(optimizerMock.getTimePattern(dummyList)).thenReturn(null);
         String actualTimePattern = preferences.getTimePattern(dummyList);
-        String expectedTimePattern = "Empty time pattern (Time patterns array is null)";
+        String expectedTimePattern = "Undefined time pattern";
         assertEquals(expectedTimePattern, actualTimePattern);
     }
 
@@ -164,7 +164,7 @@ public class PreferencesTest {
         ArrayList<Integer> dummyList = new ArrayList<>();
         when(optimizerMock.getDatePattern(dummyList)).thenReturn(null);
         String actualDatePattern = preferences.getDatePattern(dummyList);
-        String expectedDatePattern = "Empty date pattern (Date patterns array is null)";
+        String expectedDatePattern = "Undefined date pattern";
         assertEquals(expectedDatePattern, actualDatePattern);
     }
 
