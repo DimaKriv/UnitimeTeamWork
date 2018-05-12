@@ -115,7 +115,7 @@ public class CourseOffering {
     public void createCourseClass(int [][] input, XMLBuilder out, int people){
         String[] type = new String[] {"Lec","Lab","Rec"};
         int peopleNotInClass = people;
-        int suffixOfClass=0;
+        int suffixOfClass=1;
             for (int i = 0; i < input.length;) {
                 ClassOptimization optimizator = new ClassOptimization();
                 int[] classConfig = optimizator.countDatePattern(input, i);
@@ -134,7 +134,7 @@ public class CourseOffering {
                         suffixOfClass++;
                     } else{
                         i++;peopleNotInClass = people;
-                    suffixOfClass = 0;
+                    suffixOfClass = 1;
                     }
             }
     }
