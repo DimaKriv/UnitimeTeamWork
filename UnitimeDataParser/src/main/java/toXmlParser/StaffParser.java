@@ -23,6 +23,7 @@ public class StaffParser {
     }
 
     public StaffParser() throws SQLException {
+        utility = new ParserUtility();
         QUERY_SQL_STAFF = "select O1.*, I.* from (SELECT O.*, (lower(substr(STRUKTURI_UKSUS, instr(STRUKTURI_UKSUS, '  -  ')+5, 1)) || substr(STRUKTURI_UKSUS, instr(STRUKTURI_UKSUS, '  -  ')+6)) AS name FROM OPPEJOUDUDE_VALJAVOTE as O) as O1 inner join Institudid as I on I.nimetus=O1.name";
         Connection connection = utility.connectToDatabase();
         Statement statement = utility.createStatement(connection);
