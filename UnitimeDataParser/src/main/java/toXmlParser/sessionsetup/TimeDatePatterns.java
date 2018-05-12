@@ -69,8 +69,10 @@ public class TimeDatePatterns {
             e.printStackTrace();
         }
         for (int i = 0; i < daysTimePattern.length; i++) {
-            timePattern.element("days")
-                    .attribute("code", daysTimePattern[i]);
+            for (int j = 0; j < daysTimePattern[i].length(); j++) {
+                timePattern.element("days")
+                        .attribute("code", Character.toString(daysTimePattern[i].charAt(j)));
+            }
         }
 
         for (int i = 0; i < timesTimePattern.length; i++) {
@@ -283,6 +285,5 @@ public class TimeDatePatterns {
         }
         return xmlBuilders;
     }
-
 
 }

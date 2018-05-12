@@ -1,19 +1,15 @@
 package toXmlParser;
 
 import com.jamesmurty.utils.XMLBuilder;
-import com.sun.org.apache.regexp.internal.RE;
 import parserUtility.ParserUtility;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 public class StaffParser {
     ParserUtility utility;
@@ -27,6 +23,7 @@ public class StaffParser {
     }
 
     public StaffParser() throws SQLException {
+        utility = new ParserUtility();
         QUERY_SQL_STAFF = "select O1.*, I.* from (SELECT O.*, (lower(substr(STRUKTURI_UKSUS, instr(STRUKTURI_UKSUS, '  -  ')+5, 1)) || substr(STRUKTURI_UKSUS, instr(STRUKTURI_UKSUS, '  -  ')+6)) AS name FROM OPPEJOUDUDE_VALJAVOTE as O) as O1 inner join Institudid as I on I.nimetus=O1.name";
         Connection connection = utility.connectToDatabase();
         Statement statement = utility.createStatement(connection);
@@ -45,9 +42,8 @@ public class StaffParser {
 
     public XMLBuilder buildXML(String campus, String term, String year) throws ParserConfigurationException, SQLException {
         XMLBuilder xmlBuilder = createStaffParserBuilder(campus, term, year);
-
+        int externalId = 0;
         while (QUERY_SQL_RESULT_STAFF.next()) {
-            int externalId = 0;
             String firstName = QUERY_SQL_RESULT_STAFF.getString("NIMI");
             String lastName = QUERY_SQL_RESULT_STAFF.getString("PEREKONNANIMI");
             String positionType = QUERY_SQL_RESULT_STAFF.getString("AMET");

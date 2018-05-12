@@ -20,6 +20,9 @@ public class Main {
         CourseOffering courseCatalog = new CourseOffering();
         courseCatalog.createXMLFile("TTU", "Fall", "2018");
 
+        StaffParser staffParser = new StaffParser();
+        staffParser.createXMLFile("TTU", "Fall", "2018");
+
         //sessionID you can take from SESSION_AJAD
         AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1083");
         academicSessionSetup.createXMLFile("TTUTESTTIMEPATTERNS","FALL","2018");

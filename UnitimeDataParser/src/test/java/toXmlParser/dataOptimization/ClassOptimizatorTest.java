@@ -1,18 +1,16 @@
-package toXmlParser.dataOptimization;
+package toXmlParserTests.dataOptimizationTests;
 
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import toXmlParser.dataOptimization.ClassOptimization;
 
 public class ClassOptimizatorTest {
-    private ClassOptimizator optimizer;
+    private ClassOptimization optimizer;
     @Before
     public void init() {
-        optimizer = new ClassOptimizator();
+        optimizer = new ClassOptimization();
     }
     @Test
     public void findPair1() {
@@ -104,50 +102,50 @@ public class ClassOptimizatorTest {
     }
     @Test
     public void countPattern1() {
-        ArrayList<Integer> exp = new ArrayList<>(Arrays.asList(15,5,200,2));
-       ArrayList<Integer> act = optimizer.countDatePattern(new int[][]{new int [] {80, 0,0}},0);
-        Assert.assertEquals(exp, act);
+        int[] exp = new int[] {15,200,6};
+       int[] act = optimizer.countDatePattern(new int[][]{new int [] {80, 0,0}},0);
+        Assert.assertArrayEquals(exp, act);
     }
     @Test
     public void countPattern12() {
-        ArrayList<Integer> exp = new ArrayList<>(Arrays.asList(10,10,100,7));
-        ArrayList<Integer> act = optimizer.countDatePattern(new int[][]{new int [] {40, 20,10}},0);
-        Assert.assertEquals(exp, act);
+        int[] exp = new int[] {10,100,7};
+        int[] act = optimizer.countDatePattern(new int[][]{new int [] {40, 20,10}},0);
+        Assert.assertArrayEquals(exp, act);
     }
     @Test
     public void countPattern13() {
-        ArrayList<Integer> exp = new ArrayList<>(Arrays.asList(16,2,200,1));
-        ArrayList<Integer> act = optimizer.countDatePattern(new int[][]{new int [] {100, 0,0}},0);
-        Assert.assertEquals(exp, act);
+        int[] exp = new int[] {16,200,8};
+        int[] act = optimizer.countDatePattern(new int[][]{new int [] {100, 0,0}},0);
+        Assert.assertArrayEquals(exp, act);
     }
     @Test
     public void countPattern14() {
-        ArrayList<Integer> exp = new ArrayList<>(Arrays.asList(16,16,160,0));
-        ArrayList<Integer> act = optimizer.countDatePattern(new int[][]{new int [] {10, 0,0}},0);
-        Assert.assertEquals(exp, act);
+        int[] exp = new int[] {16,160,0};
+        int[] act = optimizer.countDatePattern(new int[][]{new int [] {10, 0,0}},0);
+        Assert.assertArrayEquals(exp, act);
     }
     @Test
     public void timePattern() {
-        String[] exp = new String[] {"2X90", "1X90"};
-        String[] act = optimizer.getTimePattern(new ArrayList<>(Arrays.asList(10,10,200,11)));
+        String exp = "1X90";
+        String act = optimizer.getTimePattern(new int[]{10,200,11});
         Assert.assertEquals(exp, act);
     }
     @Test
     public void timePattern1() {
-        String[] exp = new String[] {null ,"1X45"};
-        String[] act = optimizer.getTimePattern(new ArrayList<>(Arrays.asList(10,10,100,7)));
+        String exp = "3X90";
+        String act = optimizer.getTimePattern(new int[] {16,200,48});
         Assert.assertEquals(exp, act);
     }
     @Test
     public void timePattern2() {
-        String[] exp = new String[] {"3X135", "2X135"};
-        String[] act = optimizer.getTimePattern(new ArrayList<>(Arrays.asList(16,4,300,11)));
+        String exp = "2X135";
+        String act = optimizer.getTimePattern(new int[] {16,300,32});
         Assert.assertEquals(exp, act);
     }
     @Test
     public void timePatternNotValid() {
-        String[] exp = null;
-        String[] act = optimizer.getTimePattern(new ArrayList<>(Arrays.asList(16,16,120,0)));
+        String exp = ClassOptimization.NO_TIME_PATTERN;
+        String act = optimizer.getTimePattern(new int[]{16,120,0});
         Assert.assertEquals(exp, act);
     }
     /*
@@ -155,20 +153,14 @@ public class ClassOptimizatorTest {
      */
     @Test
     public void datePattern1() {
-        String exp = "Odd week";
-        String act = optimizer.getDatePattern(new ArrayList<>(Arrays.asList(16,2, 200,1)))[0];
-        Assert.assertEquals(exp, act);
-    }
-    @Test
-    public void datePattern2() {
-        String exp = "15 weeks/12 class";
-        String act = optimizer.getDatePattern(new ArrayList<>(Arrays.asList(15,5, 200,4)))[0];
+        String exp = "Half Term";
+        String act = optimizer.getDatePattern(new int[]{16,200,8});
         Assert.assertEquals(exp, act);
     }
     @Test
     public void datePatternNotValid() {
-        String exp = null;
-        String[] act = optimizer.getDatePattern(new ArrayList<>(Arrays.asList(10,10, 200,4)));
+        String exp = ClassOptimization.NO_DATE_PATTERN;
+        String act = optimizer.getDatePattern(new int[]{10, 200,4});
         Assert.assertEquals(exp, act);
     }
 }

@@ -4,12 +4,11 @@ import com.jamesmurty.utils.XMLBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import parserUtility.ParserUtility;
-import toXmlParser.dataOptimization.ClassOptimizator;
+import toXmlParser.dataOptimization.ClassOptimization;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -21,14 +20,14 @@ public class PreferencesTest {
     private ParserUtility utilityMock;
     private String queryMock;
     private ResultSet queryResultSetMock;
-    ClassOptimizator optimizerMock;
+    private ClassOptimization optimizerMock;
 
     @Before
     public void setup() {
         utilityMock = mock(ParserUtility.class);
         queryMock = "";
         queryResultSetMock = mock(ResultSet.class);
-        optimizerMock = mock(ClassOptimizator.class);
+        optimizerMock = mock(ClassOptimization.class);
         preferences = new Preferences(utilityMock, queryMock, queryResultSetMock, optimizerMock);
     }
 
@@ -142,39 +141,39 @@ public class PreferencesTest {
 
     @Test
     public void testGetTimePatternWhenTimePatternFromOptimizerIsNull() {
-        ArrayList<Integer> dummyList = new ArrayList<>();
-        when(optimizerMock.getTimePattern(dummyList)).thenReturn(null);
-        String actualTimePattern = preferences.getTimePattern(dummyList);
+        int[] dummyTimeDistribution = new int[3];
+        when(optimizerMock.getTimePattern(dummyTimeDistribution)).thenReturn(null);
+        String actualTimePattern = preferences.getTimePattern(dummyTimeDistribution);
         String expectedTimePattern = "Undefined time pattern";
         assertEquals(expectedTimePattern, actualTimePattern);
     }
 
     @Test
     public void testGetTimePatternWhenTimePatternFromOptimizerIsStringArray() {
-        ArrayList<Integer> dummyList = new ArrayList<>();
-        String[] dummyArray = new String[]{"first pattern", "second pattern"};
-        when(optimizerMock.getTimePattern(dummyList)).thenReturn(dummyArray);
-        String actualTimePattern = preferences.getTimePattern(dummyList);
-        String expectedTimePattern = "first pattern";
+        int[] dummyTimeDistribution = new int[3];
+        String dummyTimePattern = "dummy pattern";
+        when(optimizerMock.getTimePattern(dummyTimeDistribution)).thenReturn(dummyTimePattern);
+        String actualTimePattern = preferences.getTimePattern(dummyTimeDistribution);
+        String expectedTimePattern = "dummy pattern";
         assertEquals(expectedTimePattern, actualTimePattern);
     }
 
     @Test
     public void testGetDatePatternWhenDatePatternFromOptimizerIsNull() {
-        ArrayList<Integer> dummyList = new ArrayList<>();
-        when(optimizerMock.getDatePattern(dummyList)).thenReturn(null);
-        String actualDatePattern = preferences.getDatePattern(dummyList);
+        int[] dummyTimeDistribution = new int[3];
+        when(optimizerMock.getDatePattern(dummyTimeDistribution)).thenReturn(null);
+        String actualDatePattern = preferences.getDatePattern(dummyTimeDistribution);
         String expectedDatePattern = "Undefined date pattern";
         assertEquals(expectedDatePattern, actualDatePattern);
     }
 
     @Test
     public void testGetDatePatternWhenDatePatternFromOptimizerIsStringArray() {
-        ArrayList<Integer> dummyList = new ArrayList<>();
-        String[] dummyArray = new String[]{"first pattern", "second pattern"};
-        when(optimizerMock.getDatePattern(dummyList)).thenReturn(dummyArray);
-        String actualDatePattern = preferences.getDatePattern(dummyList);
-        String expectedDatePattern = "first pattern";
+        int[] dummyTimeDistribution = new int[3];
+        String dummyDatePattern = "dummy pattern";
+        when(optimizerMock.getDatePattern(dummyTimeDistribution)).thenReturn(dummyDatePattern);
+        String actualDatePattern = preferences.getDatePattern(dummyTimeDistribution);
+        String expectedDatePattern = "dummy pattern";
         assertEquals(expectedDatePattern, actualDatePattern);
     }
 
@@ -209,7 +208,7 @@ public class PreferencesTest {
     @Test
     public void testCreateSubPartElementWithTimeAndDatePreferenceInXmlBuilder() throws ParserConfigurationException, TransformerException {
         XMLBuilder actualXmlBuilder = XMLBuilder.create("test");
-        actualXmlBuilder = preferences.createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
+        actualXmlBuilder = preferences.createSubPartElementWithTimeAndDatePattern(
                 actualXmlBuilder, "subject", "class type", "time pattern", "date pattern");
 
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
@@ -232,8 +231,8 @@ public class PreferencesTest {
     @Test
     public void testCreateClassElement() throws ParserConfigurationException, TransformerException {
         XMLBuilder actualXmlBuilder = XMLBuilder.create("test");
-        actualXmlBuilder = preferences.createClassElement(
-                actualXmlBuilder, "subject", "class type", 0);
+        actualXmlBuilder = preferences.createClassElementWithTimeAndDatePattern(
+                actualXmlBuilder, "subject", "class type", 0, "time", "date");
 
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
         expectedXmlBuilder = expectedXmlBuilder.element("class")
@@ -241,6 +240,14 @@ public class PreferencesTest {
                 .attribute("course", "1")
                 .attribute("type", "class type")
                 .attribute("suffix", "0")
+                .element("timePref")
+                .attribute("pattern", "time")
+                .attribute("level", "0")
+                .up()
+                .element("datePref")
+                .attribute("pattern", "date")
+                .attribute("level", "0")
+                .up()
                 .up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
@@ -250,7 +257,7 @@ public class PreferencesTest {
     public void testCreateClassElements() throws ParserConfigurationException, TransformerException {
         XMLBuilder actualXmlBuilder = XMLBuilder.create("test");
         actualXmlBuilder = preferences.createClassElements(
-                actualXmlBuilder, "subject", "class type", 2);
+                actualXmlBuilder, "subject", "class type", 2, "time", "date");
 
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
         expectedXmlBuilder = expectedXmlBuilder.element("class")
@@ -258,12 +265,28 @@ public class PreferencesTest {
                 .attribute("course", "1")
                 .attribute("type", "class type")
                 .attribute("suffix", "1")
+                .element("timePref")
+                .attribute("pattern", "time")
+                .attribute("level", "0")
+                .up()
+                .element("datePref")
+                .attribute("pattern", "date")
+                .attribute("level", "0")
+                .up()
                 .up()
                 .element("class")
                 .attribute("subject", "subject")
                 .attribute("course", "1")
                 .attribute("type", "class type")
                 .attribute("suffix", "2")
+                .element("timePref")
+                .attribute("pattern", "time")
+                .attribute("level", "0")
+                .up()
+                .element("datePref")
+                .attribute("pattern", "date")
+                .attribute("level", "0")
+                .up()
                 .up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());

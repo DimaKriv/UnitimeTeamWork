@@ -1,9 +1,10 @@
-package toXmlParser;
+package toXmlParserTests;
 
 
 import com.jamesmurty.utils.XMLBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import toXmlParser.CourseOffering;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -23,20 +24,11 @@ public class CourseOfferingTest {
             courseOffering = new CourseOffering(queryMock, queryResultSetMock);
         }
     @Test
-    public void makeIntMassiveFromStringInput() {
-
-    }
-
-
-    @Test
-    public void findOptionalPair() {
-    }
-    @Test
     public void controllStructureOfXmlMannually() {
             int[][] subpartMin =  new int[][] {new int[]{170,30,0},new int[]{0,0,0},new int[]{0,0,200}};
         try {
             XMLBuilder SubpartAndClass = XMLBuilder.create("offering");
-        courseOffering.createCourseSubject(subpartMin, SubpartAndClass);
+                courseOffering.createCourseSubject(subpartMin, SubpartAndClass);
                 courseOffering.createCourseClass(subpartMin, SubpartAndClass, 100);
             Properties prop = new Properties();
             prop.put(javax.xml.transform.OutputKeys.INDENT, "yes");

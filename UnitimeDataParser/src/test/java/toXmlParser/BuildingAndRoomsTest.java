@@ -12,7 +12,8 @@ import java.sql.SQLException;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-public class BuildingAndRoomsTest{
+
+public class BuildingAndRoomsTest {
 
     private BuildingsAndRooms buildingsAndRooms;
     private String queryMock;
@@ -26,7 +27,8 @@ public class BuildingAndRoomsTest{
     }
 
     @Test
-    public void testXMLBuilderWithGivenCampusAndTermAndYearIsCreatedCorrectly() throws ParserConfigurationException, TransformerException {
+    public void testXMLBuilderWithGivenCampusAndTermAndYearIsCreatedCorrectly() throws ParserConfigurationException,
+            TransformerException {
         XMLBuilder expectedBuilder = XMLBuilder.create("buildingsRooms")
                 .attribute("campus", "TTU")
                 .attribute("term", "Fall")
@@ -36,8 +38,9 @@ public class BuildingAndRoomsTest{
     }
 
     @Test
-    public void testBuildingXMLWithOneEntryInResultSet() throws ParserConfigurationException, SQLException, TransformerException {
-        XMLBuilder expectedBuilder = XMLBuilder.create("BuildingsRooms")
+    public void testBuildingXMLWithOneEntryInResultSet() throws ParserConfigurationException, SQLException,
+            TransformerException {
+        XMLBuilder expectedBuilder = XMLBuilder.create("buildingsRooms")
                 .attribute("campus", "TTU")
                 .attribute("term", "Fall")
                 .attribute("year", "2018");
@@ -54,19 +57,10 @@ public class BuildingAndRoomsTest{
                 .attribute("roomClassification", "Classroom")
                 .attribute("roomNumber", "120")
                 .attribute("capacity", "24")
-                .element("roomDepartments")
-                .element("assigned")
-                .attribute("departmentNumber", "1001")
-                .attribute("percent", "100")
-                .up()
-                .element("scheduling")
-                .attribute("departmentNumber", "1002")
-                .attribute("percent", "50")
-                .up()
-                .up()
+                .element("roomFeatures")
                 .element("roomFeature")
-                .attribute("feature", "tahvel")
-                .attribute("value", "tahvel")
+                .attribute("feature", "")
+                .attribute("value", "")
                 .up()
                 .up();
         when(queryResultSetMock.next()).thenReturn(true).thenReturn(false);
@@ -78,8 +72,8 @@ public class BuildingAndRoomsTest{
         when(queryResultSetMock.getString("rm_id")).thenReturn("120");
         when(queryResultSetMock.getString("roomName")).thenReturn("Classroom");
 
-        XMLBuilder actualBuilder = buildingsAndRooms.createBuildingAndRoomsElementBuilder("TTU", "Fall", "2018");
-//            assertEquals(expectedBuilder.asString(), actualBuilder.asString());
+        XMLBuilder actualBuilder = buildingsAndRooms.buildXML("TTU", "Fall", "2018");
+        assertEquals(expectedBuilder.asString(), actualBuilder.asString());
     }
 
     @Test
