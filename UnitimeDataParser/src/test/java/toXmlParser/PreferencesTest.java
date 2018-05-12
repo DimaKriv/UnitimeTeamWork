@@ -9,7 +9,6 @@ import toXmlParser.dataOptimization.ClassOptimization;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -21,7 +20,7 @@ public class PreferencesTest {
     private ParserUtility utilityMock;
     private String queryMock;
     private ResultSet queryResultSetMock;
-    ClassOptimization optimizerMock;
+    private ClassOptimization optimizerMock;
 
     @Before
     public void setup() {
@@ -209,7 +208,7 @@ public class PreferencesTest {
     @Test
     public void testCreateSubPartElementWithTimeAndDatePreferenceInXmlBuilder() throws ParserConfigurationException, TransformerException {
         XMLBuilder actualXmlBuilder = XMLBuilder.create("test");
-        actualXmlBuilder = preferences.createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
+        actualXmlBuilder = preferences.createSubPartElementWithTimeAndDatePattern(
                 actualXmlBuilder, "subject", "class type", "time pattern", "date pattern");
 
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
@@ -232,8 +231,8 @@ public class PreferencesTest {
     @Test
     public void testCreateClassElement() throws ParserConfigurationException, TransformerException {
         XMLBuilder actualXmlBuilder = XMLBuilder.create("test");
-        actualXmlBuilder = preferences.createClassElement(
-                actualXmlBuilder, "subject", "class type", 0);
+        actualXmlBuilder = preferences.createClassElementWithTimeAndDatePattern(
+                actualXmlBuilder, "subject", "class type", 0, "time", "date");
 
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
         expectedXmlBuilder = expectedXmlBuilder.element("class")
@@ -241,6 +240,14 @@ public class PreferencesTest {
                 .attribute("course", "1")
                 .attribute("type", "class type")
                 .attribute("suffix", "0")
+                .element("timePref")
+                .attribute("pattern", "time")
+                .attribute("level", "0")
+                .up()
+                .element("datePref")
+                .attribute("pattern", "date")
+                .attribute("level", "0")
+                .up()
                 .up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
@@ -250,7 +257,7 @@ public class PreferencesTest {
     public void testCreateClassElements() throws ParserConfigurationException, TransformerException {
         XMLBuilder actualXmlBuilder = XMLBuilder.create("test");
         actualXmlBuilder = preferences.createClassElements(
-                actualXmlBuilder, "subject", "class type", 2);
+                actualXmlBuilder, "subject", "class type", 2, "time", "date");
 
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
         expectedXmlBuilder = expectedXmlBuilder.element("class")
@@ -258,12 +265,28 @@ public class PreferencesTest {
                 .attribute("course", "1")
                 .attribute("type", "class type")
                 .attribute("suffix", "1")
+                .element("timePref")
+                .attribute("pattern", "time")
+                .attribute("level", "0")
+                .up()
+                .element("datePref")
+                .attribute("pattern", "date")
+                .attribute("level", "0")
+                .up()
                 .up()
                 .element("class")
                 .attribute("subject", "subject")
                 .attribute("course", "1")
                 .attribute("type", "class type")
                 .attribute("suffix", "2")
+                .element("timePref")
+                .attribute("pattern", "time")
+                .attribute("level", "0")
+                .up()
+                .element("datePref")
+                .attribute("pattern", "date")
+                .attribute("level", "0")
+                .up()
                 .up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
