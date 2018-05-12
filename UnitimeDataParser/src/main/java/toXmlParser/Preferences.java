@@ -70,9 +70,10 @@ public class Preferences {
                     String timePattern = getTimePattern(classTypeTimeDistributionInfo);
                     String datePattern = getDatePattern(classTypeTimeDistributionInfo);
                     if (!timePattern.equals("Undefined time pattern") && !datePattern.equals("Undefined date pattern")) {
-                        xmlBuilder = createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
+                        xmlBuilder = createSubPartElementWithTimeAndDatePattern(
                                 xmlBuilder, subject, classType, timePattern, datePattern);
-                        xmlBuilder = createClassElements(xmlBuilder, subject, classType, numberOfClasses);
+                        xmlBuilder = createClassElements(
+                                xmlBuilder, subject, classType, numberOfClasses, timePattern, datePattern);
                     }
                 }
             }
@@ -158,7 +159,7 @@ public class Preferences {
         return xmlBuilder;
     }
 
-    public XMLBuilder createSubPartElementWithTimeAndDatePreferenceInXmlBuilder(
+    public XMLBuilder createSubPartElementWithTimeAndDatePattern(
             XMLBuilder xmlBuilder, String subject, String classType, String timePattern, String datePattern) {
         xmlBuilder = xmlBuilder.element("subpart")
                 .attribute("subject", subject)
@@ -170,19 +171,24 @@ public class Preferences {
         return xmlBuilder;
     }
 
-    public XMLBuilder createClassElement(XMLBuilder xmlBuilder, String subject, String classType, int classNumber) {
+    public XMLBuilder createClassElementWithTimeAndDatePattern(
+            XMLBuilder xmlBuilder, String subject, String classType, int classNumber, String timePattern, String datePattern) {
         xmlBuilder = xmlBuilder.element("class")
                 .attribute("subject", subject)
                 .attribute("course", "1")
                 .attribute("type", classType)
-                .attribute("suffix", String.valueOf(classNumber))
-                .up();
+                .attribute("suffix", String.valueOf(classNumber));
+        xmlBuilder = createTimePrefElement(xmlBuilder, timePattern);
+        xmlBuilder = createDatePrefElement(xmlBuilder, datePattern);
+        xmlBuilder = xmlBuilder.up();
         return xmlBuilder;
     }
 
-    public XMLBuilder createClassElements(XMLBuilder xmlBuilder, String subject, String classType, int numberOfClasses) {
+    public XMLBuilder createClassElements(
+            XMLBuilder xmlBuilder, String subject, String classType, int numberOfClasses, String timePattern, String datePattern) {
         for (int classNumber = 1; classNumber <= numberOfClasses; classNumber++) {
-            xmlBuilder = createClassElement(xmlBuilder, subject, classType, classNumber);
+            xmlBuilder = createClassElementWithTimeAndDatePattern(
+                    xmlBuilder, subject, classType, classNumber, timePattern, datePattern);
         }
         return xmlBuilder;
     }
