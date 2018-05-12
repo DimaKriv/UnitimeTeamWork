@@ -189,7 +189,7 @@ public class PreferencesTest {
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
         expectedXmlBuilder = expectedXmlBuilder.element("timePref")
                 .attribute("pattern", "time pattern")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
@@ -203,7 +203,7 @@ public class PreferencesTest {
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
         expectedXmlBuilder = expectedXmlBuilder.element("datePref")
                 .attribute("pattern", "date pattern")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
@@ -222,11 +222,11 @@ public class PreferencesTest {
                 .attribute("type", "class type")
                 .element("timePref")
                 .attribute("pattern", "time pattern")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .element("datePref")
                 .attribute("pattern", "date pattern")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .up();
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
@@ -246,11 +246,11 @@ public class PreferencesTest {
                 .attribute("suffix", "0")
                 .element("timePref")
                 .attribute("pattern", "time")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .element("datePref")
                 .attribute("pattern", "date")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .up();
 
@@ -271,11 +271,11 @@ public class PreferencesTest {
                 .attribute("suffix", "1")
                 .element("timePref")
                 .attribute("pattern", "time")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .element("datePref")
                 .attribute("pattern", "date")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .up()
                 .element("class")
@@ -285,11 +285,11 @@ public class PreferencesTest {
                 .attribute("suffix", "2")
                 .element("timePref")
                 .attribute("pattern", "time")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .element("datePref")
                 .attribute("pattern", "date")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .up();
 
