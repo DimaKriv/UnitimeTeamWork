@@ -19,6 +19,7 @@ public class TimeDatePatterns {
 
     }
 
+
     public XMLBuilder buildOneDatePattern(ResultSet resultSet) throws SQLException, ParserConfigurationException {
 
         String name = resultSet.getString("name");
@@ -68,7 +69,6 @@ public class TimeDatePatterns {
             e.printStackTrace();
         }
         for (int i = 0; i < daysTimePattern.length; i++) {
-
             for (int j = 0; j < daysTimePattern[i].length(); j++) {
                 timePattern.element("days")
                         .attribute("code", Character.toString(daysTimePattern[i].charAt(j)));
@@ -100,6 +100,18 @@ public class TimeDatePatterns {
         datePatterns.importXMLBuilder(addEvenWeeks());
         datePatterns.importXMLBuilder(addWeeksFromOneToEight());
         datePatterns.importXMLBuilder(addWeeksFromNineToSixteen());
+        datePatterns.importXMLBuilder(addWeeksFirstFour());
+        datePatterns.importXMLBuilder(addWeeksLastFour());
+
+        try {
+            for (int i = 0; i < addAllWeeksFromTail().size(); i++) {
+
+                datePatterns.importXMLBuilder(addAllWeeksFromTail().get(i));
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
         return datePatterns;
 
     }
@@ -186,7 +198,7 @@ public class TimeDatePatterns {
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
                 .attribute("default", "true");
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             weeksFromOneToEight.element("dates")
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
@@ -195,14 +207,15 @@ public class TimeDatePatterns {
         return weeksFromOneToEight;
     }
 
+
     public XMLBuilder addWeeksFromNineToSixteen() throws ParserConfigurationException {
 
         XMLBuilder weeksFromEightToSixteen = XMLBuilder.create("datePattern")
-                .attribute("name", "weeks 1-8")
+                .attribute("name", "weeks 9-16")
                 .attribute("type", "Standard")
                 .attribute("visible", "true")
                 .attribute("default", "true");
-        for (int i = 9; i < 16; i++) {
+        for (int i = 8; i < 16; i++) {
             weeksFromEightToSixteen.element("dates")
                     .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
                     .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
@@ -211,5 +224,66 @@ public class TimeDatePatterns {
         return weeksFromEightToSixteen;
     }
 
+    public XMLBuilder addWeeksFirstFour() throws ParserConfigurationException {
+
+        XMLBuilder firstFourWeeks = XMLBuilder.create("datePattern")
+                .attribute("name", "first 4")
+                .attribute("type", "Standard")
+                .attribute("visible", "true")
+                .attribute("default", "true");
+        for (int i = 0; i < 4; i++) {
+            firstFourWeeks.element("dates")
+                    .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
+                    .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
+
+        }
+        return firstFourWeeks;
+    }
+
+    public XMLBuilder addWeeksLastFour() throws ParserConfigurationException {
+
+        XMLBuilder lastFourWeeks = XMLBuilder.create("datePattern")
+                .attribute("name", "weeks 9-16")
+                .attribute("type", "Standard")
+                .attribute("visible", "true")
+                .attribute("default", "true");
+        for (int i = 12; i < 16; i++) {
+            lastFourWeeks.element("dates")
+                    .attribute("fromDate", academicSessionSetup.getDateInFormat(0, i))
+                    .attribute("toDate", academicSessionSetup.getDateInFormat(4, i));
+
+        }
+        return lastFourWeeks;
+    }
+
+    public ArrayList<XMLBuilder> addAllWeeksFromTail() throws ParserConfigurationException {
+        ArrayList<XMLBuilder> xmlBuilders;
+
+        xmlBuilders = new ArrayList<>();
+
+        for (int i = 0; i < 15; i++) {
+            if (i >= 1) {
+
+                XMLBuilder xmlBuilder;
+
+                xmlBuilder = XMLBuilder.create("datePattern")
+                        .attribute("name", "weeks 1-" + Integer.toString(i + 1))
+                        .attribute("type", "Standard")
+                        .attribute("visible", "true")
+                        .attribute("default", "false");
+
+                for (int j = 0; j <= i; j++) {
+
+                    xmlBuilder.element("dates")
+                            .attribute("fromDate", academicSessionSetup.getDateInFormat(0, j))
+                            .attribute("toDate", academicSessionSetup.getDateInFormat(4, j));
+
+
+                }
+                xmlBuilders.add(xmlBuilder);
+            }
+        }
+        return xmlBuilders;
+    }
 
 }
