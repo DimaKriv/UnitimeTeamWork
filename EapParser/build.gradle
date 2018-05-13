@@ -24,6 +24,9 @@ dependencies {
     extraLibs group: 'org.xerial', name: 'sqlite-jdbc', version: '3.21.0.1'
     extraLibs group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
     extraLibs group: 'org.apache.commons', name: 'commons-csv', version: '1.1'
+    extraLibs group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0'
+    extraLibs group: 'org.json', name: 'json', version: '20180130'
+
     configurations.compile.extendsFrom(configurations.extraLibs)
 }
 

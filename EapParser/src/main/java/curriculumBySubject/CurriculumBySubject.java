@@ -9,6 +9,7 @@ import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,21 +23,47 @@ public class CurriculumBySubject {
     private CSVPrinter csvPrinter;
 
     public void runParser() throws IOException {
-        String[] curriculaCodes = {
+//        String[] curriculaCodes = {
 //                "50401", "50406", "50403", "50400", "50405", "50402", "50491", "50442", "50464", "50414", "50431", "50460", "50457", "50408", "50439", "50479", "50428", "50424",
-//                "50387", "50384", "50371", "50370", "50357", "50392", "50486", "50482", "50481", "50484", "50365", "50361", "50388", "50359", "50465", "50461", "50468", "50419", "50289", "50306"
+//                "50387", "50384", "50371", "50370", "50357", "50392", "50486", "50482", "50481", "50484", "50365", "50361", "50388", "50359", "50465", "50461", "50468", "50419", "50289", "50306",
 //                "50412", "50427", "50472", "50430", "50469", "50445", "50454", "50447", "50458", "50456", "50452", "50394", "50372", "50451", "50395", "50432",
 //                "50364", "50358", "50356", "50492", "50117", "50489", "50429", "50411", "50410", "50434",
-                "50386", "50378", "50368", "50385", "50373", "50488", "50474", "50380", "50421", "50423", "50416", "50417", "50426", "50418", "50425", "50179", "50422", "50415"
+//                "50386", "50378", "50368", "50385", "50373", "50488", "50474", "50380", "50421", "50423", "50416", "50417", "50426", "50418", "50425", "50179", "50422", "50415"
+//        };
+
+        String[][] curriculaCodes = {
+                {"50401", "50406", "50403", "50400", "50405", "50402", "50491", "50442", "50464", "50414", "50431"},
+                {"50460", "50457", "50408", "50439", "50479", "50428", "50424"},
+                {"50387", "50384", "50371", "50370", "50357", "50392", "50486", "50482", "50481", "50484", "50365"},
+                {"50361", "50388", "50359", "50465", "50461", "50468", "50419", "50289", "50306"},
+                {"50412", "50427", "50472", "50430", "50469", "50445", "50454", "50447", "50458", "50456", "50452"},
+                {"50394", "50372", "50451", "50395", "50432"},
+                {"50364", "50358", "50356", "50492", "50117", "50489", "50429", "50411", "50410", "50434"},
+                {"50386", "50378", "50368", "50385", "50373", "50488", "50474", "50380", "50421", "50423"},
+                {"50416", "50417", "50426", "50418", "50425", "50179", "50422", "50415"}
         };
+
+        /*{"50401", "50406", "50403", "50400", "50405", "50402", "50491", "50442", "50464", "50414", "50431", "50460", "50457", "50408", "50439", "50479", "50428", "50424"},
+        {"50387", "50384", "50371", "50370", "50357", "50392", "50486", "50482", "50481", "50484", "50365", "50361", "50388", "50359", "50465", "50461", "50468", "50419", "50289", "50306"},
+        {"50412", "50427", "50472", "50430", "50469", "50445", "50454", "50447", "50458", "50456", "50452", "50394", "50372", "50451", "50395", "50432"},
+        {"50364", "50358", "50356", "50492", "50117", "50489", "50429", "50411", "50410", "50434"},
+        {"50386", "50378", "50368", "50385", "50373", "50488", "50474", "50380", "50421", "50423", "50416", "50417", "50426", "50418", "50425", "50179", "50422", "50415"}*/
 
         BufferedWriter writer = Files.newBufferedWriter(Paths.get(PATH_CSV_FILE));
         csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
                 .withHeader("oppekava_kood, oppekava_versioon, oppekava_nimetus, peaeriala_number, peaeriala_nimetus, semester_number, semester_tyyp, ainekood, aine_nimetus, aine_tyyp"));
 
-        for (String curriculaCode : curriculaCodes) {
-            parseCurriculaBySubject(curriculaCode);
-            System.out.println("---------------------------------");
+//        for (String curriculaCode : curriculaCodes) {
+//            parseCurriculaBySubject(curriculaCode);
+//            System.out.println("---------------------------------");
+//        }
+
+        for (int i = 0; i < curriculaCodes.length; i++) {
+            for (int codeIndex = 0; codeIndex < curriculaCodes[i].length; codeIndex++) {
+                parseCurriculaBySubject(curriculaCodes[i][codeIndex]);
+                System.out.println("---------------------------------");
+            }
+            System.out.println("=================================");
         }
 
         csvPrinter.flush();
@@ -44,7 +71,9 @@ public class CurriculumBySubject {
     }
 
     private void parseCurriculaBySubject(String curriculaCode) throws IOException {
-        Document doc  = Jsoup.connect("https://ois.ttu.ee/portal/page?_pageid=37,674560&_dad=portal&_schema=PORTAL&p_action=view&p_fk_str_yksus_id=50001&p_kava_versioon_id=" + curriculaCode + "&p_net=internet&p_lang=ET&p_rezhiim=0&p_mode=1&p_from=").get();
+        Document doc  = Jsoup.connect("https://ois.ttu.ee/portal/page?_pageid=37,674560&_dad=portal&_schema=PORTAL&" +
+                "p_action=view&p_fk_str_yksus_id=50001&p_kava_versioon_id=" + curriculaCode + "&" +
+                "p_net=internet&p_lang=ET&p_rezhiim=0&p_mode=1&p_from=").get();
 
         Element curriculumBody = doc.body();
         String curriculumCode = curriculumBody.getElementsByAttributeValue("class", "s border_right").get(0).html();
@@ -52,19 +81,35 @@ public class CurriculumBySubject {
         String curriculumName = curriculumBody.getElementsByAttributeValue("class", "s border_right").get(4).html();
 
         String body = doc.body().html();
-        String regex = "<tr>\\s*<td class=\"s tt border_right\" colspan=\"100\" valign=\"top\"><span class=\"subheader1\"><a name=\"\\w{21}\"></a>tüüpõpingukava: sügis statsionaarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"document.location.hash='algus';\">algusesse</a></span></td>\\s*</tr>";
+        String regex = "<tr>\\s*<td class=\"s tt border_right\" colspan=\"100\" valign=\"top\">" +
+                "<span class=\"subheader1\"><a name=\"\\w{21}\">" +
+                "</a>tüüpõpingukava: sügis statsionaarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                "<a href=\"javascript:;\" onclick=\"document.location.hash='algus';\">algusesse</a></span>" +
+                "</td>\\s*</tr>";
 
-        String semestersRegex = "<tr class=\"ht\">\\s*<td class=\"s_top border_right_light\" colspan=\"100\" style=\"font-weight:bold;font-style:italic\">\\d+. semester&nbsp;&nbsp;\\s*<div id=\"\\w{3}\\d{2,3}\" class=\"short\"(\\s\\w{5}=\"\\w{7}:\\s\\w{4};\")*>\\s*<a href=\"javascript:hide_show_rows\\('\\w{10}','\\w{3}\\d{2,3}',true\\);\"><img src=\"/images/ilistadd.gif\" border=\"0\" alt=\"Näita rohkem\" title=\"Näita rohkem\"></a>\\s*</div>\\s*<div id=\"\\w{3}\\d{2,3}\\w\" class=\"long\"(\\s\\w{5}=\"\\w{7}:\\s\\w{6};\")*>\\s*<a href=\"javascript:hide_show_rows\\('\\w{10}','\\w{3}\\d{2,3}',false\\);\"><img src=\"/images/ilistrmv.gif\" border=\"0\" alt=\"Näita vähem\" title=\"Näita vähem\"></a>\\s*</div></td>\\s*</tr>";
+        String semestersRegex = "<tr class=\"ht\">\\s*" +
+                "<td class=\"s_top border_right_light\" colspan=\"100\" style=\"font-weight:bold;font-style:italic\">" +
+                "\\d+. semester&nbsp;&nbsp;\\s*<div id=\"\\w{3}\\d{2,3}\" class=\"short\"(\\s\\w{5}=\"\\w{7}:\\s\\w{4};\")*>" +
+                "\\s*<a href=\"javascript:hide_show_rows\\('\\w{10}','\\w{3}\\d{2,3}',true\\);\">" +
+                "<img src=\"/images/ilistadd.gif\" border=\"0\" alt=\"Näita rohkem\" title=\"Näita rohkem\"></a>\\s*</div>" +
+                "\\s*<div id=\"\\w{3}\\d{2,3}\\w\" class=\"long\"(\\s\\w{5}=\"\\w{7}:\\s\\w{6};\")*>\\s*" +
+                "<a href=\"javascript:hide_show_rows\\('\\w{10}','\\w{3}\\d{2,3}',false\\);\">" +
+                "<img src=\"/images/ilistrmv.gif\" border=\"0\" alt=\"Näita vähem\" title=\"Näita vähem\"></a>\\s*</div>" +
+                "</td>\\s*</tr>";
 
-        List<String> curricula = Arrays.asList(body.split(regex));
+        String[] curricula = body.split(regex);
+        for (int currIndex = 1; currIndex < curricula.length; currIndex++) {
+            int redundantContentIndex = curricula[currIndex]
+                    .indexOf("<tr> \n        <td class=\"bb\" colspan=\"100\" valign=\"top\">&nbsp;</td> \n       </tr>");
+            if (redundantContentIndex >= 0) {
+                curricula[currIndex] = curricula[currIndex]
+                        .substring(0, redundantContentIndex);
+            }
+        }
         List<String[]> curriculaWithSemestersPerCurriculum = new ArrayList<>();
 
-        for (int i = 1; i < curricula.size(); i++) {
-            String[] splittedCurricula = curricula.get(i).split(semestersRegex);
-            int redundantContentIndex = splittedCurricula[splittedCurricula.length - 1].indexOf("<tr> \n        <td class=\"bb\" colspan=\"100\" valign=\"top\">&nbsp;</td> \n       </tr>");
-            if (redundantContentIndex >= 0) {
-                splittedCurricula[splittedCurricula.length - 1] = splittedCurricula[splittedCurricula.length - 1].substring(0, redundantContentIndex);
-            }
+        for (int i = 1; i < curricula.length; i++) {
+            String[] splittedCurricula = curricula[i].split(semestersRegex);
             curriculaWithSemestersPerCurriculum.add(splittedCurricula);
         }
 
