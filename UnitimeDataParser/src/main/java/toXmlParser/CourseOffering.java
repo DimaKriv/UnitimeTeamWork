@@ -68,7 +68,7 @@ public class CourseOffering {
                     .attribute("action", "insert|update|delete")
                     .element("course")
                     .attribute("subject", courseNumber)
-                    .attribute("courseNbr", 1 +"")
+                    .attribute("courseNbr", 1 + "")
                     .attribute("controlling", "true")
                     .attribute("title", subject)
                     .element("courseCredit")
@@ -80,9 +80,9 @@ public class CourseOffering {
                     .up()
             .element("config")
             .attribute("name", "1")
-            .attribute("limit", limit + 20 +"");
+            .attribute("limit", limit + "");
             createCourseSubject(subpartMin, out);
-            createCourseClass(subpartMin, out, limit + 20);
+            createCourseClass(subpartMin, out, limit);
         }
         return xmlBuilder;
     }
