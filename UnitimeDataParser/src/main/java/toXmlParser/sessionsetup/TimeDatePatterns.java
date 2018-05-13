@@ -69,10 +69,10 @@ public class TimeDatePatterns {
             e.printStackTrace();
         }
         for (int i = 0; i < daysTimePattern.length; i++) {
-            for (int j = 0; j < daysTimePattern[i].length(); j++) {
-                timePattern.element("days")
-                        .attribute("code", Character.toString(daysTimePattern[i].charAt(j)));
-            }
+
+
+            timePattern.element("days")
+                    .attribute("code", daysTimePattern[i]);
         }
 
         for (int i = 0; i < timesTimePattern.length; i++) {
