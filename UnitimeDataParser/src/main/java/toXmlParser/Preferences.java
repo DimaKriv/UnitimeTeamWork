@@ -62,7 +62,7 @@ public class Preferences {
             int[] classTypes = optimizer.makeIntMassiveFromStringInput(
                     lectureHoursPerWeek, laboratoryHoursPerWeek, recitationHoursPerWeek);
             int[][] subPartsForTypes = optimizer.makeCourceOfferringData(classTypes);
-            for (int index = 0; index < 2; index++) {
+            for (int index = 0; index < 3; index++) {
                 if (classTypes[index] != 0) {
                     String classType = getClassType(index);
                     int numberOfClasses = getNumberOfClassesForClassType(classType, studentsNumber);
@@ -146,7 +146,7 @@ public class Preferences {
         xmlBuilder = xmlBuilder.element("timePref")
                 // pattern need some improvements after fixes will be made in ClassOptimizator class.
                 .attribute("pattern", timePattern)
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up();
         return xmlBuilder;
     }
@@ -154,7 +154,7 @@ public class Preferences {
     public XMLBuilder createDatePrefElement(XMLBuilder xmlBuilder, String datePattern) {
         xmlBuilder = xmlBuilder.element("datePref")
                 .attribute("pattern", datePattern)
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up();
         return xmlBuilder;
     }
