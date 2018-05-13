@@ -147,7 +147,7 @@ public class CurriculumBySubject {
                     if (trElements.get(trIndex).getAllElements().size() >= 9) {
                         if (!trElements.get(trIndex).child(0).html().equals("peaeriala") &&
                                 !trElements.get(trIndex).child(0).html().equals("ainekood") &&
-                                !trElements.get(trIndex).child(0).getElementsByTag("nobr").html().matches("[a-zA-Z]{3}(\\d{4}|\\d{3})(\\d{1}|[a-zA-Z]{1})")) {
+                                !trElements.get(trIndex).child(0).getElementsByTag("nobr").html().matches("[A-ZÜÄÖÕ]{2,4}[.]?\\d{2,5}[.]?(\\d{3}|[A-ZÜÄÖÕ]{1,2})?[/]?\\d?")) {
                             String currentFieldOfStudy = trElements.get(trIndex).child(0).html();
                             if (!fieldOfStudy.equals(currentFieldOfStudy)) {
                                 fieldOfStudy = currentFieldOfStudy;
