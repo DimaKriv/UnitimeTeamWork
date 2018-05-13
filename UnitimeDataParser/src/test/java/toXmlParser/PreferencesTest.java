@@ -9,8 +9,12 @@ import toXmlParser.dataOptimization.ClassOptimization;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -185,7 +189,7 @@ public class PreferencesTest {
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
         expectedXmlBuilder = expectedXmlBuilder.element("timePref")
                 .attribute("pattern", "time pattern")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
@@ -199,7 +203,7 @@ public class PreferencesTest {
         XMLBuilder expectedXmlBuilder = XMLBuilder.create("test");
         expectedXmlBuilder = expectedXmlBuilder.element("datePref")
                 .attribute("pattern", "date pattern")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
@@ -218,11 +222,11 @@ public class PreferencesTest {
                 .attribute("type", "class type")
                 .element("timePref")
                 .attribute("pattern", "time pattern")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .element("datePref")
                 .attribute("pattern", "date pattern")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .up();
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
@@ -242,11 +246,11 @@ public class PreferencesTest {
                 .attribute("suffix", "0")
                 .element("timePref")
                 .attribute("pattern", "time")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .element("datePref")
                 .attribute("pattern", "date")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .up();
 
@@ -267,11 +271,11 @@ public class PreferencesTest {
                 .attribute("suffix", "1")
                 .element("timePref")
                 .attribute("pattern", "time")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .element("datePref")
                 .attribute("pattern", "date")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .up()
                 .element("class")
@@ -281,13 +285,179 @@ public class PreferencesTest {
                 .attribute("suffix", "2")
                 .element("timePref")
                 .attribute("pattern", "time")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .element("datePref")
                 .attribute("pattern", "date")
-                .attribute("level", "0")
+                .attribute("level", "1")
                 .up()
                 .up();
+
+        assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
+    }
+
+    @Test
+    public void testBuildXMLWithOneEntryInResultSet() throws ParserConfigurationException, SQLException, TransformerException {
+
+        when(queryResultSetMock.next()).thenReturn(true).thenReturn(false);
+        when(queryResultSetMock.getString("ainekood")).thenReturn("ZZZ0000");
+        when(queryResultSetMock.getString("loeng")).thenReturn("2");
+        when(queryResultSetMock.getString("praktikum")).thenReturn("2");
+        when(queryResultSetMock.getString("harjutus")).thenReturn("2");
+        when(queryResultSetMock.getString("inimeste_arv")).thenReturn("50");
+        int [] classTypesDummy = new int[]{2, 2, 2};
+        when(optimizerMock.makeIntMassiveFromStringInput("2", "2", "2")).thenReturn(classTypesDummy);
+        int[][] subPartsForTypesDummy = new int[][]{{2, 0, 0}, {0, 2, 0}, {0, 0, 2}};
+        when(optimizerMock.makeCourceOfferringData(classTypesDummy)).thenReturn(subPartsForTypesDummy);
+        int[] classTypeTimeDistributionInfoDummy = new int[]{16, 200, 16};
+        when(optimizerMock.countDatePattern(any(), anyInt())).thenReturn(classTypeTimeDistributionInfoDummy);
+        when(optimizerMock.getTimePattern(classTypeTimeDistributionInfoDummy)).thenReturn("1X90");
+        when(optimizerMock.getDatePattern(classTypeTimeDistributionInfoDummy)).thenReturn("Full Term");
+
+        XMLBuilder actualXmlBuilder = preferences.buildXML("TTU", "Fall", "2018");
+
+        XMLBuilder expectedXmlBuilder = XMLBuilder.create("preferences")
+                .attribute("campus", "TTU")
+                .attribute("term", "Fall")
+                .attribute("year", "2018")
+                .element("subpart")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("type", "Lec")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("class")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("suffix", "1")
+                .attribute("type", "Lec")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("subpart")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("type", "Lab")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("class")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("suffix", "1")
+                .attribute("type", "Lab")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("class")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("suffix", "2")
+                .attribute("type", "Lab")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("class")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("suffix", "3")
+                .attribute("type", "Lab")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("subpart")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("type", "Rec")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("class")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("suffix", "1")
+                .attribute("type", "Rec")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("class")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("suffix", "2")
+                .attribute("type", "Rec")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up()
+                .element("class")
+                .attribute("course", "1")
+                .attribute("subject", "ZZZ0000")
+                .attribute("suffix", "3")
+                .attribute("type", "Rec")
+                .element("timePref")
+                .attribute("level", "1")
+                .attribute("pattern", "1X90")
+                .up()
+                .element("datePref")
+                .attribute("level", "1")
+                .attribute("pattern", "Full Term")
+                .up()
+                .up();
+        expectedXmlBuilder = expectedXmlBuilder.up();
 
         assertEquals(expectedXmlBuilder.asString(), actualXmlBuilder.asString());
     }
