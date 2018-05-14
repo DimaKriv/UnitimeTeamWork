@@ -42,10 +42,13 @@ public class CSVEncodingRepairer {
                         // get value from string like PathToCsvFilesDirectory=SOME_VALUE (value is after equals sign)
                         pathToCsvFilesDirectory = pathToCsvFilesDirectory.split("=")[1];
                         pathToCsvFilesDirectory = pathToCsvFilesDirectory.trim();
+                    } else {
+                        pathToCsvFilesDirectory = ".";
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                pathToCsvFilesDirectory = ".";
             }
         }
         return pathToCsvFilesDirectory;
