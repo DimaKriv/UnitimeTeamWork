@@ -29,11 +29,12 @@ public class AcademicSessionSetup {
 
     private XMLBuilder xmlSessionSetup;
 
+    String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
+
+
     public AcademicSessionSetup(String sessionID) throws SQLException {
 
-        String queryDepartments = "SELECT * FROM INSTITUDID";
         String queryTimePatters = "SELECT * FROM TIME_PATTERN";
-        String queryAreas = "SELECT * FROM SUBJECT_AREAS_TTU";
 
         this.sessionID = sessionID;
 
@@ -46,8 +47,6 @@ public class AcademicSessionSetup {
 
         resultSetTimePatterns = utility.queryDataFromDatabase(queryTimePatters, getNewStatement());
     }
-
-    String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
 
     public XMLBuilder buildXML(String campus, String term, String year) {
 
