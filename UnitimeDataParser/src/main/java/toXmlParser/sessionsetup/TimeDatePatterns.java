@@ -69,7 +69,7 @@ public class TimeDatePatterns {
             e.printStackTrace();
         }
         for (int i = 0; i < daysTimePattern.length; i++) {
-            
+
             timePattern.element("days")
                     .attribute("code", daysTimePattern[i]);
         }

@@ -24,12 +24,6 @@ public class MainData {
                 .attribute("eventStartDate", academicSessionSetup.getDateInFormat(0, -1))
                 .attribute("eventEndDate", academicSessionSetup.getDateInFormat(1, -1));
 
-
-//            holidays/managers are not important
-//            XMLBuilder holidays = session.element("holidays");
-//            XMLBuilder holiday = holidays.element("holiday")
-//                    .attribute("date", "2118/9/6");
-
         return session;
 
     }
