@@ -1,5 +1,4 @@
-import toXmlParser.*;
-import toXmlParser.sessionsetup.AcademicSessionSetup;
+import toXmlParser.Curricula;
 
 import java.sql.SQLException;
 
@@ -24,7 +23,7 @@ public class Main {
 //        staffParser.createXMLFile("TTU", "Fall", "2018");
 //
 //        //sessionID you can take from SESSION_AJAD
-//        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1083");
+//        AcademicSessionSetup academicSessionSetup = new AcademicSessionSetup("1123");
 //        academicSessionSetup.createXMLFile("TTUTESTTIMEPATTERNS","FALL","2018");
 //
 //        Preferences preferences = new Preferences();

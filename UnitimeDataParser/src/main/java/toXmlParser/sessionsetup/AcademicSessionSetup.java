@@ -20,9 +20,7 @@ public class AcademicSessionSetup {
 
     private MainData mainData;
 
-    private ResultSet resultSetDepartments;
     ResultSet resultSetTimePatterns;
-    private ResultSet resultSetSubjectAreas;
 
     private TimeDatePatterns timeDatePatterns;
     private ExaminationPeriods examinationPeriods;
@@ -31,11 +29,12 @@ public class AcademicSessionSetup {
 
     private XMLBuilder xmlSessionSetup;
 
+    String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
+
+
     public AcademicSessionSetup(String sessionID) throws SQLException {
 
-        String queryDepartments = "SELECT * FROM INSTITUDID";
         String queryTimePatters = "SELECT * FROM TIME_PATTERN";
-        String queryAreas = "SELECT * FROM SUBJECT_AREAS_TTU";
 
         this.sessionID = sessionID;
 
@@ -46,14 +45,8 @@ public class AcademicSessionSetup {
         this.timeDatePatterns = new TimeDatePatterns(this);
         this.examinationPeriods = new ExaminationPeriods(this);
 
-
-        resultSetDepartments = utility.queryDataFromDatabase(queryDepartments, getNewStatement());
         resultSetTimePatterns = utility.queryDataFromDatabase(queryTimePatters, getNewStatement());
-        resultSetSubjectAreas = utility.queryDataFromDatabase(queryAreas, getNewStatement());
-
     }
-
-    String[] FINAL_EXAM_TIMES = new String[]{"1000", "1200", "1400", "1600", "1800"};
 
     public XMLBuilder buildXML(String campus, String term, String year) {
 
@@ -62,45 +55,6 @@ public class AcademicSessionSetup {
 
             xmlSessionSetup.importXMLBuilder(mainData.buildXML());
 
-            XMLBuilder departments = xmlSessionSetup.element("departments");
-            while (resultSetDepartments.next()) {
-                String code = resultSetDepartments.getString("EXTERNAL_ID");
-                String abbreviation = resultSetDepartments.getString("ABBV");
-                String name = resultSetDepartments.getString("NIMETUS");
-//                String externalId = resultSetDepartments.getString("EXTERNALID");
-
-                XMLBuilder department = departments.element("department")
-                        .attribute("code", code)
-//                        .attribute("externalId", externalId)
-                        .attribute("abbreviation", abbreviation)
-                        .attribute("name", name);
-
-                department.element("eventManagement")
-                        .attribute("enabled", "true");
-
-                department.element("required")
-                        .attribute("time", "false")
-                        .attribute("room", "false")
-                        .attribute("distribution", "false");
-            }
-
-
-            //ADD SUBJECT AREAS
-
-            XMLBuilder subjectAreas = xmlSessionSetup.element("subjectAreas");
-            while (resultSetSubjectAreas.next()) {
-
-                String abbreviation = resultSetSubjectAreas.getString("abbv");
-                String title = resultSetSubjectAreas.getString("title");
-                String department = resultSetSubjectAreas.getString("department_id");
-
-                subjectAreas.element("subjectArea")
-                        .attribute("abbreviation", abbreviation)
-                        .attribute("title", title)
-                        .attribute("department", department);
-            }
-
-
             //ADD TIME/DATE PATTERNS/
             xmlSessionSetup.importXMLBuilder(timeDatePatterns.buildTimePatterns());
             xmlSessionSetup.importXMLBuilder(timeDatePatterns.buildDatePatterns());
@@ -108,7 +62,7 @@ public class AcademicSessionSetup {
             // ADD EXAMINATION PERIODS
             xmlSessionSetup.importXMLBuilder(examinationPeriods.buildExaminationPeriods());
 
-        } catch (ParserConfigurationException | SQLException e) {
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
         return xmlSessionSetup;
