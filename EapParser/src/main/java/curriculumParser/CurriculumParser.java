@@ -1,12 +1,7 @@
 package curriculumParser;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,29 +20,14 @@ public class CurriculumParser {
         BufferedWriter writer = Files.newBufferedWriter(Paths.get(PATH_CSV_FILE));
 
         csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
-                .withHeader("curriculumShortCode", "curriculumLongCode", "curriculumName", "curriculumType", "curriculumMaster"));
+                .withHeader("curriculumShortCode", "curriculumLongCode", "curriculumName", "curriculumType",
+                        "curriculumMaster"));
 
         String[] curriculaCodes = {"50001", "50007", "50015", "50020"};
 
         for (String curriculaCode : curriculaCodes) {
             printAreaCurricula(curriculaCode);
         }
-
-//        Request request = new Request.Builder()
-//                .url("https://ois2.ttu.ee/uusois/!uus_ois2.ois_public.get_json?j_code=D63613804034D05BDB0E88B33C6FE952&p_from_row=0&p_orderby=ASC_nimetus&p_where=&p_lisa=p_str_id%3D%3E50020%2Cp_tase%3D%3E%27D%27&p_rnd=1526068394333")
-//                .build();
-//
-//        Response response = client.newCall(request).execute();
-//        String rawJSON = response.body().string();
-//        JSONArray jsonArray = new JSONArray(rawJSON);
-//
-//        JSONObject jsonObject = new JSONObject(jsonArray.get(1).toString());
-//        JSONArray jsonArrayForFirstElement = jsonObject.getJSONArray("andmed");
-//
-//        for (int i = 0; i < jsonArrayForFirstElement.length(); i++) {
-//            System.out.println(jsonArrayForFirstElement.getJSONObject(i).getString("kood_ttu"));
-//            System.out.println(jsonArrayForFirstElement.getJSONObject(i).getString("nimetus"));
-//        }
 
         csvPrinter.flush();
 
@@ -57,7 +37,8 @@ public class CurriculumParser {
 
     private void printAreaCurricula(String curriculaCode) throws IOException {
         Document doc  = Jsoup.connect("https://ois.ttu.ee/portal/page?_pageid=37,674560&_dad=portal&_schema" +
-                "=PORTAL&p_action=view&p_fk_str_yksus_id=" + curriculaCode + "&p_kava_versioon_id=&p_net=internet&p_lang=ET&p_rezhiim=0&p_mode=1&p_from=").get();
+                "=PORTAL&p_action=view&p_fk_str_yksus_id=" + curriculaCode + "&p_kava_versioon_id=&p_net=internet&p_" +
+                "lang=ET&p_rezhiim=0&p_mode=1&p_from=").get();
 
         int counterTT = doc.body().getElementsByAttributeValue("class", "tt").size();
 

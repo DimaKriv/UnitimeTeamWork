@@ -9,12 +9,10 @@ import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CurriculumBySubject {
@@ -23,14 +21,6 @@ public class CurriculumBySubject {
     private CSVPrinter csvPrinter;
 
     public void runParser() throws IOException {
-//        String[] curriculaCodes = {
-//                "50401", "50406", "50403", "50400", "50405", "50402", "50491", "50442", "50464", "50414", "50431", "50460", "50457", "50408", "50439", "50479", "50428", "50424",
-//                "50387", "50384", "50371", "50370", "50357", "50392", "50486", "50482", "50481", "50484", "50365", "50361", "50388", "50359", "50465", "50461", "50468", "50419", "50289", "50306",
-//                "50412", "50427", "50472", "50430", "50469", "50445", "50454", "50447", "50458", "50456", "50452", "50394", "50372", "50451", "50395", "50432",
-//                "50364", "50358", "50356", "50492", "50117", "50489", "50429", "50411", "50410", "50434",
-//                "50386", "50378", "50368", "50385", "50373", "50488", "50474", "50380", "50421", "50423", "50416", "50417", "50426", "50418", "50425", "50179", "50422", "50415"
-//        };
-
         String[][] curriculaCodes = {
                 {"50401", "50406", "50403", "50400", "50405", "50402", "50491"},
                 {"50442", "50464", "50414", "50431"},
@@ -50,20 +40,11 @@ public class CurriculumBySubject {
                 {"50415"}
         };
 
-        /*{"50401", "50406", "50403", "50400", "50405", "50402", "50491", "50442", "50464", "50414", "50431", "50460", "50457", "50408", "50439", "50479", "50428", "50424"},
-        {"50387", "50384", "50371", "50370", "50357", "50392", "50486", "50482", "50481", "50484", "50365", "50361", "50388", "50359", "50465", "50461", "50468", "50419", "50289", "50306"},
-        {"50412", "50427", "50472", "50430", "50469", "50445", "50454", "50447", "50458", "50456", "50452", "50394", "50372", "50451", "50395", "50432"},
-        {"50364", "50358", "50356", "50492", "50117", "50489", "50429", "50411", "50410", "50434"},
-        {"50386", "50378", "50368", "50385", "50373", "50488", "50474", "50380", "50421", "50423", "50416", "50417", "50426", "50418", "50425", "50179", "50422", "50415"}*/
-
         BufferedWriter writer = Files.newBufferedWriter(Paths.get(PATH_CSV_FILE));
         csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
-                .withHeader("oppekava_kood, oppekava_versioon, oppekava_nimetus, peaeriala_number, peaeriala_nimetus, semester_number, semester_tyyp, ainekood, aine_nimetus, aine_tyyp"));
+                .withHeader("oppekava_kood, oppekava_versioon, oppekava_nimetus, peaeriala_number, " +
+                        "peaeriala_nimetus, semester_number, semester_tyyp, ainekood, aine_nimetus, aine_tyyp"));
 
-//        for (String curriculaCode : curriculaCodes) {
-//            parseCurriculaBySubject(curriculaCode);
-//            System.out.println("---------------------------------");
-//        }
 
         for (int i = 0; i < curriculaCodes.length; i++) {
             for (int codeIndex = 0; codeIndex < curriculaCodes[i].length; codeIndex++) {
@@ -147,7 +128,8 @@ public class CurriculumBySubject {
                     if (trElements.get(trIndex).getAllElements().size() >= 9) {
                         if (!trElements.get(trIndex).child(0).html().equals("peaeriala") &&
                                 !trElements.get(trIndex).child(0).html().equals("ainekood") &&
-                                !trElements.get(trIndex).child(0).getElementsByTag("nobr").html().matches("[A-ZÜÄÖÕ]{2,4}[.]?\\d{2,5}[.]?(\\d{3}|[A-ZÜÄÖÕ]{1,2})?[/]?\\d?")) {
+                                !trElements.get(trIndex).child(0)
+                                        .getElementsByTag("nobr").html().matches("[A-ZÜÄÖÕ]{2,4}[.]?\\d{2,5}[.]?(\\d{3}|[A-ZÜÄÖÕ]{1,2})?[/]?\\d?")) {
                             String currentFieldOfStudy = trElements.get(trIndex).child(0).html();
                             if (!fieldOfStudy.equals(currentFieldOfStudy)) {
                                 fieldOfStudy = currentFieldOfStudy;
@@ -164,6 +146,7 @@ public class CurriculumBySubject {
                             csvPrinter.printRecord(curriculumCode, curriculumVersion, curriculumName, fieldOfStudyNumber, fieldOfStudy,
                                     semesterNumber, subjectSeason, subjectCode, subjectName, subjectType);
 
+                            System.out.println(fieldOfStudy);
 
                         }
                     }
