@@ -49,9 +49,9 @@ public class Departments {
             String name = queryResultSet.getString("NIMETUS");
             String deptCode = queryResultSet.getString("EXTERNAL_ID");
             xmlBuilder.element("department")
-                        .attribute("abbreviation", abbreviation)
-                        .attribute("name", name)
-                        .attribute("deptCode", deptCode);
+                    .attribute("abbreviation", abbreviation)
+                    .attribute("name", name)
+                    .attribute("deptCode", deptCode);
         }
         return xmlBuilder;
     }

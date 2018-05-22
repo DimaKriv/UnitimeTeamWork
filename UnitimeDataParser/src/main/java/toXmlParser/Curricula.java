@@ -79,7 +79,7 @@ public class Curricula {
         if (curriculumNumber > 1) {
             xmlBuilder = xmlBuilder.up().up();
         }
-        xmlBuilder =  xmlBuilder.element("curriculum")
+        xmlBuilder = xmlBuilder.element("curriculum")
                 .attribute("name", currentCurriculumName)
                 .element("academicArea")
                 .attribute("abbreviation", "TTUM")
@@ -92,7 +92,7 @@ public class Curricula {
         if (currentSemester > 1) {
             xmlBuilder = xmlBuilder.up();
         }
-        xmlBuilder =  xmlBuilder.element("classification")
+        xmlBuilder = xmlBuilder.element("classification")
                 .attribute("enrollment", String.valueOf(classificationEnrollmentNumber))
                 .element("academicClassification")
                 .attribute("code", String.valueOf(currentSemester))

@@ -32,6 +32,7 @@ public class ParserUtility {
 
     /**
      * Connect to the database
+     *
      * @return the Connection object
      */
     public Connection connectToDatabase() throws SQLException {
@@ -40,6 +41,7 @@ public class ParserUtility {
 
     /**
      * Create Statement object, which can process SQL string, using given connection object.
+     *
      * @param connection from which will be created Statement object
      * @return Statement object for executing given SQL query in database to which it is connected.
      */
@@ -49,7 +51,8 @@ public class ParserUtility {
 
     /**
      * Make query from database and return queried data in ResultSet object.
-     * @param querySQL SQL statement to query from database.
+     *
+     * @param querySQL  SQL statement to query from database.
      * @param statement is Statement object which will process given SQL string.
      * @return queried data in ResultSet object.
      */
@@ -59,10 +62,11 @@ public class ParserUtility {
 
     /**
      * Write content of XMLBuilder to file with given name.
+     *
      * @param xmlBuilder with xml file content to save (write).
-     * @param fileName in which xml content from XMLBuilder will be saved.
+     * @param fileName   in which xml content from XMLBuilder will be saved.
      * @throws FileNotFoundException is thrown if file where is needed to write xml content does not exist.
-     * @throws TransformerException occurred on transformation XMLBuilder toWriter function.
+     * @throws TransformerException  occurred on transformation XMLBuilder toWriter function.
      */
     public void writeToXMLFile(XMLBuilder xmlBuilder, String fileName) throws FileNotFoundException, TransformerException {
         // create XMLFiles directory

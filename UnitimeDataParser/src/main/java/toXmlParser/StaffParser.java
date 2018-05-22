@@ -16,7 +16,7 @@ public class StaffParser {
     private String QUERY_SQL_STAFF;
     private ResultSet QUERY_SQL_RESULT_STAFF;
 
-    public StaffParser(String querySql, ResultSet queryResultSet)  {
+    public StaffParser(String querySql, ResultSet queryResultSet) {
         utility = new ParserUtility();
         this.QUERY_SQL_STAFF = querySql;
         this.QUERY_SQL_RESULT_STAFF = queryResultSet;

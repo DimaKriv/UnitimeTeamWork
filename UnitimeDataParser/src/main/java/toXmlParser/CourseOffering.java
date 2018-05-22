@@ -22,7 +22,6 @@ public class CourseOffering {
         utility = new ParserUtility();
         Connection connection = utility.connectToDatabase();
         Statement statement = utility.createStatement(connection);
-//        querySql = "select D.course, D.department_name, D.nimetus_est,A.loeng, A.praktikum, A.harjutus   from  (select distinct S.course, S.department_name, T.nimetus_est, T.TUNN_AINE_ID from SUBJECT_TO_AREA as S INNER JOIN TUNN_AINE as T ON S.course=T.ainekood) as D inner join T_AINE as A ON A.FK_TUNN_AINE_ID=D.TUNN_AINE_ID where A.FK_TYYPKAVA_LIIK_KOOD='TYYPKAVA_LIIK_SS' and A.FK_OPETSEMESTER_KOOD in ('AINESEMESTER_SK','AINESEMESTER_K')";
         querySql = "select inimeste_arv,ainekood,nimetus,loeng,praktikum,harjutus from U_COURSEOFFERING";
         queryResultSet = utility.queryDataFromDatabase(querySql, statement);
     }
@@ -44,7 +43,7 @@ public class CourseOffering {
 
     public XMLBuilder buildXML(String campus, String term, String year) throws ParserConfigurationException, SQLException {
         XMLBuilder xmlBuilder = createCourseOfferingElementBuilder(campus, term, year);
-        int i =1;
+        int i = 1;
         while (queryResultSet.next()) {
             String limitStr = queryResultSet.getString("inimeste_arv");
             String subject = queryResultSet.getString("nimetus");
@@ -54,15 +53,15 @@ public class CourseOffering {
             String harjutus = queryResultSet.getString("harjutus");
             ClassOptimization optimizator = new ClassOptimization();
             int[][] subpartMin = optimizator.makeCourceOfferringData(
-                    optimizator.makeIntMassiveFromStringInput(lecture,paktikum,harjutus));
+                    optimizator.makeIntMassiveFromStringInput(lecture, paktikum, harjutus));
             int limit;
             try {
-                limit= Integer.parseInt(limitStr);
+                limit = Integer.parseInt(limitStr);
             } catch (Exception e) {
                 System.out.println("Not valid limit");
                 continue;
             }
-           XMLBuilder out = xmlBuilder.element("offering")
+            XMLBuilder out = xmlBuilder.element("offering")
                     .attribute("id", String.valueOf(i++))
                     .attribute("offered", "true")
                     .attribute("action", "insert|update|delete")
@@ -78,9 +77,9 @@ public class CourseOffering {
                     .attribute("fixedCredit", "2")
                     .up()
                     .up()
-            .element("config")
-            .attribute("name", "1")
-            .attribute("limit", limit + "");
+                    .element("config")
+                    .attribute("name", "1")
+                    .attribute("limit", limit + "");
             createCourseSubject(subpartMin, out);
             createCourseClass(subpartMin, out, limit);
         }
@@ -100,53 +99,57 @@ public class CourseOffering {
         }
     }
 
-    public void createCourseSubject(int [][] input, XMLBuilder out){
-        String[] type = new String[] {"Lec","Lab","Rec"};
+    public void createCourseSubject(int[][] input, XMLBuilder out) {
+        String[] type = new String[]{"Lec", "Lab", "Rec"};
         for (int i = 0; i < input.length; i++) {
             ClassOptimization optimizator = new ClassOptimization();
             int[] classConfig = optimizator.countDatePattern(input, i);
-            if (isExist(classConfig,optimizator)) {
-               out = out.e("subpart").attribute("type", type[i])
-                        .a("minPerWeek",  minPerWeek(classConfig,optimizator)+ "");
+            if (isExist(classConfig, optimizator)) {
+                out = out.e("subpart").attribute("type", type[i])
+                        .a("minPerWeek", minPerWeek(classConfig, optimizator) + "");
                 out = out.up();
             }
         }
     }
-    public void createCourseClass(int [][] input, XMLBuilder out, int people){
-        String[] type = new String[] {"Lec","Lab","Rec"};
+
+    public void createCourseClass(int[][] input, XMLBuilder out, int people) {
+        String[] type = new String[]{"Lec", "Lab", "Rec"};
         int peopleNotInClass = people;
-        int suffixOfClass=1;
-            for (int i = 0; i < input.length;) {
-                ClassOptimization optimizator = new ClassOptimization();
-                int[] classConfig = optimizator.countDatePattern(input, i);
-                if (!isExist(classConfig,optimizator)) {
-                i++; continue;
-                }
-                    int limitClassCapacity;
-                    if ( i == 0) limitClassCapacity = 200;
-                    else  limitClassCapacity = 20;
-                  out =  out.element("class")
-                            .attribute("type", type[i]).attribute("suffix"
-                                  ,suffixOfClass + "")
-                            .attribute("limit", limitClassCapacity+"").up();
-                    if ((peopleNotInClass - limitClassCapacity) > 0) {
-                        peopleNotInClass -= limitClassCapacity;
-                        suffixOfClass++;
-                    } else{
-                        i++;peopleNotInClass = people;
-                    suffixOfClass = 1;
-                    }
+        int suffixOfClass = 1;
+        for (int i = 0; i < input.length; ) {
+            ClassOptimization optimizator = new ClassOptimization();
+            int[] classConfig = optimizator.countDatePattern(input, i);
+            if (!isExist(classConfig, optimizator)) {
+                i++;
+                continue;
             }
+            int limitClassCapacity;
+            if (i == 0) limitClassCapacity = 200;
+            else limitClassCapacity = 20;
+            out = out.element("class")
+                    .attribute("type", type[i]).attribute("suffix"
+                            , suffixOfClass + "")
+                    .attribute("limit", limitClassCapacity + "").up();
+            if ((peopleNotInClass - limitClassCapacity) > 0) {
+                peopleNotInClass -= limitClassCapacity;
+                suffixOfClass++;
+            } else {
+                i++;
+                peopleNotInClass = people;
+                suffixOfClass = 1;
+            }
+        }
     }
 
-    public int minPerWeek(int[] classConfig , ClassOptimization op) {
+    public int minPerWeek(int[] classConfig, ClassOptimization op) {
         int[] numberAndMinutesOfClass = op.getNumberAndMinutesOfClass(classConfig);
         return numberAndMinutesOfClass[0] * numberAndMinutesOfClass[1];
     }
+
     public boolean isExist(int[] classConfig, ClassOptimization op) {
-      if(op.getDatePattern(classConfig).equals(ClassOptimization.NO_DATE_PATTERN)
-              || op.getTimePattern(classConfig).equals(ClassOptimization.NO_TIME_PATTERN))
-          return false;
-      else return true;
+        if (op.getDatePattern(classConfig).equals(ClassOptimization.NO_DATE_PATTERN)
+                || op.getTimePattern(classConfig).equals(ClassOptimization.NO_TIME_PATTERN))
+            return false;
+        else return true;
     }
 }

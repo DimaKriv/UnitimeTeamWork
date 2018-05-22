@@ -5,19 +5,15 @@ import parserUtility.ParserUtility;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 public class BuildingsAndRooms {
 
-    //Select
+
     private String QUERY_SQL_BUILDING;
     private ResultSet QUERY_SQL_RESULT_BUILDING;
     private ParserUtility utility;
@@ -29,7 +25,7 @@ public class BuildingsAndRooms {
         this.QUERY_SQL_RESULT_BUILDING = queryResultSet;
     }
 
-    public BuildingsAndRooms() throws SQLException{
+    public BuildingsAndRooms() throws SQLException {
         utility = new ParserUtility();
         QUERY_SQL_BUILDING = "SELECT V.FK_VARUSTUS_KOOD, H.bl_id, H.nimetus AS buildingName, R.kohtade_arv, R.rm_id, R.ruum_id, R.kood, R.nimetus AS roomName FROM R_HOONE AS H INNER JOIN R_RUUM AS R ON H.bl_id=R.fk_bl_id LEFT JOIN R_RUUM_VARUSTUS AS V ON V.fk_ruum_id=R.ruum_id WHERE H.bl_id NOT IN ('KOPLI116', 'AKAD21F', 'AKAD21B', 'KOPLI101', 'KJARVE2')";
         Connection connection = utility.connectToDatabase();
@@ -61,13 +57,13 @@ public class BuildingsAndRooms {
             String roomNumber = QUERY_SQL_RESULT_BUILDING.getString("rm_id");
             String roomClassification = QUERY_SQL_RESULT_BUILDING.getString("roomName");
             roomFeature = QUERY_SQL_RESULT_BUILDING.getString("FK_VARUSTUS_KOOD");
-            if (roomFeature == null){
+            if (roomFeature == null) {
                 roomFeature = "";
             }
-            if (roomFeature.length() > 20){
-                roomFeature = roomFeature.substring(0,20);
+            if (roomFeature.length() > 20) {
+                roomFeature = roomFeature.substring(0, 20);
             }
-            switch (roomClassification){
+            switch (roomClassification) {
                 case "Üldkasutatav auditoorium":
                     roomClassification = "Uld.auditoorium";
                     break;
@@ -80,16 +76,8 @@ public class BuildingsAndRooms {
                 default:
                     break;
             }
-//            if (roomClassification.equals("Üldkasutatav auditoorium")){
-//                roomClassification = "Uld.auditoorium";
-//            }
-//            if (roomClassification.equals("Eriotstarbeline auditoorium")){
-//                roomClassification = "Eri.auditoorium";
-//            }
-//            if (roomClassification.equals("Kategooria: õppetegevus")){
-//                roomClassification = "õppetegevus";
-//            }
-            switch (buildingName){
+
+            switch (buildingName) {
                 case "Õppehoone U02 (B korpus)":
                     buildingName = "Õppehoone U02 (B)";
                     break;
@@ -105,25 +93,8 @@ public class BuildingsAndRooms {
                 default:
                     break;
             }
-//            if (buildingName.equals("Õppehoone U02 (B korpus)")){
-//                buildingName = "Õppehoone U02 (B)";
-//            }
-//            if (buildingName.equals("Õppehoone U04 (B korpus)")){
-//                buildingName = "Õppehoone U04 (B)";
-//            }
-//            if (buildingName.equals("Õppehoone U05 (B korpus)")){
-//                buildingName = "Õppehoone U05 (B)";
-//            }
-//            if (buildingName.equals("Õppehoone U06 (A korpus)")){
-//                buildingName = "Õppehoone U02 (A)";
-//            }
-//                String roomFeatures = QUERY_SQL_RESULT_BUILDING.getString("fk_varustus_kood");
-//                String roomFeaturesValue = roomFeatures;
-//                if (roomFeatures.length() > 20){
-//                    roomFeaturesValue = roomFeatures.substring(0, 20);
-//                    roomFeatures = roomFeatures.substring(0, 20);
-//                }
-            if (buildingAbbreviation.equals("SOC")){
+
+            if (buildingAbbreviation.equals("SOC")) {
                 departmentCode = "1017";
                 xmlBuilder.element("building")
                         .attribute("abbreviation", buildingAbbreviation)
@@ -155,7 +126,7 @@ public class BuildingsAndRooms {
                         .up()
                         .up();
             }
-            if (buildingAbbreviation.equals("EIK")){
+            if (buildingAbbreviation.equals("EIK")) {
                 departmentCode = "1005";
                 xmlBuilder.element("building")
                         .attribute("abbreviation", buildingAbbreviation)
@@ -187,7 +158,7 @@ public class BuildingsAndRooms {
                         .up()
                         .up();
             }
-            if (buildingAbbreviation.equals("SCI")){
+            if (buildingAbbreviation.equals("SCI")) {
                 departmentCode = "1014";
                 xmlBuilder.element("building")
                         .attribute("abbreviation", buildingAbbreviation)
