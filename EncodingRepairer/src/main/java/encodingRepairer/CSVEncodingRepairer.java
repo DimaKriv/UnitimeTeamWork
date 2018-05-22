@@ -24,10 +24,11 @@ public class CSVEncodingRepairer {
     /**
      * Gets path to directory in which are placed incorrectly encoded files from properties file
      * (this path should be written in properties file like PathToCsvFilesDirectory=SOME_PATH_HERE)
+     *
      * @param pathToPropertiesFile path to properties file location (including filename)
      * @return path to directory in which should be repaired incorrectly encoded files
-     *         if properties file is presented and PathToCsvFilesDirectory value is not empty or
-     *         otherwise returns . (path to current repairer location)
+     * if properties file is presented and PathToCsvFilesDirectory value is not empty or
+     * otherwise returns . (path to current repairer location)
      */
     private String getPathToCsvFilesDirectoryFromPropertiesFile(String pathToPropertiesFile) {
         File propertiesFile = new File(pathToPropertiesFile);
@@ -56,9 +57,10 @@ public class CSVEncodingRepairer {
 
     /**
      * List all the files under a directory
+     *
      * @param directoryName to be listed
      */
-    private List<File> getFilesList(String directoryName){
+    private List<File> getFilesList(String directoryName) {
         List<File> filesList = new LinkedList<>();
 
         File directory = new File(directoryName);
@@ -72,13 +74,14 @@ public class CSVEncodingRepairer {
 
     /**
      * Get file extension (using pattern like filename.extension)
+     *
      * @param file file, which extension to get
      * @return extension of file (like extension) if it is presented or
-     *         empty string if there is not fount file extension
+     * empty string if there is not fount file extension
      */
     private String getFileExtension(File file) {
         String fileName = file.getName();
-        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
+        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
             return fileName.substring(fileName.lastIndexOf(".") + 1);
         } else {
             return "";
@@ -87,6 +90,7 @@ public class CSVEncodingRepairer {
 
     /**
      * Get list of files with csv extension from unchecked files list
+     *
      * @param files list of files from which files with csv extension will be gotten
      * @return list of files with csv extension (like filename.csv)
      */

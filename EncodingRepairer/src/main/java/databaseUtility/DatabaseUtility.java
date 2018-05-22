@@ -13,6 +13,7 @@ public class DatabaseUtility {
 
     /**
      * Connect to the database
+     *
      * @return the Connection object
      */
     public static Connection connectToDatabase() {
@@ -27,14 +28,15 @@ public class DatabaseUtility {
 
     /**
      * Make query from database and return queried data in ResultSet object
+     *
      * @param querySQL SQL statement to query from database
      * @return queried data in ResultSet object.
      */
-    public static ResultSet queryDataFromDatabase(String querySQL){
+    public static ResultSet queryDataFromDatabase(String querySQL) {
         ResultSet resultSet = null;
         try {
             Connection connection = connectToDatabase();
-            Statement statement  = connection.createStatement();
+            Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(querySQL);
         } catch (SQLException e) {
             e.printStackTrace();
