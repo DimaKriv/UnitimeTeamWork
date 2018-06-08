@@ -24,7 +24,7 @@ public class CourseOffering {
         utility = new ParserUtility();
         Connection connection = utility.connectToDatabase();
         Statement statement = utility.createStatement(connection);
-        querySql ="select inimeste_arv,ainekood,nimetus,loeng,praktikum,harjutus,T.oppejoud_id,T.type " +
+        querySql ="select inimeste_arv,ainekood,nimetus,loeng,praktikum,harjutus,fk_aine_id,T.oppejoud_id,T.type " +
                 "from U_COURSEOFFERING u left join (select distinct AO.aine_id, AO.oppejoud_id,AT.type " +
                 "from aine_type_oppejoud at inner join aine_oppejoud ao on ao.aine_id=at.aine_id " +
                 "and ao.oppejoud_id=at.oppejoud_id)t on t.aine_id=u.fk_aine_id;";
@@ -48,18 +48,19 @@ public class CourseOffering {
 
     public XMLBuilder buildXML(String campus, String term, String year) throws ParserConfigurationException, SQLException {
         XMLBuilder xmlBuilder = createCourseOfferingElementBuilder(campus, term, year);
-        int i = 1;
         String curlimitStr = null;
         String cursubject = null;
         String curcourseNumber = null;
         String curlecture = null;
         String curpaktikum = null;
         String curharjutus = null;
+        String cur_aine_id = null;
         HashMap<Integer,List<Integer>> staffSortByClassCode = new HashMap<>();
         int loengINT = 0; int praktikumINT = 1; int harjutusINT = 2;
         staffSortByClassCode.put(loengINT,new ArrayList<>());
         staffSortByClassCode.put(praktikumINT,new ArrayList<>());
         staffSortByClassCode.put(harjutusINT,new ArrayList<>());
+
         while (queryResultSet.next()) {
             String limitStr = queryResultSet.getString("inimeste_arv");
             String subject = queryResultSet.getString("nimetus");
@@ -69,6 +70,7 @@ public class CourseOffering {
             String harjutus = queryResultSet.getString("harjutus");
             String instructorId = queryResultSet.getString("oppejoud_id");
             String lessonType = queryResultSet.getString("type");
+            String aine_id = queryResultSet.getString("fk_aine_id");
             if (cursubject == null) {
                 curlimitStr = limitStr;
                 cursubject = subject;
@@ -76,6 +78,7 @@ public class CourseOffering {
                 curlecture = lecture;
                 curpaktikum = paktikum;
                 curharjutus = harjutus;
+                cur_aine_id = aine_id;
                 putToMapTypeOfClassAndInstructorId(staffSortByClassCode, lessonType,instructorId);
                 continue;
             }
@@ -84,7 +87,7 @@ public class CourseOffering {
                 continue;
             } else {
                 addCourse(xmlBuilder, curlimitStr,curlecture,
-                        curpaktikum, curharjutus,cursubject, curcourseNumber, i, staffSortByClassCode);
+                        curpaktikum, curharjutus,cursubject, curcourseNumber, cur_aine_id, staffSortByClassCode);
                 staffSortByClassCode.get(loengINT).clear();
                 staffSortByClassCode.get(praktikumINT).clear();
                 staffSortByClassCode.get(harjutusINT).clear();
@@ -94,11 +97,12 @@ public class CourseOffering {
                 curlecture = lecture;
                 curpaktikum = paktikum;
                 curharjutus = harjutus;
+                cur_aine_id = aine_id;
                 putToMapTypeOfClassAndInstructorId(staffSortByClassCode, lessonType,instructorId);
             }
         }
         addCourse(xmlBuilder, curlimitStr,curlecture,
-                curpaktikum, curharjutus,cursubject, curcourseNumber, i, staffSortByClassCode);
+                curpaktikum, curharjutus,cursubject, curcourseNumber, cur_aine_id, staffSortByClassCode);
         return xmlBuilder;
     }
 
@@ -148,7 +152,8 @@ public class CourseOffering {
                             , suffixOfClass + "")
                     .attribute("limit", limitClassCapacity + "");
             for (int j = 0; j < staff.get(i).size(); j++) {
-              out = out.element("instructor").attribute("id",staff.get(i).get(j) + "").up();
+              out = out.element("instructor").attribute("id",staff.get(i).get(j) + "")
+                      .attribute("share", "100").up();
             }
                    out = out.up();
             if ((peopleNotInClass - limitClassCapacity) > 0) {
@@ -192,7 +197,7 @@ public class CourseOffering {
     }
 
     public void addCourse(XMLBuilder xmlBuilder, String limitStr, String lecture,
-                          String paktikum, String harjutus, String subject, String courseNumber, int i,
+                          String paktikum, String harjutus, String subject, String courseNumber, String i,
                           HashMap<Integer,List<Integer>> staff) {
 
         ClassOptimization optimizator = new ClassOptimization();
@@ -206,7 +211,7 @@ public class CourseOffering {
             return ;
         }
         XMLBuilder out = xmlBuilder.element("offering")
-                .attribute("id", String.valueOf(i++))
+                .attribute("id", i)
                 .attribute("offered", "true")
                 .attribute("action", "insert|update|delete")
                 .element("course")
