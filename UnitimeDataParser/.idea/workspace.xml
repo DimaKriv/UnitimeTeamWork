@@ -2,34 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb035ebb-4f4b-4f51-be22-720eff6b7af8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5-rc-2/fileContent/annotation-processors.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/3.5-rc-2/fileContent/annotation-processors.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5-rc-2/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/3.5-rc-2/fileContent/fileContent.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/fileSnapshots.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/fileSnapshots.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/jvmClassSignatures.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/jvmClassSignatures.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/3.5-rc-2/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser_main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser_main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/UnitimeDataParser_test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/UnitimeDataParser-1.0-SNAPSHOT.tar" beforeDir="false" afterPath="$PROJECT_DIR$/build/distributions/UnitimeDataParser-1.0-SNAPSHOT.tar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/UnitimeDataParser-1.0-SNAPSHOT.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/distributions/UnitimeDataParser-1.0-SNAPSHOT.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/parser-1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/parser-1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/scripts/UnitimeDataParser" beforeDir="false" afterPath="$PROJECT_DIR$/build/scripts/UnitimeDataParser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/toXmlParser/Preferences.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/toXmlParser/Preferences.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/BuildingAndRoomsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/BuildingAndRoomsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/CourseCatalogTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/CourseCatalogTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/CourseOfferingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/CourseOfferingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/DepartmentsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/DepartmentsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/StaffTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/StaffTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/SubjectAreasTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/SubjectAreasTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/dataOptimizationTests/ClassOptimizatorTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/sessionsetupTests/AcademicSessionSetupTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/sessionsetup/AcademicSessionSetupTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/sessionsetupTests/ExaminationPeriodsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/sessionsetup/ExaminationPeriodsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/sessionsetupTests/MainDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/sessionsetup/MainDataTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/toXmlParserTests/sessionsetupTests/TimeDatePatternsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/toXmlParser/sessionsetup/TimeDatePatternsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/toXmlParser/CourseOffering.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/toXmlParser/CourseOffering.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -75,8 +49,8 @@
       <file leaf-file-name="Preferences.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/Preferences.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="62" column="71" lean-forward="true" selection-start-line="62" selection-start-column="71" selection-end-line="62" selection-end-column="71" />
+            <state relative-caret-position="17">
+              <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,11 +58,38 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="CourseOffering.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/CourseOffering.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1224">
+              <caret line="82" column="38" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ParserUtility.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/parserUtility/ParserUtility.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BuildingAndRoomsTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/BuildingAndRoomsTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="PreferencesTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/PreferencesTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="256" column="48" lean-forward="true" selection-start-line="256" selection-start-column="48" selection-end-line="256" selection-end-column="48" />
+            <state relative-caret-position="4267">
+              <caret line="267" column="5" selection-start-line="267" selection-start-column="5" selection-end-line="267" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -112,11 +113,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
       <map>
-        <entry key="$PROJECT_DIR$" value="C:\Users\imgret\.gradle\wrapper\dists\gradle-3.5-rc-2-all\c0k4lbl8pjtnoeqme5ekch4re\gradle-3.5-rc-2" />
+        <entry key="$PROJECT_DIR$" value="C:\Users\Dmitri\.gradle\wrapper\dists\gradle-3.5-rc-2-all\c0k4lbl8pjtnoeqme5ekch4re\gradle-3.5-rc-2" />
       </map>
     </option>
     <option name="myGradleVersions">
@@ -321,7 +323,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="6092585812488" />
+        <entry key="$PROJECT_DIR$" value="6098780492164" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
         <entry key="$PROJECT_DIR$/build.gradle" value="328949656" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="615277776" />
@@ -512,6 +514,10 @@
         <option value="$PROJECT_DIR$/src/test/java/toXmlParserTests/PreferencesTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/toXmlParser/Preferences.java" />
         <option value="$PROJECT_DIR$/src/test/java/toXmlParser/PreferencesTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/toXmlParser/CourseOfferingTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/toXmlParser/dataOptimization/ClassOptimizatorTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/toXmlParser/dataOptimization/ClassOptimization.java" />
+        <option value="$PROJECT_DIR$/src/main/java/toXmlParser/CourseOffering.java" />
       </list>
     </option>
   </component>
@@ -520,6 +526,9 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="37" />
@@ -610,7 +619,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="parserUtility" type="462c0819:PsiDirectoryNode" />
+              <item name="toXmlParser" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UnitimeDataParser" type="b2602c69:ProjectViewProjectNode" />
@@ -619,23 +628,25 @@
               <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="toXmlParser" type="462c0819:PsiDirectoryNode" />
+              <item name="dataOptimization" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="extract.method.default.visibility" value="public" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RunDashboard">
@@ -650,33 +661,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.PreferencesTest">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="UnitimeDataParser_main" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-    </configuration>
+  <component name="RunManager" selected="JUnit.BuildingAndRoomsTest.testBuildingXMLWithOneEntryInResultSet">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
-    <configuration name="All in UnitimeDataParser_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="UnitimeDataParser_test" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="PreferencesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BuildingAndRoomsTest.testBuildingXMLWithOneEntryInResultSet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="UnitimeDataParser_test" />
       <extension name="coverage">
         <pattern>
@@ -687,9 +676,101 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="toXmlParser" />
-      <option name="MAIN_CLASS_NAME" value="toXmlParser.PreferencesTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="toXmlParser.BuildingAndRoomsTest" />
+      <option name="METHOD_NAME" value="testBuildingXMLWithOneEntryInResultSet" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="CourseOfferingTest.checkIfExistSubpartExistNotValidDate1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="UnitimeDataParser_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="toXmlParserTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="toXmlParser" />
+      <option name="MAIN_CLASS_NAME" value="toXmlParserTests.CourseOfferingTest" />
+      <option name="METHOD_NAME" value="checkIfExistSubpartExistNotValidDate1" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="CourseOfferingTest.checkIfExistSubpartExistNotValidDate2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="UnitimeDataParser_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="toXmlParserTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="toXmlParser" />
+      <option name="MAIN_CLASS_NAME" value="toXmlParserTests.CourseOfferingTest" />
+      <option name="METHOD_NAME" value="checkIfExistSubpartExistNotValidDate2" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="CourseOfferingTest.getMinPerWeek" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="UnitimeDataParser_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="toXmlParserTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="toXmlParser" />
+      <option name="MAIN_CLASS_NAME" value="toXmlParserTests.CourseOfferingTest" />
+      <option name="METHOD_NAME" value="getMinPerWeek" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="CourseOfferingTest.getMinPerWeekNotValid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="UnitimeDataParser_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="toXmlParserTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="toXmlParser" />
+      <option name="MAIN_CLASS_NAME" value="toXmlParserTests.CourseOfferingTest" />
+      <option name="METHOD_NAME" value="getMinPerWeekNotValid" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -738,15 +819,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JUnit.All in UnitimeDataParser_test" />
-      <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.PreferencesTest" />
+      <item itemvalue="JUnit.CourseOfferingTest.checkIfExistSubpartExistNotValidDate1" />
+      <item itemvalue="JUnit.CourseOfferingTest.checkIfExistSubpartExistNotValidDate2" />
+      <item itemvalue="JUnit.CourseOfferingTest.getMinPerWeek" />
+      <item itemvalue="JUnit.CourseOfferingTest.getMinPerWeekNotValid" />
+      <item itemvalue="JUnit.BuildingAndRoomsTest.testBuildingXMLWithOneEntryInResultSet" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.PreferencesTest" />
-        <item itemvalue="JUnit.All in UnitimeDataParser_test" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.CourseOfferingTest.checkIfExistSubpartExistNotValidDate1" />
+        <item itemvalue="JUnit.BuildingAndRoomsTest.testBuildingXMLWithOneEntryInResultSet" />
+        <item itemvalue="JUnit.CourseOfferingTest.getMinPerWeekNotValid" />
+        <item itemvalue="JUnit.CourseOfferingTest.getMinPerWeek" />
+        <item itemvalue="JUnit.CourseOfferingTest.checkIfExistSubpartExistNotValidDate2" />
       </list>
     </recent_temporary>
   </component>
@@ -769,16 +854,36 @@
       <workItem from="1525714698486" duration="12000" />
       <workItem from="1525715116053" duration="1251000" />
       <workItem from="1526029313382" duration="7010000" />
+      <workItem from="1526076053118" duration="6168000" />
+      <workItem from="1526111335342" duration="12406000" />
+      <workItem from="1526162443952" duration="2009000" />
+      <workItem from="1526164747098" duration="35000" />
     </task>
+    <task id="LOCAL-00001" summary="Imre please make changes in Preferences">
+      <created>1526077453809</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1526077453809</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Small change in CourseOffering">
+      <created>1526079992739</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1526079992765</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Small change in CourseOffering">
+      <created>1526084556473</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1526084556518</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="PreferencesTest - 2018.05.11 at 14h 37m 38s.xml">
-      <configuration name="PreferencesTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="PreferencesTest - 2018.05.11 at 14h 38m 37s.xml">
-      <configuration name="PreferencesTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="PreferencesTest - 2018.05.11 at 14h 39m 02s.xml">
       <configuration name="PreferencesTest" configurationId="JUnit" />
     </history-entry>
@@ -803,48 +908,91 @@
     <history-entry file="PreferencesTest - 2018.05.11 at 14h 55m 39s.xml">
       <configuration name="PreferencesTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="BuildingAndRoomsTest_testBuildingXMLWithOneEntryInResultSet - 2018.05.13 at 01h 30m 27s.xml">
+      <configuration name="BuildingAndRoomsTest.testBuildingXMLWithOneEntryInResultSet" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CourseOfferingTest_checkIfExistSubpartExistNotValidDate1 - 2018.05.13 at 01h 33m 35s.xml">
+      <configuration name="CourseOfferingTest.checkIfExistSubpartExistNotValidDate1" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22106000" />
+    <option name="totallyTimeSpent" value="22701000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Designer" order="3" />
-      <window_info anchor="right" id="Database" order="4" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32900432" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32900432" />
-      <window_info anchor="bottom" id="CheckStyle" order="8" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27132195" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="Designer" order="3" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27086383" />
+      <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="Gradle" order="4" weight="0.32995737" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="3" />
       <window_info anchor="right" id="Theme Preview" order="4" />
       <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32900432" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.32900432" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="CheckStyle" order="8" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -855,17 +1003,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/StaffParser.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/PreferencesTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/DepartmentsTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="14" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+        <state relative-caret-position="4539">
+          <caret line="267" column="5" selection-start-line="267" selection-start-column="5" selection-end-line="267" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1013,13 +1157,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParserTests/sessionsetup/AcademicSessionSetupTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/parserUtility/ParserUtility.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="839">
-          <caret line="70" column="110" selection-start-line="70" selection-start-column="110" selection-end-line="70" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/sessionsetup/MainData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1038,13 +1175,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="56" lean-forward="true" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/CourseOffering.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="137" column="28" lean-forward="true" selection-start-line="137" selection-start-column="28" selection-end-line="137" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1100,13 +1230,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/BuildingAndRoomsTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="34" column="75" selection-start-line="34" selection-start-column="75" selection-end-line="34" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/sessionsetup/AcademicSessionSetupTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1142,13 +1265,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/dataOptimization/ClassOptimizator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="123" column="18" selection-start-line="123" selection-start-column="18" selection-end-line="123" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/dataOptimization/ClassOptimizator.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/DepartmentsTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-544">
@@ -1158,18 +1275,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/PreferencesTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="256" column="48" lean-forward="true" selection-start-line="256" selection-start-column="48" selection-end-line="256" selection-end-column="48" />
+        <state relative-caret-position="4267">
+          <caret line="267" column="5" selection-start-line="267" selection-start-column="5" selection-end-line="267" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/Preferences.java">
+    <entry file="file://$PROJECT_DIR$/UnitimeDataParser.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="62" column="71" lean-forward="true" selection-start-line="62" selection-start-column="71" selection-end-line="62" selection-end-column="71" />
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/toXmlParser/BuildingAndRoomsTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/parserUtility/ParserUtility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/CourseOffering.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1224">
+          <caret line="82" column="38" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toXmlParser/Preferences.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1229,7 +1374,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>UnitimeDataParser</last-edited>
+          <last-edited>UnitimeDataParser_test|UnitimeDataParser</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

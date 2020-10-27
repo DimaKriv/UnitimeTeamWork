@@ -42,10 +42,10 @@ public class Preferences {
 
     public XMLBuilder createPreferencesElementBuilder(String campus, String term, String year) throws ParserConfigurationException {
         XMLBuilder xmlBuilder =
-                XMLBuilder.create("preferences")
-                        .attribute("campus", campus)
-                        .attribute("term", term)
-                        .attribute("year", year);
+            XMLBuilder.create("preferences")
+                .attribute("campus", campus)
+                .attribute("term", term)
+                .attribute("year", year);
 
         return xmlBuilder;
     }
@@ -78,7 +78,7 @@ public class Preferences {
                 }
             }
         }
-        xmlBuilder = xmlBuilder.up();
+      //  xmlBuilder = xmlBuilder.up();
         return xmlBuilder;
     }
 
@@ -126,7 +126,7 @@ public class Preferences {
         Optional<String> optionalTimePattern = Optional.ofNullable(
                 optimizer.getTimePattern(classTypeTimeDistributionInfo));
         String timePattern = "Undefined time pattern";
-        if (optionalTimePattern.isPresent()) {
+        if (optionalTimePattern.isPresent())  {
             timePattern = optionalTimePattern.get();
         }
         return timePattern;
@@ -136,7 +136,7 @@ public class Preferences {
         Optional<String> optionalDatePatterns = Optional.ofNullable(
                 optimizer.getDatePattern(classTypeTimeDistributionInfo));
         String datePattern = "Undefined date pattern";
-        if (optionalDatePatterns.isPresent()) {
+        if (optionalDatePatterns.isPresent())  {
             datePattern = optionalDatePatterns.get();
         }
         return datePattern;
@@ -144,6 +144,7 @@ public class Preferences {
 
     public XMLBuilder createTimePrefElement(XMLBuilder xmlBuilder, String timePattern) {
         xmlBuilder = xmlBuilder.element("timePref")
+                // pattern need some improvements after fixes will be made in ClassOptimizator class.
                 .attribute("pattern", timePattern)
                 .attribute("level", "1")
                 .up();
